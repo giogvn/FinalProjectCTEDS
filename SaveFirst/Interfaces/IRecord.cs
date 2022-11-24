@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace SaveFirst.Interfaces
 {
-    internal interface iRecord
+    internal interface IRecord<T>
     {
-        List<Record> ReadAll();
-        void Create(Record newRecord);
-        void Update(Record record);
+        List<T> ReadAll();
+        void Create(T newRecord);
+        void Update(T record);
         void Delete(string idRecord);
     }
 }
