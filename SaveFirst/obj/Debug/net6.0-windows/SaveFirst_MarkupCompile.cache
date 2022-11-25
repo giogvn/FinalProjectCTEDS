@@ -1,5 +1,5 @@
 ﻿SaveFirst
-1.0.0.0
+
 
 winexe
 C#
@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\User\Documents\Pedro\FinalProject\SaveFirst\App.xaml
 11407045341
 
-11-1419676967
+9-14881882
 194-200944676
 MainWindow.xaml;
 
-False
+True
 

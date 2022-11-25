@@ -11,6 +11,7 @@ namespace SaveFirst.Interfaces
         List<T> ReadAll();
         void Create(T newRecord);
         void Update(T record);
-        void Delete(string idRecord);
+        void Delete(int RecordId);
+        List<T> FindAllFromSaver(int SaverId);
     }
 }

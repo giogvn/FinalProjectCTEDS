@@ -1,20 +1,20 @@
 ﻿SaveFirst
-1.0.0.0
+
 
 winexe
 C#
 .cs
-C:\Users\User\Documents\Pedro\FinalProject\SaveFirst\obj\Debug\net6.0-windows\
+C:\Users\User\Documents\Pedro\FinalProject\SaveFirst\obj\Release\net6.0-windows\
 SaveFirst
 none
 false
-TRACE;DEBUG;NET;NET6_0;NETCOREAPP
+TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 C:\Users\User\Documents\Pedro\FinalProject\SaveFirst\App.xaml
 11407045341
 
-11-1419676967
+9-14881882
 194-200944676
 MainWindow.xaml;
 
-False
+True
 
