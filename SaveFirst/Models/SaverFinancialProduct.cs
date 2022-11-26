@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace SaveFirst.Models
 {
-    internal class SaverFinancialProduct
+    public class SaverFinancialProduct
     {
+        public int Id { get; set; }
         public int SaverId { get; set; }
         public int FinancialProductId { get; set; }
         public string Recurrence { get; set; } = String.Empty;

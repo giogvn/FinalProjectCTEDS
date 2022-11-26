@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SaveFirst.Interfaces
 {
-    internal interface IRecord<T>
+    public interface IRecord<T>
     {
         List<T> ReadAll();
         void Create(T newRecord);
