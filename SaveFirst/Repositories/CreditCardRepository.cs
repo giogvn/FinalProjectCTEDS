@@ -72,7 +72,7 @@ namespace SaveFirst.Repositories
                             string[] invDueD = rdr["invoice_due_date"].ToString().Split("-");
                             int[] invDate = { int.Parse(invDueD[0]), int.Parse(invDueD[1]), int.Parse(invDueD[2]) };
 
-                            string[] invClosingD = rdr["invoice_due_date"].ToString().Split("-");
+                            string[] invClosingD = rdr["invoice_closing_date"].ToString().Split("-");
                             int[] invClosingDate = { int.Parse(invClosingD[0]), int.Parse(invClosingD[1]), int.Parse(invClosingD[2]) };
 
 
