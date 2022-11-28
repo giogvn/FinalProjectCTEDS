@@ -50,13 +50,13 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<CreditCard> FindAllFromSaver(int Id)
+        static List<CreditCard> FindAllFromSaver(string queryFind)
         {
             CreditCard record = null;
             List<CreditCard> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
-                string queryFind = $"SELECT * FROM CreditCard WHERE saver_id = '{Id}'";
+                //string queryFind = $"SELECT * FROM CreditCard WHERE saver_id = '{Id}'";
                 using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
                 {
                     con.Open();
@@ -101,7 +101,7 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        public List<CreditCard> ReadAll() => throw new NotImplementedException();
+        public List<CreditCard> ReadAll(string query) => throw new NotImplementedException();
 
         public void Update(CreditCard record)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SaveFirst.Models
 {
-    internal class Saver
+    public class Saver
     {
         public int Id { get; set; }
         public string? Email { get; set; }
@@ -14,7 +14,6 @@ namespace SaveFirst.Models
         public string Name { get; set; } = String.Empty;    
         public DateOnly Birthday { get; set; }
         public string Password { get; set; } = String.Empty;
-
         public string Type { get; set; } = String.Empty;
 
 

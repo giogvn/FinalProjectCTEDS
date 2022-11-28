@@ -11,14 +11,8 @@ using Newtonsoft.Json.Linq;
 
 namespace SaveFirst.Repositories
 {
-    public class FinancialProductRepository : IRecord<FinancialProduct>
+    public class FinancialProductRepository
     { 
-        public void Delete(int RecordId) => throw new NotImplementedException();
-
-        public void Create(FinancialProduct newRecord) => throw new NotImplementedException();
-
-        public List<FinancialProduct> FindAllFromSaver(int Id) => throw new NotImplementedException();
-
         public List<FinancialProduct> ReadAll()
         {
             List<FinancialProduct> list = new();

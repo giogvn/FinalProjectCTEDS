@@ -57,7 +57,7 @@ namespace SaveFirst.Repositories
             throw new NotImplementedException();
         }
 
-        public List<IntermediateModel> FindAllFromSaver(int SaverId)
+        static List<IntermediateModel> FindAllFromSaver(string queryFind)
         {
             IntermediateModel record = null;
             List<IntermediateModel> list = new();
@@ -95,12 +95,12 @@ namespace SaveFirst.Repositories
                 return list;
             }
 
-        public List<IntermediateModel> ReadAll()
+        public List<IntermediateModel> ReadAll(string querySelect)
         {
             List<IntermediateModel> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
-                string querySelect = $"SELECT * FROM {DatabaseName}";
+                //string querySelect = $"SELECT * FROM {DatabaseName}";
                 con.Open();
 
                 SqliteDataReader rdr;

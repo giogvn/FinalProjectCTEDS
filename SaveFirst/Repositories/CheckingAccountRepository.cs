@@ -49,13 +49,13 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<CheckingAccount> FindAllFromSaver(int Id)
+        static List<CheckingAccount> FindAllFromSaver(string queryFind)
         {
             CheckingAccount record = null;
             List<CheckingAccount> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
-                string queryFind = $"SELECT * FROM CheckingAccount WHERE saver_id = '{Id}'";
+                //string queryFind = $"SELECT * FROM CheckingAccount WHERE saver_id = '{Id}'";
                 using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
                 {
                     con.Open();
@@ -96,7 +96,7 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        public List<CheckingAccount> ReadAll() => throw new NotImplementedException();
+        public List<CheckingAccount> ReadAll(string querySelect) => throw new NotImplementedException();
 
         public void Update(CheckingAccount record)
         {

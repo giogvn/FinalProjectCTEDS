@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,8 @@ namespace SaveFirst.Models
         public int SaverId { get; set; }
 
         public DateOnly Date { get; set; }
+
+        public  DateOnly DueDate { get; set; }
 
         public float Value { get; set; }
 

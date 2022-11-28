@@ -30,8 +30,8 @@ namespace SaveFirst.Repositories
 
         public void Create(Expense newRecord)
         {
-            string queryInsert = $"INSERT INTO Expense (saver_id, expense_date, value, expense_type, description, status," +
-                $"number_of_installments, installments_value, installments_left) VALUES (@SaverId, @Date, @Value, @Type, " +
+            string queryInsert = $"INSERT INTO Expense (saver_id, expense_date, due_date, value, expense_type, description, status," +
+                $"number_of_installments, installments_value, installments_left) VALUES (@SaverId, @Date, @DueDate, @Value, @Type, " +
                 $"@Description, @Status, @NumberOfInstallments, @InstallmentsValue, @InstallmentsLeft)";
 
             using (SqliteConnection con = new(ConnectionString))
@@ -40,6 +40,7 @@ namespace SaveFirst.Repositories
                 {
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
                     cmd.Parameters.AddWithValue("@Date", newRecord.Date);
+                    cmd.Parameters.AddWithValue("@DueDate", newRecord.Date);
                     cmd.Parameters.AddWithValue("@Value", newRecord.Value);
                     cmd.Parameters.AddWithValue("@Type", newRecord.Type);
                     cmd.Parameters.AddWithValue("@Description", newRecord.Description);
@@ -54,12 +55,12 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<Expense> FindAllFromSaver(int SaverId)
+        public static List<Expense> FindAllFromSaver(string queryFind)
         {
             List<Expense> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
-                string querySelect = $"SELECT * FROM Expense";
+                //string querySelect = $"SELECT * FROM Expense";
                 con.Open();
 
                 SqliteDataReader rdr;
@@ -92,7 +93,7 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        List<Expense> ReadAll (int Id) => throw new NotImplementedException();   
+        List<Expense> ReadAll (string querySelect) => throw new NotImplementedException();   
 
         public void Update(Expense record)
         {
@@ -115,10 +116,6 @@ namespace SaveFirst.Repositories
                 }
             }
         }
-
-        public List<Expense> ReadAll()
-        {
-            throw new NotImplementedException();
-        }
+        public List<Expense> ReadAll(string query) => throw new NotImplementedException();
     }
 }

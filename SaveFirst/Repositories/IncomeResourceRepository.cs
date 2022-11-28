@@ -51,13 +51,13 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<IncomeResource> FindAllFromSaver(int Id)
+        static public List<IncomeResource> FindAllFromSaver(string queryFind)
         {
             IncomeResource record = null;
             List<IncomeResource> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
-                string queryFind = $"SELECT * FROM IncomeResource WHERE saver_id = '{Id}'";
+                //string queryFind = $"SELECT * FROM IncomeResource WHERE saver_id = '{Id}'";
                 using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
                 {
                     con.Open();
@@ -98,7 +98,7 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        public List<IncomeResource> ReadAll() => throw new NotImplementedException();
+        static List<IncomeResource> ReadAll(string querySelect) => throw new NotImplementedException();
 
         public void Update(IncomeResource record)
         {

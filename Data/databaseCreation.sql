@@ -11,6 +11,7 @@ CREATE TABLE Expense(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
   expense_date DATE,
+  due_date DATE,
   value INTEGER NOT NULL,
   expense_type TEXT CHECK(expense_type = "recurrent" OR expense_type = "sporadic"),
   description TEXT,

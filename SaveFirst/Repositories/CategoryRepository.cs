@@ -45,13 +45,13 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<Category> FindAllFromSaver(int Id)
+        static List<Category> FindAllFromSaver(string queryFind)
         {
             Category record = null;
             List<Category> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
-                string queryFind = $"SELECT * FROM Category WHERE saver_id = '{Id}'";
+                //string queryFind = $"SELECT * FROM Category WHERE saver_id = '{Id}'";
                 using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
                 {
                     con.Open();
@@ -82,7 +82,7 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        public List<Category> ReadAll() => throw new NotImplementedException();
+        public List<Category> ReadAll(string query) => throw new NotImplementedException();
 
         public void Update(Category record) => throw new NotImplementedException();
     }

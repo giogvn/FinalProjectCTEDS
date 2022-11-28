@@ -51,14 +51,14 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<SaverFinancialProduct> FindAllFromSaver(int SaverId)
+        static List<SaverFinancialProduct> FindAllFromSaver(string queryFind)
         {
             SaverFinancialProduct record = null;
             List<SaverFinancialProduct> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
                 //string queryFind = $"IF EXISTS(SELECT * FROM UserCredentials WHERE Email = {email})\r\n BEGIN\r\n   SELECT * FROM UserCredentials WHERE Email = {email}\r\n\r\n END";
-                string queryFind = $"SELECT * FROM SaverFinancialProduct WHERE saver_id = '{SaverId}'";
+                //string queryFind = $"SELECT * FROM SaverFinancialProduct WHERE saver_id = '{SaverId}'";
                 using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
                 {
                     con.Open();
@@ -95,12 +95,12 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        public List<SaverFinancialProduct> ReadAll()
+        public List<SaverFinancialProduct> ReadAll(string querySelect)
         {
             List<SaverFinancialProduct> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
-                string querySelect = $"SELECT * FROM SaverFinancialProduct";
+                //string querySelect = $"SELECT * FROM SaverFinancialProduct";
                 con.Open();
 
                 SqliteDataReader rdr;

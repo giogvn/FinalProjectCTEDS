@@ -28,7 +28,7 @@ namespace SaveFirst.Repositories
             }
         }
 
-        void IRecord<Saver>.Create(Saver newRecord)
+        public void Create(Saver newRecord)
         {
             string queryInsert = $"INSERT INTO Saver (id , email, saver_type, payer_id,  name,  birthdate) VALUES (@Id, @Email, @Type, @PayerId, @Name, @Birthday)";
             using (SqliteConnection con = new(ConnectionString))
@@ -48,13 +48,13 @@ namespace SaveFirst.Repositories
             }
         }
 
-        List<Saver> IRecord<Saver>.FindAllFromSaver(int Id)
+        public static List<Saver> FindAllFromSaver(string queryFind)
         {
             Saver record = null;
             List<Saver> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
-                string queryFind = $"SELECT * FROM Saver WHERE payer_id = '{Id}'";
+                //string queryFind = $"SELECT * FROM Saver WHERE payer_id = '{Id}'";
                 using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
                 {
                     con.Open();
@@ -89,12 +89,12 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        List<Saver> IRecord<Saver>.ReadAll()
+        public List<Saver> ReadAll(string querySelect)
         {
             List<Saver> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
-                string querySelect = $"SELECT * FROM Saver WHERE payer_id = @PayerId";
+                //string querySelect = $"SELECT * FROM Saver WHERE payer_id = @PayerId";
                 con.Open();
 
                 SqliteDataReader rdr;
@@ -121,7 +121,7 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        void IRecord<Saver>.Update(Saver record)
+        public void Update(Saver record)
         {
             using (SqliteConnection con = new(ConnectionString))
             {
