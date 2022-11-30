@@ -1,5 +1,6 @@
 CREATE TABLE Saver(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	email TEXT NOT NULL,
     user_type TEXT CHECK(user_type = "payer" OR user_type = "dependent"),
 	payer_id INTEGER,
 	name	TEXT NOT NULL,
@@ -10,6 +11,7 @@ CREATE TABLE Expense(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER NOT NULL,
   expense_date DATE,
+  due_date DATE,
   value INTEGER NOT NULL,
   expense_type TEXT CHECK(expense_type = "recurrent" OR expense_type = "sporadic"),
   description TEXT,
@@ -22,7 +24,9 @@ CREATE TABLE Expense(
 
 CREATE TABLE Category(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL
+  saver_id INTEGER,
+  name TEXT NOT NULL,
+  FOREIGN KEY (saver_id) REFERENCES Saver(id)
 );
 
 CREATE TABLE ExpenseCategory(
@@ -90,9 +94,10 @@ CREATE TABLE IncomeResource(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   user_id INTEGER,
   value INTEGER NOT NULL,
+  name TEXT NOT NULL,
   payday DATE NOT NULL,
-  start_day DATE,
-  end_day DATE,
+  start_date DATE,
+  end_date DATE,
   recurrence TEXT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES User(id)
 );
