@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SaveFirst
+namespace SaveFirst.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for PaymentMethodRegister.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class PaymentMethodRegister : Page
     {
-        public MainWindow()
+        public PaymentMethodRegister()
         {
             InitializeComponent();
         }

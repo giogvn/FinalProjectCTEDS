@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 
 namespace SaveFirst.Repositories
 {
     public class CategoryRepository : IRecord<Category>
     {
-        private string ConnectionString = "Data source = Saver.db";
+        static string ConnectionString = "Data source = Saver.db";
         public void Delete(int RecordId)
         {
             using (SqliteConnection con = new(ConnectionString))

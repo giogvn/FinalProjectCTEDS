@@ -11,7 +11,7 @@ namespace SaveFirst.Repositories
 {
     public class SaverFinancialProductRepository : IRecord<SaverFinancialProduct>
     {
-        private string ConnectionString = "Data source = SaverFinancialProduct.db";
+        static string ConnectionString = "Data source = SaverFinancialProduct.db";
         public void Delete(int RecordId)
         {
             using (SqliteConnection con = new(ConnectionString))

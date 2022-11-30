@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 
 namespace SaveFirst.Repositories
 {
     public class ExpenseRepository : IRecord<Expense>
     {
-        private string ConnectionString = "Data source = Expense.db";
+        static string ConnectionString = "Data source = Expense.db";
         public void Delete(int RecordId)
         {
             using (SqliteConnection con = new(ConnectionString))
@@ -65,7 +66,7 @@ namespace SaveFirst.Repositories
 
                 SqliteDataReader rdr;
 
-                using (SqliteCommand cmd = new SqliteCommand(querySelect, con))
+                using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
                 {
                     rdr = cmd.ExecuteReader();
 
@@ -93,7 +94,7 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        List<Expense> ReadAll (string querySelect) => throw new NotImplementedException();   
+        public List<Expense> ReadAll (string querySelect) => throw new NotImplementedException();   
 
         public void Update(Expense record)
         {
@@ -116,6 +117,5 @@ namespace SaveFirst.Repositories
                 }
             }
         }
-        public List<Expense> ReadAll(string query) => throw new NotImplementedException();
     }
 }

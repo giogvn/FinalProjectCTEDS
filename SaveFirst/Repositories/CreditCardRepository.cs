@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 
 namespace SaveFirst.Repositories
 {
     public class CreditCardRepository : IRecord<CreditCard>
     {
-        private string ConnectionString = "Data source = CreditCard.db";
+        static string ConnectionString = "Data source = CreditCard.db";
         public void Delete(int RecordId)
         {
             using (SqliteConnection con = new(ConnectionString))

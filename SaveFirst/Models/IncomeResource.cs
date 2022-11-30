@@ -14,7 +14,7 @@ namespace SaveFirst.Models
 
         public int SaverId { get; set; }
 
-        public DateOnly PayDay { get; set; }
+        public int PayDay { get; set; }
 
         public DateOnly StartDate { get; set; }
 

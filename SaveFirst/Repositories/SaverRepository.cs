@@ -5,12 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Data.Sqlite;
 
 namespace SaveFirst.Repositories
 {
     public class SaverRepository : IRecord<Saver>
     {
-        private string ConnectionString = "Data source = Saver.db";
+        static string ConnectionString = "Data source = Saver.db";
         public void Delete(int RecordId)
         {
             using (SqliteConnection con = new(ConnectionString))
@@ -70,7 +71,7 @@ namespace SaveFirst.Repositories
                             record = new Saver()
                             {
                                 Id = (int)rdr["id"],
-                                Type = (int)rdr["user_type"],
+                                Type = rdr["user_type"].ToString(),
                                 PayerId = (int)rdr["payer_id"],
                                 Birthday = new DateOnly(num[0], num[1], num[2]),                            
                             };
@@ -110,7 +111,7 @@ namespace SaveFirst.Repositories
                         Saver record = new Saver()
                         {
                             Id = (int)rdr["id"],
-                            Type = (int)rdr["saver_id"],
+                            Type = rdr["type"].ToString(),
                             Name = rdr["name"].ToString(),
                             Birthday = new DateOnly(num[0], num[1], num[2])
                         };

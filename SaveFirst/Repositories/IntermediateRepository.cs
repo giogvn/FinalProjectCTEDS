@@ -31,7 +31,7 @@ namespace SaveFirst.Repositories
 
         public void Create(IntermediateModel newRecord)
         {
-            using (SqliteConnection con = new SqliteConnection(ConnectionString))
+            using (SqliteConnection con = new SqliteConnection(this.ConnectionString))
             {
                 // SQL Injection
                 //string queryInsert = $"INSERT INTO Products (IdProduct, Name, Description, Price) VALUES ('{newProduct.IdProduct}', '{newProduct.Name}', '{newProduct.Description}', {newProduct.Price})";
@@ -57,14 +57,14 @@ namespace SaveFirst.Repositories
             throw new NotImplementedException();
         }
 
-        static List<IntermediateModel> FindAllFromSaver(string queryFind)
+        public List<IntermediateModel> FindAllFromSaver(string queryFind)
         {
             IntermediateModel record = null;
             List<IntermediateModel> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
                 //string queryFind = $"IF EXISTS(SELECT * FROM UserCredentials WHERE Email = {email})\r\n BEGIN\r\n   SELECT * FROM UserCredentials WHERE Email = {email}\r\n\r\n END";
-                string queryFind = $"SELECT * FROM {DatabaseName} WHERE saver_id = '{SaverId}'";
+                //string queryFind = $"SELECT * FROM {DatabaseName} WHERE saver_id = '{SaverId}'";
                 using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
                 {
                     con.Open();
