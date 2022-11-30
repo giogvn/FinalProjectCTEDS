@@ -1253,23 +1253,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\cteds_22\\.nuget\\packages\\": {},
+    "C:\\Users\\cteds_07\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\cteds_22\\Desktop\\Project\\SaveFirst\\SaveFirst.csproj",
+      "projectUniqueName": "C:\\Users\\cteds_07\\Documents\\FinalProjectCTEDS\\SaveFirst\\SaveFirst.csproj",
       "projectName": "SaveFirst",
-      "projectPath": "C:\\Users\\cteds_22\\Desktop\\Project\\SaveFirst\\SaveFirst.csproj",
-      "packagesPath": "C:\\Users\\cteds_22\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\cteds_22\\Desktop\\Project\\SaveFirst\\obj\\",
+      "projectPath": "C:\\Users\\cteds_07\\Documents\\FinalProjectCTEDS\\SaveFirst\\SaveFirst.csproj",
+      "packagesPath": "C:\\Users\\cteds_07\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\cteds_07\\Documents\\FinalProjectCTEDS\\SaveFirst\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\cteds_22\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\cteds_07\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SaveFirst.Models
 {
-    public class CreditCard
+    public class PaymentMethod
     {
 
         public int Id { get; set; } 
@@ -21,6 +21,10 @@ namespace SaveFirst.Models
         public DateOnly InvoiceDueDate { get; set; }
 
         public DateOnly InvoiceClosingDate { get; set; }
+
+        public DateOnly RegistrationDate { get; set; }
+
+        public DateOnly CancelDate { get; set;}
 
     }
 }

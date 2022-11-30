@@ -1,7 +1,7 @@
 CREATE TABLE Saver(
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
 	email TEXT NOT NULL,
-    user_type TEXT CHECK(user_type = "payer" OR user_type = "dependent"),
+    Saver_type TEXT CHECK(Saver_type = "payer" OR Saver_type = "dependent"),
 	payer_id INTEGER,
 	name	TEXT NOT NULL,
 	birthdate DATE
@@ -9,7 +9,7 @@ CREATE TABLE Saver(
 
 CREATE TABLE Expense(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER NOT NULL,
+  saver_id INTEGER NOT NULL,
   expense_date DATE,
   due_date DATE,
   value INTEGER NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE Expense(
   number_of_installments INTEGER DEFAULT 1,
   installment_value INTEGER NOT NULL,
   installments_left INTEGER DEFAULT 1,
-  FOREIGN KEY (user_id) REFERENCES User(id)
+  FOREIGN KEY (saver_id) REFERENCES Saver(id)
 );
 
 CREATE TABLE Category(
@@ -46,60 +46,47 @@ CREATE TABLE FinancialProduct(
 
 CREATE TABLE SaverFinancialProduct(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER,
+  saver_id INTEGER,
   financial_product_id INTEGER,
   recurrence TEXT,
   reason TEXT,
   purchase_date DATE,
   number_of_shares INTEGER NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES User(id),
+  FOREIGN KEY (saver_id) REFERENCES Saver(id),
   FOREIGN KEY (financial_product_id) REFERENCES FinancialProduct(id)
-);
-
-CREATE TABLE PaymentMethod(
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT CHECK(name = "creditCard" OR name = "checkingAccount")
 );
 
 CREATE TABLE ExpensePaymentMethod(
   expense_id INTEGER,
-  payment_method_id
-);
-
-CREATE TABLE CreditCard(
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER,
   payment_method_id INTEGER,
-  name TEXT DEFAULT "creditCard",
-  bank TEXT DEFAULT "undefinedBank",
-  invoice_due_date DATE NOT NULL,
-  invoice_closing_date DATE NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES User(id),
   FOREIGN KEY (payment_method_id) REFERENCES PaymentMethod(id)
 );
 
-CREATE TABLE CheckingAccount(
+CREATE TABLE PaymentMethod(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER,
+  saver_id INTEGER,
   payment_method_id INTEGER,
-  name TEXT DEFAULT "notDefined",
-  bank TEXT NOT NULL,
+  name TEXT,
+  type TEXT,
+  bank TEXT DEFAULT "undefinedBank",
+  invoice_due_date DATE NOT NULL,
+  invoice_closing_date DATE NOT NULL,
   registration_date DATE NOT NULL,
-  cancel_date DATE,
-  FOREIGN KEY (user_id) REFERENCES User(id),
+  cancel_date DATE DEFAULT NULL,
+  FOREIGN KEY (saver_id) REFERENCES Saver(id),
   FOREIGN KEY (payment_method_id) REFERENCES PaymentMethod(id)
 );
 
 CREATE TABLE IncomeResource(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
-  user_id INTEGER,
+  saver_id INTEGER,
   value INTEGER NOT NULL,
   name TEXT NOT NULL,
   payday DATE NOT NULL,
   start_date DATE,
   end_date DATE,
   recurrence TEXT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES User(id)
+  FOREIGN KEY (saver_id) REFERENCES Saver(id)
 );
 
 CREATE TABLE PaymentMethodIncomeResource(

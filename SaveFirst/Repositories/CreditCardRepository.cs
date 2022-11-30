@@ -9,7 +9,7 @@ using Microsoft.Data.Sqlite;
 
 namespace SaveFirst.Repositories
 {
-    public class CreditCardRepository : IRecord<CreditCard>
+    public class CreditCardRepository : IRecord<PaymentMethod>
     {
         static string ConnectionString = "Data source = CreditCard.db";
         public void Delete(int RecordId)
@@ -29,7 +29,7 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public void Create(CreditCard newRecord)
+        public void Create(PaymentMethod newRecord)
         {
             string queryInsert = $"INSERT INTO CreditCard (saver_id, name, bank, expiration_date, invoice_due_date, invoice_closing_date) " +
                 $"VALUES (@SaverId, @Name, @Bank, @ExpirationDate, @InvoiceDueDate, @InvoiceClosingDate)";
@@ -51,10 +51,10 @@ namespace SaveFirst.Repositories
             }
         }
 
-        static List<CreditCard> FindAllFromSaver(string queryFind)
+        static List<PaymentMethod> FindAllFromSaver(string queryFind)
         {
-            CreditCard record = null;
-            List<CreditCard> list = new();
+            PaymentMethod record = null;
+            List<PaymentMethod> list = new();
             using (SqliteConnection con = new(ConnectionString))
             {
                 //string queryFind = $"SELECT * FROM CreditCard WHERE saver_id = '{Id}'";
@@ -77,7 +77,7 @@ namespace SaveFirst.Repositories
                             int[] invClosingDate = { int.Parse(invClosingD[0]), int.Parse(invClosingD[1]), int.Parse(invClosingD[2]) };
 
 
-                            record = new CreditCard()
+                            record = new PaymentMethod()
                             {
                                 Id = (int)rdr["id"],
                                 SaverId = (int)rdr["saver_id"],
@@ -102,9 +102,9 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        public List<CreditCard> ReadAll(string query) => throw new NotImplementedException();
+        public List<PaymentMethod> ReadAll(string query) => throw new NotImplementedException();
 
-        public void Update(CreditCard record)
+        public void Update(PaymentMethod record)
         {
             using (SqliteConnection con = new(ConnectionString))
             {
