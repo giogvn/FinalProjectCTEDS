@@ -117,5 +117,34 @@ namespace SaveFirst.Repositories
                 }
             }
         }
+
+        public static List<Expense> GetExpensesFromIncomeResource(int IncomeResourceId, string status = "active")
+        {
+            string queryFind = $"SELECT * FROM Expense WHERE id = (SELECT expense_id FROM " +
+                $"ExpensePaymentMethod NATURAL JOIN PaymentMethodIncomeResource WHERE income_resource_id = {IncomeResourceId})" +
+                $"AND status = {status};";
+
+            return FindAllFromSaver(queryFind);
+        }
+
+        public float CalculateTotalExpenses(int saverId, DateOnly limitDate)
+        {
+            string queryFind = $"SELECT * FROM Expense JOIN (SELECT ExpensePaymentMethod, PaymentMethod WHERE saver_id = {saverId} AND payment_method_id = id" +
+                $"AND type = credit_card AND invoice_closing_date <= {limitDate.ToString("dd/mm/yyyy")} ON id = expense_id";
+
+            List<Expense> expenses = FindAllFromSaver(queryFind);
+
+            float total = 0;
+
+            foreach(Expense expense in expenses)
+            {
+                total += expense.Value;
+            }
+
+            return total;           
+
+        }
+
+        
     }
 }

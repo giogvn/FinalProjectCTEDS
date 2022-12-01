@@ -13,7 +13,7 @@ namespace SaveFirst.Repositories
 {
     public class FinancialProductRepository
     { 
-        public List<FinancialProduct> ReadAll()
+        public static List<FinancialProduct> ReadAll()
         {
             List<FinancialProduct> list = new();
 

@@ -37,23 +37,15 @@ CREATE TABLE ExpenseCategory(
   FOREIGN KEY (category_id) REFERENCES Category(id)
 );
 
-CREATE TABLE FinancialProduct(
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  name TEXT NOT NULL,
-  price INTEGER NOT NULL
-);
-
-
 CREATE TABLE SaverFinancialProduct(
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   saver_id INTEGER,
-  financial_product_id INTEGER,
+  financial_product_name TEXT,
   recurrence TEXT,
   reason TEXT,
   purchase_date DATE,
   number_of_shares INTEGER NOT NULL,
   FOREIGN KEY (saver_id) REFERENCES Saver(id),
-  FOREIGN KEY (financial_product_id) REFERENCES FinancialProduct(id)
 );
 
 CREATE TABLE ExpensePaymentMethod(

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.Sqlite;
 using SaveFirst.Interfaces;
+using SaveFirst.Repositories;
 using SaveFirst.Models;
 using System;
 using System.Collections.Generic;
@@ -38,7 +39,7 @@ namespace SaveFirst.Repositories
                 {
                     cmd.Parameters.AddWithValue("@Id", newRecord.Id);
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
-                    cmd.Parameters.AddWithValue("@FinancialProductId", newRecord.FinancialProductId);
+                    cmd.Parameters.AddWithValue("@FinancialProductId", newRecord.FinancialProductName);
                     cmd.Parameters.AddWithValue("@Recurrence", newRecord.Recurrence);
                     cmd.Parameters.AddWithValue("@Reason", newRecord.Reason);
                     cmd.Parameters.AddWithValue("@PurchaseDate", newRecord.PurchaseDate.ToString("yyyy-MM-dd"));
@@ -74,7 +75,7 @@ namespace SaveFirst.Repositories
                             {
                                 Id = (int)rdr["id"],
                                 SaverId = (int)rdr["saver_id"],
-                                FinancialProductId = (int)rdr["financial_product_id"],
+                                FinancialProductName = rdr["financial_product_name"].ToString(),
                                 Recurrence = rdr["recurrence"].ToString(),
                                 Reason = rdr["reason"].ToString(),
                                 PurchaseDate = new DateOnly(num[0], num[1], num[2]),
@@ -117,7 +118,7 @@ namespace SaveFirst.Repositories
                         {
                             Id = (int)rdr["id"],
                             SaverId = (int)rdr["saver_id"],
-                            FinancialProductId = (int)rdr["financial_product_id"],
+                            FinancialProductName = rdr["financial_product_name"].ToString(),
                             Recurrence = rdr["recurrence"].ToString(),
                             Reason = rdr["reason"].ToString(),
                             PurchaseDate = new DateOnly(num[0], num[1], num[2]),
@@ -140,7 +141,7 @@ namespace SaveFirst.Repositories
                 {
                     cmd.Parameters.AddWithValue("@Id", record.Id);
                     cmd.Parameters.AddWithValue("@SaverId", record.SaverId);
-                    cmd.Parameters.AddWithValue("@FinancialProductId", record.FinancialProductId);
+                    cmd.Parameters.AddWithValue("@FinancialProductId", record.FinancialProductName);
                     cmd.Parameters.AddWithValue("@Recurrence", record.Recurrence);
                     cmd.Parameters.AddWithValue("@Reason", record.Reason);
                     cmd.Parameters.AddWithValue("@PurchaseDate", record.PurchaseDate.ToString("yyyy-MM-dd"));
@@ -151,6 +152,23 @@ namespace SaveFirst.Repositories
                     cmd.ExecuteNonQuery();
                 }
             }
+        }
+
+        public float CalculateTotalSavings(int saverId, DateOnly limitDate)
+        {
+
+            string queryFind = $"SELECT * FROM SaverFinancialProduct WHERE saver_id = {saverId} AND purchase_date <= {limitDate.ToString("dd/mm/yyyy")}";
+
+            List<SaverFinancialProduct> savings = FindAllFromSaver(queryFind);
+            List<FinancialProduct> financialProducts = FinancialProductRepository.ReadAll();
+
+            float savings = 0;
+
+            foreach(SaverFinancialProduct financialProduct in savings)
+            {
+                savings += financialProduct.
+            }
+
         }
     }
 }

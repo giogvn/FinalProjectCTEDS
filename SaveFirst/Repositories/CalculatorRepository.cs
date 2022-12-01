@@ -12,29 +12,6 @@ namespace SaveFirst.Repositories
 {
     internal class CalculatorRepository
     {
-        internal List<Expense> GetExpensesFromIncomeResource(int IncomeResourceId , string status = "active")
-        {
-            string queryFind = $"SELECT * FROM Expense WHERE id = (SELECT expense_id FROM " +
-                $"ExpensePaymentMethod NATURAL JOIN PaymentMethodIncomeResource WHERE income_resource_id = {IncomeResourceId})" +
-                $"AND status = {status};";
-
-            return ExpenseRepository.FindAllFromSaver(queryFind);
-        }
-
-        public float MoneyLeftFromIncomeResource(int IncomeResourceId)
-        {
-            string queryFind = $"SELECT * FROM IncomeResource WHERE id = {IncomeResourceId}";
-            List<Expense> expenses = this.GetExpensesFromIncomeResource(IncomeResourceId);
-            float moneyLeft = IncomeResourceRepository.FindAllFromSaver(queryFind)[0].Value;
-
-            foreach(Expense expense in expenses) 
-            {
-                moneyLeft -= expense.InstallmentValue;
-            }
-
-            return moneyLeft;
-        }
-
         public DateOnly CalculateDueDate(DateOnly purchaseDate, int numberOfInstallments ,int invoiceDueDate)
         {
             DateOnly dueD = purchaseDate.AddMonths(numberOfInstallments);
@@ -53,5 +30,12 @@ namespace SaveFirst.Repositories
 
             return ((currDueDate.Year - dueDate.Year) * 12) + currDueDate.Month - dueDate.Month;
         }
+
+        public float CalculateInstallmentValue(int numberOfInstallments, float expenseValue)
+        {
+            return expenseValue / numberOfInstallments;
+        }
+
+
     }
 }
