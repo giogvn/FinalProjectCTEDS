@@ -11,5 +11,7 @@
     <Grid Background="White">
         <ComboBox HorizontalAlignment="Left" Height="26" Margin="46,75,0,0" VerticalAlignment="Top" Width="431"/>
         <TextBlock HorizontalAlignment="Left" Height="20" Margin="46,32,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="431"/>
+        <Button Content="Button" HorizontalAlignment="Left" Height="36" Margin="352,153,0,0" VerticalAlignment="Top" Width="35" Click="Button_Click"/>
+        
     </Grid>
 </Page>

@@ -16,18 +16,14 @@ using System.Windows.Shapes;
 namespace SaveFirst.Views
 {
     /// <summary>
-    /// Interaction logic for PaymentMethodRegister.xaml
+    /// Interaction logic for IncomeResourceRegister.xaml
     /// </summary>
-    public partial class PaymentMethodRegister : Page
+    public partial class IncomeResourceRegister : Page
     {
-        public PaymentMethodRegister()
+        public IncomeResourceRegister()
         {
             InitializeComponent();
-        }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Switcher.Switch(new IncomeResourceRegister());
         }
     }
 }

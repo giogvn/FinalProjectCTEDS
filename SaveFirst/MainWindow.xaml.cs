@@ -12,17 +12,34 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SaveFirst;
+using SaveFirst.Views;
 
-namespace SaveFirst.Views
+namespace SaveFirst
 {
+    public static class Switcher
+    {
+        public static MainWindow pageSwitcher;
+
+        public static void Switch(UserControl newPage)
+        {
+            pageSwitcher.Navigate(newPage);
+        }
+    }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
+
+            InitializeComponent();
+            Content = new PaymentMethodRegister();
+        }
+        public void Navigate(UserControl nextPage)
+        {
+            this.Content = nextPage;
         }
     }
 }
