@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\cteds_22\Desktop\Project\SaveFirst\App.xaml
-3-559488694
+4-96678530
 
-29-323470826
+301784378446
 213-1434713973
-MainWindow.xaml;Views\IncomeResourceRegister.xaml;Views\PaymentMethodRegister.xaml;
+MainWindow.xaml;MyUserControl.xaml;Views\IncomeResourceRegister.xaml;Views\PaymentMethodRegister.xaml;
 
-True
+False
 

@@ -16,15 +16,6 @@ using SaveFirst.Views;
 
 namespace SaveFirst
 {
-    public static class Switcher
-    {
-        public static MainWindow pageSwitcher;
-
-        public static void Switch(UserControl newPage)
-        {
-            pageSwitcher.Navigate(newPage);
-        }
-    }
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -35,11 +26,11 @@ namespace SaveFirst
         {
 
             InitializeComponent();
-            Content = new PaymentMethodRegister();
         }
-        public void Navigate(UserControl nextPage)
+
+        private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            this.Content = nextPage;
+            this.contentControl.Content = new MyUserControl();
         }
     }
 }

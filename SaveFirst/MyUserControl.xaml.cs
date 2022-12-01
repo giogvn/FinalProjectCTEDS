@@ -13,22 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SaveFirst.Views
+namespace SaveFirst
 {
     /// <summary>
-    /// Interaction logic for PaymentMethodRegister.xaml
+    /// Interaction logic for MyUserControl.xaml
     /// </summary>
-    public partial class PaymentMethodRegister : Page
+    public partial class MyUserControl : UserControl
     {
-        public PaymentMethodRegister()
+        public MyUserControl()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow next = (MainWindow)sender;
-            next.Content = new IncomeResourceRegister();
         }
     }
 }

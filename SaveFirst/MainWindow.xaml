@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="mainwindow" Height="450" Width="800">
     <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Button Content="Switch" Click="ButtonClick"/>
+            <ContentControl x:Name="contentControl" Grid.Row="1"/>
 
+        </Grid>
     </Grid>
 </Window>
