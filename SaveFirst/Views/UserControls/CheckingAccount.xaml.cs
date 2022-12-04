@@ -13,17 +13,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SaveFirst.Views
+namespace SaveFirst.Views.UserControls
 {
     /// <summary>
-    /// Interaction logic for IncomeResourceRegister.xaml
+    /// Interação lógica para CheckingAccount.xam
     /// </summary>
-    public partial class IncomeResourceRegister : Page
+    public partial class CheckingAccount : UserControl
     {
-        public IncomeResourceRegister()
+        public CheckingAccount()
         {
             InitializeComponent();
-
         }
     }
 }

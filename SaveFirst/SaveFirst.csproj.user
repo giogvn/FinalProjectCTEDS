@@ -5,13 +5,10 @@
     <Compile Update="MyUserControl.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="UserControl2.xaml.cs">
+    <Compile Update="Views\LoginWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\IncomeResourceRegister.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Update="Views\PaymentMethodRegister.xaml.cs">
+    <Compile Update="Views\SaverRWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -19,13 +16,10 @@
     <Page Update="MyUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="UserControl2.xaml">
+    <Page Update="Views\LoginWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Views\IncomeResourceRegister.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\PaymentMethodRegister.xaml">
+    <Page Update="Views\SaverRWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

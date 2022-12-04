@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\cteds_22\Desktop\Project\SaveFirst\obj\Debug\net6.0-windows\
+C:\Users\User\Documents\Pedro\FinalProject\SaveFirst\obj\Debug\net6.0-windows\
 SaveFirst
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\cteds_22\Desktop\Project\SaveFirst\App.xaml
-5-590295206
+C:\Users\User\Documents\Pedro\FinalProject\SaveFirst\App.xaml
+71786827598
 
-29-1962947098
-213-1434713973
-MainWindow.xaml;MyUserControl.xaml;UserControl2.xaml;Views\IncomeResourceRegister.xaml;Views\PaymentMethodRegister.xaml;
+32-378672388
+213-908865400
+MainWindow.xaml;MyUserControl.xaml;Views\LoginWindow.xaml;Views\PaymentMethodRWindow.xaml;Views\SaverRWindow.xaml;Views\UserControls\CheckingAccount.xaml;Views\UserControls\CreditCard.xaml;
 
 False
 
