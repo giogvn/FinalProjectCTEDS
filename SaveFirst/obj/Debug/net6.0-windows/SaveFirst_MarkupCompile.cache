@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\User\Documents\Pedro\FinalProject\SaveFirst\App.xaml
-71786827598
+7977348391
 
-32-378672388
+29-1963801055
 213-908865400
-MainWindow.xaml;MyUserControl.xaml;Views\LoginWindow.xaml;Views\PaymentMethodRWindow.xaml;Views\SaverRWindow.xaml;Views\UserControls\CheckingAccount.xaml;Views\UserControls\CreditCard.xaml;
+MainWindow.xaml;Views\IncomeResourceRWindow.xaml;Views\LoginWindow.xaml;Views\PaymentMethodRWindow.xaml;Views\SaverRWindow.xaml;Views\UserControls\CheckingAccount.xaml;Views\UserControls\CreditCard.xaml;
 
 False
 

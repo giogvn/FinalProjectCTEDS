@@ -37,7 +37,7 @@ namespace SaveFirst
             ServiceCollection services = new();
 
             foreach (var connectionString in ConnectionStrings) {
-                services.AddDbContext<Context>(options =>
+                services.AddDbContext<DbContext>(options =>
                 {
                     options.UseSqlite(connectionString);
                 });

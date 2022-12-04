@@ -5,62 +5,85 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaveFirst.Views"
         mc:Ignorable="d"
-        Title="SaverRWindow" Height="950" Width="800">
+        Title="SaverRWindow" Height="380" Width="535">
+    <Window.Resources>
+        <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent}, 
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                 x:Name="textSource" 
+                                 Background="Transparent" 
+                                 Panel.ZIndex="2" />
+                            <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="Gray"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="120"/>
-            <RowDefinition/>
+            <RowDefinition Height="60" />
+            <RowDefinition Height="210"/>
+            <RowDefinition Height="73" />
         </Grid.RowDefinitions>
 
-        <TextBlock FontWeight="Bold" Height="29" Width="287" FontSize="24" HorizontalAlignment="Center" Margin=" 0 60 0 31" Grid.Row="0">
-            Cadastro
-        </TextBlock>
+        <TextBlock FontWeight="Bold" Height="29" Width="317" FontSize="24" HorizontalAlignment="Left" Margin="24,14,0,17"><Run Language="pt-br" Text="Cadastro de novos usuários"/></TextBlock>
 
         <Grid Grid.Row="1" Name="NewSaverGrid">
-            <Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <!--<Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
-            </Grid.RowDefinitions>
+            </Grid.RowDefinitions>-->
 
-            <TextBlock Background="White" Margin="60,15,360,131" LineHeight="19" Grid.Row="0" FontSize="16" Height="19" Width="58" RenderTransformOrigin="2.31,0.634">
-                Nome
-            </TextBlock>
-            <TextBox Text="{Binding Name}" Grid.Row="0" Padding="14" Height="60" Width="360" Background="LightGray" FontSize="20">
+            <TextBox HorizontalAlignment="Center" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Nome" Text="{Binding Name}" Grid.Row="0" FontSize="20" Padding="14" Grid.ColumnSpan="1" Height="30" Width="190" Margin="0,42,0,138" />
 
-            </TextBox>
-            <Calendar Grid.Row="1" Name ="Birthday"/>
 
-            <TextBlock Background="White" Margin="60,15,360,131" LineHeight="19" Grid.Row="2" FontSize="16" Height="19" Width="58" RenderTransformOrigin="2.31,0.634">
-                E-mail
-            </TextBlock>
-            <TextBox Text="{Binding Email}" Grid.Row="2" Padding="14" Height="60" Width="360" Background="LightGray" FontSize="20">
+            <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Email}" Padding="14" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Email" FontSize="20" Height="30" Width="190" />
 
-            </TextBox>
+            <TextBox HorizontalAlignment="Center" Text="{Binding Password}" Padding="14" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Senha" FontSize="20" Height="30" Width="190" Margin="0,138,0,42"  />
+            <TextBlock Text="Aniversário" Grid.Column="1" HorizontalAlignment="Center" FontSize="15"  Margin ="0,10,0,180" Height="20" />
+            <Viewbox Grid.Column="1" Stretch="Fill" Height="150" Width="150">
+                <Calendar  Name ="Birthday" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Viewbox>
 
-            <TextBlock Background="White" Margin="60,15,360,131" LineHeight="19" Grid.Row="3" FontSize="16" Height="19" Width="58" RenderTransformOrigin="2.31,0.634">
-                Senha
-            </TextBlock>
-            <TextBox Text="{Binding Password}" Grid.Row="3" Padding="14" Height="60" Width="360" Background="LightGray" FontSize="20">
-
-            </TextBox>
-
-            <Grid Grid.Row="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-
-                <Button FontSize="16" Click ="Register" Grid.Column="0" Height="60" Width="120" VerticalAlignment="Center" HorizontalAlignment="Center">
-                    Fazer Cadastro
-                </Button>
-                <Button FontSize="16" Grid.Column="1" Height="60" Width="120" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Cancel">
-                    Cancelar
-                </Button>
-            </Grid>
         </Grid>
-        
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Click="Cancel"  Width="190" Height="30" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center">
+                Cancelar
+            </Button>
+            <Button Click="Register" Grid.Column="1"  Width="190" Height="30" FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Center">
+                Efetuar cadastro
+            </Button>
+        </Grid>
+
     </Grid>
 </Window>

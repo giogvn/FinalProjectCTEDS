@@ -28,9 +28,6 @@ namespace SaveFirst
             InitializeComponent();
         }
 
-        private void ButtonClick(object sender, RoutedEventArgs e)
-        {
-            this.contentControl.Content = new MyUserControl();
-        }
+        
     }
 }

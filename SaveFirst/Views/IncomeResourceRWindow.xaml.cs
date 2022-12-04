@@ -10,17 +10,16 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SaveFirst
+namespace SaveFirst.Views
 {
     /// <summary>
-    /// Interaction logic for MyUserControl.xaml
+    /// Lógica interna para IncomeResourceRWindow.xaml
     /// </summary>
-    public partial class MyUserControl : UserControl
+    public partial class IncomeResourceRWindow : Window
     {
-        public MyUserControl()
+        public IncomeResourceRWindow()
         {
             InitializeComponent();
         }

@@ -12,7 +12,7 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-            <Button Content="Switch" Click="ButtonClick"/>
+            <Button Content="Switch" />
             <ContentControl x:Name="contentControl" Grid.Row="1"/>
 
         </Grid>

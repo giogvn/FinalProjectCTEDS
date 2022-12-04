@@ -121,5 +121,19 @@ namespace SaveFirst.Repositories
                 }
             }
         }
+
+        public float MoneyLeftFromIncomeResource(int IncomeResourceId)
+        {
+            string queryFind = $"SELECT * FROM IncomeResource WHERE id = {IncomeResourceId}";
+            List<Expense> expenses = ExpenseRepository.GetExpensesFromIncomeResource(IncomeResourceId);
+            float moneyLeft = FindAllFromSaver(queryFind)[0].Value;
+
+            foreach (Expense expense in expenses)
+            {
+                moneyLeft -= expense.InstallmentValue;
+            }
+
+            return moneyLeft;
+        }
     } 
 }
