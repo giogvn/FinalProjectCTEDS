@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SaveFirst.Views;
+using SaveFirst.Models;
 
 namespace SaveFirst
 {
@@ -21,11 +22,13 @@ namespace SaveFirst
     /// </summary>
     public partial class MainWindow : Window
     {
+        Saver Saver;
 
-        public MainWindow()
+        public MainWindow(Saver saver): base()
         {
 
             InitializeComponent();
+            Saver = saver;
         }
 
         

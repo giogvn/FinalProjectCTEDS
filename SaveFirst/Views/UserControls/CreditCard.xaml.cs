@@ -21,8 +21,15 @@ namespace SaveFirst.Views.UserControls
     public partial class CreditCard : UserControl
     {
         public CreditCard()
+
         {
             InitializeComponent();
+
+            this.DataContext = this;
+        }
+        private void doit(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(date1.SelectedDate.ToString());
         }
     }
 }

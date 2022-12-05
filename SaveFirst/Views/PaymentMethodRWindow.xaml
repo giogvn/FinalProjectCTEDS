@@ -5,24 +5,26 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaveFirst.Views"
         mc:Ignorable="d"
-        Title="PaymentMethodRWindow" Height="450" Width="800">
-    <Window.Resources>
+        SizeToContent="Height"
+        Title="PaymentMethodRWindow"  Width="485">
+    <!--<Window.Resources>
         <local:PaymentMethodRWindow x:Key="radioBoolToIntConverter" />
-    </Window.Resources>
-    <Grid>
+    </Window.Resources>-->
+    <Grid Height="300">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="220"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             
-            <ComboBox Margin ="10" SelectionChanged="ChangeContentForRegister" Name="Choice1" IsReadOnly="True">
+            <ComboBox Margin ="10"  VerticalAlignment="Center" SelectionChanged="ChangeContentForRegister" Name="Choice1" IsReadOnly="True">
                 <ComboBoxItem IsEnabled="False" IsSelected="True">Escolha uma opção</ComboBoxItem>
                 <ComboBoxItem>Cartão de Crédito</ComboBoxItem>
                 <ComboBoxItem>Conta corrente</ComboBoxItem>
             </ComboBox>
+            
 
         </StackPanel>
 

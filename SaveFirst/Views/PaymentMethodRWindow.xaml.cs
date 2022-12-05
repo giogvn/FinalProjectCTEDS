@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SaveFirst.Views.UserControls;
+using SaveFirst.Models;
 
 namespace SaveFirst.Views
 {
@@ -22,11 +23,12 @@ namespace SaveFirst.Views
     /// </summary>
     public partial class PaymentMethodRWindow : Window
     {
+        Saver Saver;
 
-        public PaymentMethodRWindow()
+        public PaymentMethodRWindow(Saver saver): base()
         {
             InitializeComponent();
-            MessageBox.Show(Choice1.SelectedIndex.ToString());
+            Saver = saver;
             
         }
 

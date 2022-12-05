@@ -5,13 +5,42 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SaveFirst.Views.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBox HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="329" Margin="71,98,0,0"/>
-        <TextBox HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="329" Margin="433,98,0,0"/>
-        <TextBox HorizontalAlignment="Left" Height="46" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="329" Margin="433,0,0,0" RenderTransformOrigin="1.584,3.098"/>
-        <TextBox HorizontalAlignment="Left" Height="47" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Center" Width="329" Margin="71,0,0,0"/>
-        <TextBox HorizontalAlignment="Center" Height="47" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="328" Margin="0,308,0,0"/>
+             d:DesignHeight="220" d:DesignWidth="485">
+    <UserControl.Resources>
+        <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent}, 
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                 x:Name="textSource" 
+                                 Background="Transparent" 
+                                 Panel.ZIndex="2" />
+                            <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="Gray"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
+    </UserControl.Resources>
+    <Grid>
+        <TextBox Style="{StaticResource placeHolder}" Tag="Nome" HorizontalAlignment="Center" Height="30" Margin="0,52,0,138" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+        <TextBox Style="{StaticResource placeHolder}" Tag="Banco"  HorizontalAlignment="Center" Height="30" VerticalAlignment="Center" TextWrapping="Wrap" Width="300"/>
+        <DatePicker  Height="30" Width="300" HorizontalAlignment="Center" Margin="0 138 0 52"/>
     </Grid>
 </UserControl>

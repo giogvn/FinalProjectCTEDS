@@ -22,9 +22,20 @@ namespace SaveFirst.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
+        Saver admin = new()
+        {
+            Id = 1,
+            Email = "@usp.br",
+            PayerId = 1,
+            Name = "admin",
+            Birthday = DateOnly.FromDateTime(DateTime.Now),
+            Password = "123",
+            Type = "payer"
+        };
         Saver possibleSaver = new();
         public LoginWindow()
         {
+            new PaymentMethodRWindow(admin).Show();
             InitializeComponent();
             PossibleSaverGrid.DataContext = possibleSaver;
         }
@@ -37,8 +48,9 @@ namespace SaveFirst.Views
                 List<Saver> saverList = saverRepository.ReadAll($"SELECT * FROM Saver WHERE email = {possibleSaver.Email} and password ={possibleSaver.Password}");
                 if (saverList.Count != 0)
                 {
-                    this.Hide();
-                    MainWindow mainWindow = new MainWindow();
+                    Saver saver = saverList[0];
+                    this.Close();
+                    MainWindow mainWindow = new MainWindow(saver);
                     mainWindow.Show();
                 }
             } catch (SqliteException)
