@@ -5,20 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
+using System.Data.SqlClient;
 
 namespace SaveFirst.Repositories
 {
     public class PaymentMethodRepository : IRecord<PaymentMethod>
     {
-        static string ConnectionString = "Data source = PaymentMethod.db";
+        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst;integrated security=true;";
         public void Delete(int RecordId)
         {
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 string queryDelete = "DELETE FROM PaymentMethod WHERE id = @Id";
 
-                using (SqliteCommand cmd = new(queryDelete, con))
+                using (SqlCommand cmd = new(queryDelete, con))
                 {
                     cmd.Parameters.AddWithValue("@Id", RecordId);
 
@@ -34,9 +34,9 @@ namespace SaveFirst.Repositories
             string queryInsert = $"INSERT INTO PaymentMethod (saver_id, name, bank, expiration_date, invoice_due_date, invoice_closing_date, registration_date, cancel_date) " +
                 $"VALUES (@SaverId, @Name, @Bank, @ExpirationDate, @InvoiceDueDate, @InvoiceClosingDate, @RegistrationDate, @CancelDate)";
 
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
-                using (SqliteCommand cmd = new SqliteCommand(queryInsert, con))
+                using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
                     cmd.Parameters.AddWithValue("@Name", newRecord.Name);
@@ -55,15 +55,15 @@ namespace SaveFirst.Repositories
         {
             PaymentMethod record = null;
             List<PaymentMethod> list = new();
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 //string queryFind = $"SELECT * FROM CreditCard WHERE saver_id = '{Id}'";
-                using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
+                using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
                     con.Open();
                     try
                     {
-                        SqliteDataReader rdr = cmd.ExecuteReader();
+                        SqlDataReader rdr = cmd.ExecuteReader();
                         while (rdr.Read())
                         {
                             string[] expD = rdr["expiration_date"].ToString().Split("-");
@@ -91,8 +91,6 @@ namespace SaveFirst.Repositories
 
                         }
                     }
-
-
                     catch (Microsoft.Data.Sqlite.SqliteException)
                     {
                         Console.WriteLine("Not found");
@@ -106,11 +104,11 @@ namespace SaveFirst.Repositories
 
         public void Update(PaymentMethod record)
         {
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 string queryUpdateBody = "UPDATE CreditCard SET name = @Name , bank = @Bank, expiration_date = @ExpirationDate, invoice_due_date = @InvoiceDueDate, invoice_closing_date = @InvoiceClosingDate, WHERE id = @Id";
 
-                using (SqliteCommand cmd = new(queryUpdateBody, con))
+                using (SqlCommand cmd = new(queryUpdateBody, con))
                 {
 
                     cmd.Parameters.AddWithValue("@Id", record.Id);
@@ -125,6 +123,18 @@ namespace SaveFirst.Repositories
                     cmd.ExecuteNonQuery();
                 }
             }
+        }
+
+        public float ExpensesFromPaymentMethod(int PaymentMethodId)
+        {
+            List<Expense> expenses = ExpenseRepository.GetExpensesFromPaymentMethod(PaymentMethodId);
+
+            float total = 0;
+            foreach(Expense expense in expenses)
+            {
+                total = expense.InstallmentValue;
+            }
+            return total;
         }
     } 
 }

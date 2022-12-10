@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using SaveFirst.Models;
 using SaveFirst.Interfaces;
 using Microsoft.EntityFrameworkCore.Sqlite;
-using Microsoft.Data.Sqlite;
+using System.Data.SqlClient;
 
 namespace SaveFirst.Repositories
 {
@@ -31,14 +31,14 @@ namespace SaveFirst.Repositories
 
         public void Create(IntermediateModel newRecord)
         {
-            using (SqliteConnection con = new SqliteConnection(this.ConnectionString))
+            using (SqlConnection con = new SqlConnection(this.ConnectionString))
             {
                 // SQL Injection
                 //string queryInsert = $"INSERT INTO Products (IdProduct, Name, Description, Price) VALUES ('{newProduct.IdProduct}', '{newProduct.Name}', '{newProduct.Description}', {newProduct.Price})";
 
                 string queryInsert = $"INSERT INTO {DatabaseName} ({Labels[0]}, {Labels[1]}, saver_id) VALUES (@ForeignKey1, @ForeignKey2, @SaverId)";
 
-                using (SqliteCommand cmd = new SqliteCommand(queryInsert, con))
+                using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
                     cmd.Parameters.AddWithValue("@ForeignKey1", newRecord.ForeignKey1);
                     cmd.Parameters.AddWithValue("@ForeignKey2", newRecord.ForeignKey2);
@@ -61,17 +61,17 @@ namespace SaveFirst.Repositories
         {
             IntermediateModel record = null;
             List<IntermediateModel> list = new();
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 //string queryFind = $"IF EXISTS(SELECT * FROM UserCredentials WHERE Email = {email})\r\n BEGIN\r\n   SELECT * FROM UserCredentials WHERE Email = {email}\r\n\r\n END";
                 //string queryFind = $"SELECT * FROM {DatabaseName} WHERE saver_id = '{SaverId}'";
-                using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
+                using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
                     con.Open();
 
                     try
                     {
-                        SqliteDataReader rdr = cmd.ExecuteReader();
+                        SqlDataReader  rdr = cmd.ExecuteReader();
                         while (rdr.Read())
                         {
                             record = new IntermediateModel()
@@ -98,14 +98,14 @@ namespace SaveFirst.Repositories
         public List<IntermediateModel> ReadAll(string querySelect)
         {
             List<IntermediateModel> list = new();
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 //string querySelect = $"SELECT * FROM {DatabaseName}";
                 con.Open();
 
-                SqliteDataReader rdr;
+                SqlDataReader  rdr;
 
-                using (SqliteCommand cmd = new SqliteCommand(querySelect, con))
+                using (SqlCommand cmd = new SqlCommand(querySelect, con))
                 {
                     rdr = cmd.ExecuteReader();
 

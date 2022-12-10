@@ -43,23 +43,19 @@ namespace SaveFirst.Views
         private void Login(object sender, RoutedEventArgs e)
         {
             SaverRepository saverRepository = new SaverRepository();
-            try
+
+            List<Saver> savers  = saverRepository.findSaver(possibleSaver.Email, possibleSaver.Password);
+            if (savers.Count > 0)
             {
-                List<Saver> saverList = saverRepository.ReadAll($"SELECT * FROM Saver WHERE email = {possibleSaver.Email} and password ={possibleSaver.Password}");
-                if (saverList.Count != 0)
-                {
-                    Saver saver = saverList[0];
-                    this.Close();
-                    MainWindow mainWindow = new MainWindow(saver);
-                    mainWindow.Show();
-                }
-            } catch (SqliteException)
-            {
-                MessageBox.Show("Usuário não encontrado!");
+                Saver saver = savers[0];
+                this.Close();
+                MainWindow mainWindow = new MainWindow(saver);
+                mainWindow.Show();
             }
-
-
-
+            else
+            {
+                MessageBox.Show("Email ou senha incorretos!");
+            }        
         }
 
         private void SignIn(object sender, RoutedEventArgs e)
