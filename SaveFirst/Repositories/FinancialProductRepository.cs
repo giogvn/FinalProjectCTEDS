@@ -33,6 +33,5 @@ namespace SaveFirst.Repositories
             }
             return list;
         }
-        public void Update(FinancialProduct record) => throw new NotImplementedException();
     }
 }

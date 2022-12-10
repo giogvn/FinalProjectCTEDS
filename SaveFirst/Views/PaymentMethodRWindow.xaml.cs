@@ -44,6 +44,11 @@ namespace SaveFirst.Views
             else
                 NeededData.Content = null;
         }
+
+        private void ChangeContentForRegister(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
 

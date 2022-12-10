@@ -5,20 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
+using System.Data.SqlClient;
+using System.Windows.Documents;
 
 namespace SaveFirst.Repositories
 {
     public class IncomeResourceRepository : IRecord<IncomeResource>
-    { 
-        static string ConnectionString = "Data source = IncomeResource.db";
+    {
+        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst;integrated security=true;";
         public void Delete(int RecordId)
         {
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 string queryDelete = "DELETE FROM IncomeResource WHERE id = @Id";
 
-                using (SqliteCommand cmd = new(queryDelete, con))
+                using (SqlCommand cmd = new(queryDelete, con))
                 {
                     cmd.Parameters.AddWithValue("@Id", RecordId);
 
@@ -34,9 +35,9 @@ namespace SaveFirst.Repositories
             string queryInsert = $"INSERT INTO IncomeResource (saver_id, name, value, payday, start_date, end_date, recurrence) " +
                 $"VALUES (@SaverId, @Name, @Value, @Payday, @StartDate, @EndDate, @Recurrence)";
 
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
-                using (SqliteCommand cmd = new SqliteCommand(queryInsert, con))
+                using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
                     cmd.Parameters.AddWithValue("@Name", newRecord.Name);
@@ -52,49 +53,38 @@ namespace SaveFirst.Repositories
             }
         }
 
-        static public List<IncomeResource> FindAllFromSaver(string queryFind)
+        static public List<IncomeResource> FindAllFromSaver(int IncomeResourceId)
         {
             IncomeResource record = null;
             List<IncomeResource> list = new();
-            using (SqliteConnection con = new(ConnectionString))
+            string queryFind = $"SELECT * FROM IncomeResource WHERE id = @IncomeResource";
+            using (SqlConnection con = new(ConnectionString))
             {
-                //string queryFind = $"SELECT * FROM IncomeResource WHERE saver_id = '{Id}'";
-                using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
+                con.Open();
+                SqlDataReader rdr;
+                using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
-                    con.Open();
-                    try
+                    cmd.Parameters.AddWithValue("@IncomeResource", IncomeResourceId);
+                    rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
                     {
-                        SqliteDataReader rdr = cmd.ExecuteReader();
-                        while (rdr.Read())
+                        string[] startD = rdr["start_date"].ToString().Split("-");
+                        int[] startDate = { int.Parse(startD[0]), int.Parse(startD[1]), int.Parse(startD[2]) };
+                        string[] endD = rdr["end_date"].ToString().Split("-");
+                        int[] endDate = { int.Parse(endD[0]), int.Parse(endD[1]), int.Parse(endD[2]) };
+                        record = new IncomeResource()
                         {
-                            string[] startD = rdr["start_date"].ToString().Split("-");
-                            int[] startDate = { int.Parse(startD[0]), int.Parse(startD[1]), int.Parse(startD[2]) };
-
-
-                            string[] endD = rdr["end_date"].ToString().Split("-");
-                            int[] endDate = { int.Parse(endD[0]), int.Parse(endD[1]), int.Parse(endD[2]) };
-                      
-                            record = new IncomeResource()
-                            {
-                                Id = (int)rdr["id"],
-                                SaverId = (int)rdr["saver_id"],
-                                Name = rdr["name"].ToString(),
-                                Value = (float)rdr["value"],
-                                PayDay = (int)rdr["payday"],
-                                StartDate = new DateOnly(startDate[0], startDate[1], startDate[2]),
-                                EndDate = new DateOnly(endDate[0], endDate[1], endDate[2])                               
-                            };
-                            list.Add(record);
-
-                        }
+                            Id = (int)rdr["id"],
+                            SaverId = (int)rdr["saver_id"],
+                            Name = rdr["name"].ToString(),
+                            Value = (float)rdr["value"],
+                            PayDay = (int)rdr["payday"],
+                            StartDate = new DateOnly(startDate[0], startDate[1], startDate[2]),
+                            EndDate = new DateOnly(endDate[0], endDate[1], endDate[2])
+                        };
+                        list.Add(record);
                     }
-
-
-                    catch (Microsoft.Data.Sqlite.SqliteException)
-                    {
-                        Console.WriteLine("Not found");
-                    }
-                }
+                }                
             }
             return list;
         }
@@ -103,11 +93,11 @@ namespace SaveFirst.Repositories
 
         public void Update(IncomeResource record)
         {
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 string queryUpdateBody = "UPDATE IncomeResource SET name = @Name , value = @Value, payday = @Payday, recurrence = @Recurrence, WHERE id = @Id";
 
-                using (SqliteCommand cmd = new(queryUpdateBody, con))
+                using (SqlCommand cmd = new(queryUpdateBody, con))
                 {
 
                     cmd.Parameters.AddWithValue("@Id", record.Id);
@@ -123,10 +113,9 @@ namespace SaveFirst.Repositories
         }
 
         public float MoneyLeftFromIncomeResource(int IncomeResourceId)
-        {
-            string queryFind = $"SELECT * FROM IncomeResource WHERE id = {IncomeResourceId}";
+        {            
             List<Expense> expenses = ExpenseRepository.GetExpensesFromIncomeResource(IncomeResourceId);
-            float moneyLeft = FindAllFromSaver(queryFind)[0].Value;
+            float moneyLeft = FindAllFromSaver(IncomeResourceId)[0].Value;
 
             foreach (Expense expense in expenses)
             {

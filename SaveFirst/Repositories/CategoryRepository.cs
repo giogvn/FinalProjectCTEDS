@@ -5,20 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
+using System.Data.SqlClient;
 
 namespace SaveFirst.Repositories
 {
     public class CategoryRepository : IRecord<Category>
     {
-        static string ConnectionString = "Data source = Saver.db";
+        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst;integrated security=true;";
         public void Delete(int RecordId)
         {
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 string queryDelete = "DELETE FROM Category WHERE id = @Id";
 
-                using (SqliteCommand cmd = new(queryDelete, con))
+                using (SqlCommand cmd = new(queryDelete, con))
                 {
                     cmd.Parameters.AddWithValue("@Id", RecordId);
 
@@ -33,9 +33,9 @@ namespace SaveFirst.Repositories
         {
             string queryInsert = $"INSERT INTO Category (name) VALUES (@SaverId, @Name)";
 
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
-                using (SqliteCommand cmd = new SqliteCommand(queryInsert, con))
+                using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
                     cmd.Parameters.AddWithValue("@Name", newRecord.Name);
@@ -45,46 +45,39 @@ namespace SaveFirst.Repositories
                 }
             }
         }
-
-        static List<Category> FindAllFromSaver(string queryFind)
+        public List<Category> FindAllFromSaver(int saverId)
         {
-            Category record = null;
             List<Category> list = new();
-            using (SqliteConnection con = new(ConnectionString))
+            string querySelect = "SELECT * FROM Category WHERE saver_id = @SaverId";
+            using (SqlConnection con = new(ConnectionString))
             {
-                //string queryFind = $"SELECT * FROM Category WHERE saver_id = '{Id}'";
-                using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
+                con.Open();
+                SqlDataReader rdr;
+                using (SqlCommand cmd = new SqlCommand(querySelect, con))
                 {
-                    con.Open();
+                    cmd.Parameters.AddWithValue("@SaverId", saverId);
                     try
                     {
-                        SqliteDataReader rdr = cmd.ExecuteReader();
-                        while (rdr.Read())
+                        rdr = cmd.ExecuteReader();
+                        rdr.Read();                   
+                        Category record = new Category()
                         {
-
-                            record = new Category()
-                            {
-                                Id = (int)rdr["id"],
-                                SaverId = (int)rdr["saver_id"],
-                                Name = rdr["name"].ToString()
-                            };
-                            list.Add(record);
-
-                        }
+                            Id = (int)rdr["id"],
+                            SaverId = (int)rdr["saver_id"],
+                            Name = rdr["name"].ToString()
+                        };
+                        list.Add(record);
+                        return list;
                     }
-
-
-                    catch (Microsoft.Data.Sqlite.SqliteException)
+                    catch (Exception e)
                     {
-                        Console.WriteLine("Not found");
+                        return list;
                     }
                 }
             }
-            return list;
         }
 
-        public List<Category> ReadAll(string query) => throw new NotImplementedException();
-
         public void Update(Category record) => throw new NotImplementedException();
+        public List<Category> ReadAll(string queryFind) => throw new NotImplementedException();
     }
 }

@@ -7,19 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 
 namespace SaveFirst.Repositories
 {
     public class SaverFinancialProductRepository : IRecord<SaverFinancialProduct>
     {
-        static string ConnectionString = "Data source = SaverFinancialProduct.db";
+        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst;integrated security=true;";
         public void Delete(int RecordId)
         {
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 string queryDelete = "DELETE FROM SaverFinancialProduct WHERE id = @Id";
 
-                using (SqliteCommand cmd = new(queryDelete, con))
+                using (SqlCommand cmd = new(queryDelete, con))
                 {
                     cmd.Parameters.AddWithValue("@Id", RecordId);
 
@@ -33,9 +34,9 @@ namespace SaveFirst.Repositories
         public void Create(SaverFinancialProduct newRecord)
         {
             string queryInsert = $"INSERT INTO SaverFinancialProduct (id ,saver_id, financial_product_id,  recurrence,  reason,  purchase_date,  number_of_shares) VALUES (@Id, @SaverId, @FinancialProductId, @Recurrence, @Reason, @PurchaseDate, @NumberOfShares )";
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
-                using (SqliteCommand cmd = new SqliteCommand(queryInsert, con))
+                using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
                     cmd.Parameters.AddWithValue("@Id", newRecord.Id);
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
@@ -56,17 +57,17 @@ namespace SaveFirst.Repositories
         {
             SaverFinancialProduct record = null;
             List<SaverFinancialProduct> list = new();
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 //string queryFind = $"IF EXISTS(SELECT * FROM UserCredentials WHERE Email = {email})\r\n BEGIN\r\n   SELECT * FROM UserCredentials WHERE Email = {email}\r\n\r\n END";
                 //string queryFind = $"SELECT * FROM SaverFinancialProduct WHERE saver_id = '{SaverId}'";
-                using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
+                using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
                     con.Open();
 
                     try
                     {
-                        SqliteDataReader rdr = cmd.ExecuteReader();
+                        SqlDataReader  rdr = cmd.ExecuteReader();
                         while (rdr.Read())
                         {
                             string[] nums = rdr["purchase_date"].ToString().Split("-");
@@ -99,14 +100,14 @@ namespace SaveFirst.Repositories
         public List<SaverFinancialProduct> ReadAll(string querySelect)
         {
             List<SaverFinancialProduct> list = new();
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 //string querySelect = $"SELECT * FROM SaverFinancialProduct";
                 con.Open();
 
-                SqliteDataReader rdr;
+                SqlDataReader  rdr;
 
-                using (SqliteCommand cmd = new SqliteCommand(querySelect, con))
+                using (SqlCommand cmd = new SqlCommand(querySelect, con))
                 {
                     rdr = cmd.ExecuteReader();
 
@@ -133,11 +134,11 @@ namespace SaveFirst.Repositories
 
         public void Update(SaverFinancialProduct record)
         {
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 string queryUpdateBody = "UPDATE SaverFinancialProduct SET id = @Id , saver_id = @SaverId, financial_product_id = @FinancialProductId,  recurrence = @Recurrence,  reason = @Reason,  purchase_date = @PurchaseDate,  number_of_shares = @NumberOfShares WHERE id = @Id";
 
-                using (SqliteCommand cmd = new(queryUpdateBody, con))
+                using (SqlCommand cmd = new(queryUpdateBody, con))
                 {
                     cmd.Parameters.AddWithValue("@Id", record.Id);
                     cmd.Parameters.AddWithValue("@SaverId", record.SaverId);

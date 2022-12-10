@@ -5,20 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data.SqlClient;
 using Microsoft.Data.Sqlite;
 
 namespace SaveFirst.Repositories
 {
     public class SaverRepository : IRecord<Saver>
     {
-        static string ConnectionString = "Data source = Saver.db";
+        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst;integrated security=true;";
         public void Delete(int RecordId)
         {
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 string queryDelete = "DELETE FROM Saver WHERE id = @Id";
 
-                using (SqliteCommand cmd = new(queryDelete, con))
+                using (SqlCommand cmd = new(queryDelete, con))
                 {
                     cmd.Parameters.AddWithValue("@Id", RecordId);
 
@@ -32,9 +33,9 @@ namespace SaveFirst.Repositories
         public void Create(Saver newRecord)
         {
             string queryInsert = $"INSERT INTO Saver (id , email, saver_type, payer_id,  name,  birthdate) VALUES (@Id, @Email, @Type, @PayerId, @Name, @Birthday)";
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
-                using (SqliteCommand cmd = new SqliteCommand(queryInsert, con))
+                using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
                     cmd.Parameters.AddWithValue("@Id", newRecord.Id);
                     cmd.Parameters.AddWithValue("@Email", newRecord.Email);
@@ -53,16 +54,16 @@ namespace SaveFirst.Repositories
         {
             Saver record = null;
             List<Saver> list = new();
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 //string queryFind = $"SELECT * FROM Saver WHERE payer_id = '{Id}'";
-                using (SqliteCommand cmd = new SqliteCommand(queryFind, con))
+                using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
                     con.Open();
 
                     try
                     {
-                        SqliteDataReader rdr = cmd.ExecuteReader();
+                        SqlDataReader rdr = cmd.ExecuteReader();
                         while (rdr.Read())
                         {
 
@@ -73,7 +74,7 @@ namespace SaveFirst.Repositories
                                 Id = (int)rdr["id"],
                                 Type = rdr["user_type"].ToString(),
                                 PayerId = (int)rdr["payer_id"],
-                                Birthday = new DateOnly(num[0], num[1], num[2]),                            
+                                Birthday = new DateOnly(num[0], num[1], num[2]),
                             };
                             list.Add(record);
 
@@ -90,22 +91,22 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        public List<Saver> ReadAll(string querySelect)
+        public List<Saver> findSaver(string email, string password)
         {
             List<Saver> list = new();
-            using (SqliteConnection con = new(ConnectionString))
+            string querySelect = "SELECT * FROM Saver WHERE email = @Email AND password = @Password";
+            using (SqlConnection con = new(ConnectionString))
             {
-                //string querySelect = $"SELECT * FROM Saver WHERE payer_id = @PayerId";
                 con.Open();
-
-                SqliteDataReader rdr;
-
-                using (SqliteCommand cmd = new SqliteCommand(querySelect, con))
+                SqlDataReader rdr;
+                using (SqlCommand cmd = new SqlCommand(querySelect, con))
                 {
-                    rdr = cmd.ExecuteReader();
-
-                    while (rdr.Read())
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    cmd.Parameters.AddWithValue("@Password", password);                   
+                    try
                     {
+                        rdr = cmd.ExecuteReader();
+                        rdr.Read();
                         string[] nums = rdr["birthdate"].ToString().Split("-");
                         int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                         Saver record = new Saver()
@@ -116,7 +117,46 @@ namespace SaveFirst.Repositories
                             Birthday = new DateOnly(num[0], num[1], num[2])
                         };
                         list.Add(record);
+                        return list;
                     }
+                    catch (Exception e)
+                    {
+                        return list;
+                    }
+                }
+            }
+        }
+
+        public List<Saver> ReadAll(string querySelect)
+        {
+            List<Saver> list = new();
+            using (SqlConnection con = new(ConnectionString))
+            {                
+                con.Open();
+                SqlDataReader  rdr;
+                using (SqlCommand cmd = new SqlCommand(querySelect, con))
+                {                    
+                    try
+                    {
+                        rdr = cmd.ExecuteReader();
+                        while (rdr.Read())
+                        {
+                            string[] nums = rdr["birthdate"].ToString().Split("-");
+                            int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
+                            Saver record = new Saver()
+                            {
+                                Id = (int)rdr["id"],
+                                Type = rdr["type"].ToString(),
+                                Name = rdr["name"].ToString(),
+                                Birthday = new DateOnly(num[0], num[1], num[2])
+                            };
+                            list.Add(record);
+                        }
+                    }
+                    catch (SqlException)
+                    {
+                        return list;    
+                    }                    
                 }
             }
             return list;
@@ -124,11 +164,11 @@ namespace SaveFirst.Repositories
 
         public void Update(Saver record)
         {
-            using (SqliteConnection con = new(ConnectionString))
+            using (SqlConnection con = new(ConnectionString))
             {
                 string queryUpdateBody = "UPDATE Saver SET name = @Name , birthdate = @Birthday WHERE id = @Id";
 
-                using (SqliteCommand cmd = new(queryUpdateBody, con))
+                using (SqlCommand cmd = new(queryUpdateBody, con))
                 {
 
                     cmd.Parameters.AddWithValue("@Id", record.Id);

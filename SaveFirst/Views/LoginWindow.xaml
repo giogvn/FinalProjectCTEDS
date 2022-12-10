@@ -26,14 +26,14 @@
             <TextBlock Background="White" Margin="60,15,360,131" LineHeight="19" Grid.Row="0" FontSize="16" Height="19" Width="58" RenderTransformOrigin="2.31,0.634">
                 E-mail
             </TextBlock>
-            <TextBox Text="{Binding Email}" Grid.Row="0" Padding="14" Height="60" Width="360" Background="LightGray" FontSize="20">
+            <TextBox Text="{Binding Email, Mode = TwoWay}" Grid.Row="0" Padding="14" Height="60" Width="360" Background="LightGray" FontSize="20">
 
             </TextBox>
 
             <TextBlock Background="White" Margin="60,15,360,131" LineHeight="19" Grid.Row="1" FontSize="16" Height="19" Width="58" RenderTransformOrigin="2.31,0.634">
                 Senha
             </TextBlock>
-            <TextBox Text="{Binding Password}" Grid.Row="1" Padding="14" Height="60" Width="360" Background="LightGray" FontSize="20">
+            <TextBox Text="{Binding Password,Mode = TwoWay}" Grid.Row="1" Padding="14" Height="60" Width="360" Background="LightGray" FontSize="20">
 
             </TextBox>
 
