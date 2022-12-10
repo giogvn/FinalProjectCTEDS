@@ -42,6 +42,6 @@
         <TextBox Style="{StaticResource placeHolder}" Tag="Nome" HorizontalAlignment="Center" Height="25" Margin="0,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
         <TextBox Style="{StaticResource placeHolder}" Tag="Banco"  HorizontalAlignment="Center" Height="25" VerticalAlignment="Top" TextWrapping="Wrap" Width="300" Margin="0,74,0,0"/>
         <DatePicker  Height="25" Width="300" HorizontalAlignment="Center" Margin="0,116,0,50"/>
-        <ComboBox HorizontalAlignment="Center" Name ="IncomeResourceOptions" Height="25" Width="300" Margin="0,158,0,8" />
+        <ComboBox Name="IncomeResourceChoice"  HorizontalAlignment="Center" Height="25" Width="300" Margin="0,158,0,8" />
     </Grid>
 </UserControl>

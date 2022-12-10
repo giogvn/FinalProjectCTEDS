@@ -35,7 +35,8 @@ namespace SaveFirst.Views
         Saver possibleSaver = new();
         public LoginWindow()
         {
-            new PaymentMethodRWindow(admin).Show();
+            new IncomeResourceRWindow( admin).Show();
+            //new PaymentMethodRWindow(admin).Show();
             InitializeComponent();
             PossibleSaverGrid.DataContext = possibleSaver;
         }

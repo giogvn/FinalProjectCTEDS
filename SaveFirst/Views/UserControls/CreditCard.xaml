@@ -39,10 +39,13 @@
 
     </UserControl.Resources>
     <Grid Name="payMethod">
-        <DatePicker Name="date1" SelectedDateChanged="doit" Margin="32,123,231,72"/>
+        <DatePicker Name="DueDatePicker" Margin="251,74,12,121"/>
         <TextBox Style ="{StaticResource placeHolder}" Tag="Nome" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.562,0.556" Margin="32,27,0,0" Width="190"></TextBox>
         <TextBox Style ="{StaticResource placeHolder}" Tag="Banco" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.562,0.556" Margin="32,74,0,0" Width="190"/>
-        <DatePicker x:Name="date1_Copy" SelectedDateChanged="doit" Margin="32,172,263,23"/>
-        <ListBox Margin="273,27,22,32"></ListBox>
+        <DatePicker x:Name="ClosingDatePicker" SelectedDateChanged="doit" Margin="32,172,263,23"/>
+        <ComboBox Name="IncomeResourceBox" Height="25" Margin="267,27,28,168">
+            
+        </ComboBox>
+        <TextBox Style ="{StaticResource placeHolder}" Tag="Data de validade" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.562,0.556" Margin="32,126,0,0" Width="190"/>
     </Grid>
 </UserControl>

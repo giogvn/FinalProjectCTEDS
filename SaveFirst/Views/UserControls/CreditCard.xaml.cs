@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SaveFirst.Models;
+using SaveFirst.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,16 +22,21 @@ namespace SaveFirst.Views.UserControls
     /// </summary>
     public partial class CreditCard : UserControl
     {
-        public CreditCard()
+        Saver Saver;
+        public CreditCard(Saver saver)
 
         {
             InitializeComponent();
-
+            Saver = saver;
             this.DataContext = this;
-        }
-        private void doit(object sender, RoutedEventArgs e)
-        {
-            MessageBox.Show(date1.SelectedDate.ToString());
+
+            CategoryRepository categoryRepository = new CategoryRepository();
+
+            List<Category> categories = categoryRepository.ReadAll(""); // see what to do later
+            List<string> names = new();
+            foreach (var category in categories)
+                names.Add(category.Name);
+            IncomeResourceBox.ItemsSource = names;
         }
     }
 }

@@ -5,8 +5,85 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaveFirst.Views"
         mc:Ignorable="d"
-        Title="IncomeResourceRWindow" Height="450" Width="800">
-    <Grid>
         
+        SizeToContent="Height"
+        Width="485"
+        Title="IncomeResourceRWindow">
+    <Window.Resources>
+        <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Grid>
+                            <TextBox Text="{Binding Path=Text,
+                                                RelativeSource={RelativeSource TemplatedParent}, 
+                                                Mode=TwoWay,
+                                                UpdateSourceTrigger=PropertyChanged}"
+                                 x:Name="textSource" 
+                                 Background="Transparent" 
+                                 Panel.ZIndex="2" />
+                            <TextBox Text="{TemplateBinding Tag}" Background="{TemplateBinding Background}" Panel.ZIndex="1">
+                                <TextBox.Style>
+                                    <Style TargetType="{x:Type TextBox}">
+                                        <Setter Property="Foreground" Value="Transparent"/>
+                                        <Style.Triggers>
+                                            <DataTrigger Binding="{Binding Path=Text, Source={x:Reference textSource}}" Value="">
+                                                <Setter Property="Foreground" Value="Gray"/>
+                                            </DataTrigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TextBox.Style>
+                            </TextBox>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid Height="300">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        
+        <Label FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" Content="Cadastro de fonte de renda"/>
+        <Grid Grid.Row="1" Name="IncomeResourceInput">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox TextChanged="DateBoxChanged" Name="DateBox"  HorizontalAlignment="Center" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Data de pagamento"  Grid.Row="0" FontSize="20" Padding="14" Grid.ColumnSpan="1" Height="30" Width="190" Margin="0,42,0,138" />
+
+
+            <TextBox VerticalAlignment="Center" Name="NameBox" HorizontalAlignment="Center" Text="{Binding inputs[1]}" Padding="14" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Nome" FontSize="20" Height="30" Width="190" />
+
+            <TextBox TextChanged="ValueBoxChanged" Name="ValueBox"  HorizontalAlignment="Center" Text="{Binding Value}" Padding="14" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Valor" FontSize="20" Height="30" Width="190" Margin="0,138,0,42"  />
+
+            <ComboBox Name ="RecurrenceBox" Grid.Column="1" Width="190" Height="30" Margin=" 0 42 0 138" >
+                <ComboBoxItem IsEnabled="False" IsSelected="True">Escolha um tipo de recorrência</ComboBoxItem>
+                <ComboBoxItem>Não recorrente</ComboBoxItem>
+                <ComboBoxItem>Semanalmente</ComboBoxItem>
+                <ComboBoxItem>Mensalmente</ComboBoxItem>
+                <ComboBoxItem>Semestralmente</ComboBoxItem>
+            </ComboBox>
+
+        </Grid>
+
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button Click="Cancel"  Width="140" Height="20" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center">
+                Cancelar
+            </Button>
+            <Button Click="AddIncome" Grid.Column="1"  Width="140" Height="20" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center">
+                Adicionar
+            </Button>
+        </Grid>
+
     </Grid>
 </Window>
