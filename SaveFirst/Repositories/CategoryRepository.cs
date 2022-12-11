@@ -77,6 +77,32 @@ namespace SaveFirst.Repositories
             }
         }
 
+        public List<Category> getExpenseCategory(int expenseId)
+        {
+        string queryFind = $"SELECT * FROM ExpenseCategory JOIN Category ON expense_id = id WHERE expense_id = @expenseId;";
+        List<Category> categories = new();
+        using (SqlConnection con = new(ConnectionString))
+        {
+            con.Open();
+            SqlDataReader rdr;
+            using (SqlCommand cmd = new SqlCommand(queryFind, con))
+            {
+                cmd.Parameters.AddWithValue("@expenseId", expenseId);
+                rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {                       
+                    Category record = new Expense()
+                    {
+                        Id = (int)rdr["id"],
+                        SaverId = (int)rdr["saver_id"],
+                        Name = rdr["name"].ToString()
+                    };
+                    categories.Add(record);
+                }
+            }
+        }
+        return categories;
+    }
         public void Update(Category record) => throw new NotImplementedException();
         public List<Category> ReadAll(string queryFind) => throw new NotImplementedException();
     }

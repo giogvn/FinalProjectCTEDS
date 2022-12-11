@@ -16,6 +16,8 @@ namespace SaveFirst.Models
 
         public string? Bank { get; set; }
 
+        public float Limit {get; set; }
+
         public DateOnly ExpirationDate { get; set; }
 
         public DateOnly InvoiceDueDate { get; set; }
