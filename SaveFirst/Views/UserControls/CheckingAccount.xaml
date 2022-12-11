@@ -38,10 +38,9 @@
         </Style>
 
     </UserControl.Resources>
-    <Grid>
-        <TextBox Style="{StaticResource placeHolder}" Tag="Nome" HorizontalAlignment="Center" Height="25" Margin="0,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
-        <TextBox Style="{StaticResource placeHolder}" Tag="Banco"  HorizontalAlignment="Center" Height="25" VerticalAlignment="Top" TextWrapping="Wrap" Width="300" Margin="0,74,0,0"/>
-        <DatePicker  Height="25" Width="300" HorizontalAlignment="Center" Margin="0,116,0,50"/>
-        <ComboBox Name="IncomeResourceChoice"  HorizontalAlignment="Center" Height="25" Width="300" Margin="0,158,0,8" />
+    <Grid Name="paymentMethodGrid">
+        <TextBox Style="{StaticResource placeHolder}" Tag="Nome" Text="{Binding Name}" HorizontalAlignment="Center" Height="25" Margin="0,32,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="300"/>
+        <TextBox Style="{StaticResource placeHolder}" Tag="Banco" Text="{Binding Bank}" HorizontalAlignment="Center" Height="25" VerticalAlignment="Top" TextWrapping="Wrap" Width="300" Margin="0,74,0,0"/>
+        
     </Grid>
 </UserControl>

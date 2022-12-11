@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\Users\Giovani\Documents\cteds\FinalProjectCTEDS\SaveFirst\obj\Debug\net6.0-windows\
+C:\Users\User\Documents\Pedro\FinalProject\SaveFirst\obj\Debug\net6.0-windows\
 SaveFirst
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-C:\Users\Giovani\Documents\cteds\FinalProjectCTEDS\SaveFirst\App.xaml
+C:\Users\User\Documents\Pedro\FinalProject\SaveFirst\App.xaml
 7977348391
 
 29-1963801055
-229-1557018073
+229525672803
 MainWindow.xaml;Views\IncomeResourceRWindow.xaml;Views\LoginWindow.xaml;Views\PaymentMethodRWindow.xaml;Views\SaverRWindow.xaml;Views\UserControls\CheckingAccount.xaml;Views\UserControls\CreditCard.xaml;
 
 False

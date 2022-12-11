@@ -1,19 +1,8 @@
 ﻿using SaveFirst.Models;
-using SaveFirst.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Text.RegularExpressions;
+using System.Windows;
 
 namespace SaveFirst.Views.UserControls
 {
@@ -22,21 +11,27 @@ namespace SaveFirst.Views.UserControls
     /// </summary>
     public partial class CreditCard : UserControl
     {
-        Saver Saver;
-        public CreditCard(Saver saver)
 
+        public CreditCard(PaymentMethod beingCreated)
         {
             InitializeComponent();
-            Saver = saver;
-            this.DataContext = this;
 
-            CategoryRepository categoryRepository = new CategoryRepository();
-
-            List<Category> categories = categoryRepository.ReadAll(""); // see what to do later
-            List<string> names = new();
-            foreach (var category in categories)
-                names.Add(category.Name);
-            IncomeResourceBox.ItemsSource = names;
+            paymentMethodGrid.DataContext = beingCreated;
         }
+
+        public bool ExpirationDateFormatCheck()
+        {
+            return Regex.IsMatch (ExpireDateBox.Text.Trim(), "[0-9]{2}/[0-9]{4}");
+        }
+        public bool ClosingDateValidValue (out int day)
+        {
+            return int.TryParse(ClosingDateBox.Text, out day) && day > 0 && day <=31;
+        }
+        public int[] SplitExpirationDate()
+        {
+            int[] result = { int.Parse(ExpireDateBox.Text.Split("/")[0]), int.Parse(ExpireDateBox.Text.Split("/")[1]) };
+            return result;
+        }
+
     }
 }

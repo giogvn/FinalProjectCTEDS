@@ -1,34 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using SaveFirst.Views.UserControls;
 using SaveFirst.Models;
+using SaveFirst.Repositories;
 
 namespace SaveFirst.Views
 {
-    
+
     /// <summary>
     /// Lógica interna para PaymentMethodRWindow.xaml
     /// </summary>
     public partial class PaymentMethodRWindow : Window
     {
         Saver Saver;
+        PaymentMethod newPaymentMethod = new();
+        CreditCard CreditCardOptions;
+        CheckingAccount CheckingAccountOptions;
 
         public PaymentMethodRWindow(Saver saver): base()
         {
             InitializeComponent();
             Saver = saver;
+            CreditCardOptions = new(newPaymentMethod);
+            CheckingAccountOptions = new(newPaymentMethod);
+            newPaymentMethod.SaverId = saver.Id;
             
         }
 
@@ -38,17 +33,53 @@ namespace SaveFirst.Views
                 return;
             
             if (Choice1.SelectedIndex == 1)
-                NeededData.Content = new CreditCard();
+                NeededData.Content = CreditCardOptions;
             else if (Choice1.SelectedIndex == 2)
-                NeededData.Content = new CheckingAccount();
+                NeededData.Content = CheckingAccountOptions;
             else
                 NeededData.Content = null;
         }
 
-        private void ChangeContentForRegister(object sender, SelectionChangedEventArgs e)
+        private void Process(object sender, RoutedEventArgs e)
         {
+            switch ((int)Choice1.SelectedIndex) {
+                case 1:
 
+                    if (!CreditCardOptions.ExpirationDateFormatCheck())
+                    {
+                        MessageBox.Show("Siga o formato MM/YYYY para data de validade");
+                        break;
+                    }
+                    else
+                    {
+                        int[] values = CreditCardOptions.SplitExpirationDate();
+                        newPaymentMethod.ExpirationDate = new DateOnly(values[1], values[0], 1);
+                    }
+
+                    if (CreditCardOptions.ClosingDateValidValue(out int day))
+                    {
+                        newPaymentMethod.InvoiceClosingDate = new(DateTime.Now.Year, DateTime.Now.Month, day);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Escolha um valor entre 1 e 31 para o fechamento da fatura");
+                        CreditCardOptions.ClosingDateBox.Text = "";
+                        break;
+                    }
+
+                    new PaymentMethodRepository().Create(newPaymentMethod);
+
+                    break;
+                case 2:
+                    new PaymentMethodRepository().Create(newPaymentMethod);
+                    break;
+                default:
+                    break;
+            }
+
+                    
         }
+
     }
 }
 

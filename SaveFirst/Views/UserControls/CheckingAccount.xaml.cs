@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SaveFirst.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +21,11 @@ namespace SaveFirst.Views.UserControls
     /// </summary>
     public partial class CheckingAccount : UserControl
     {
-        public CheckingAccount()
+        public CheckingAccount(PaymentMethod beingCreated)
         {
             InitializeComponent();
+
+            paymentMethodGrid.DataContext = beingCreated;
         }
     }
 }
