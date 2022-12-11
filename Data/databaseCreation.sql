@@ -8,7 +8,7 @@ GO
 CREATE TABLE Saver(
 	id INT PRIMARY KEY IDENTITY(1,1),
 	email VARCHAR(255) NOT NULL UNIQUE,
-    	type VARCHAR(255),
+  type VARCHAR(255),
 	payer_id INT,
 	name	VARCHAR(255) NOT NULL,
 	birthdate DATE
@@ -21,7 +21,7 @@ CREATE TABLE Expense(
   saver_id INT NOT NULL,
   expense_date DATE,
   due_date DATE,
-  value INT NOT NULL,
+  value FLOAT NOT NULL,
   expense_type VARCHAR(255),
   description VARCHAR(255),
   status VARCHAR(255),
@@ -71,6 +71,7 @@ CREATE TABLE PaymentMethod(
   name VARCHAR(255),
   type VARCHAR(255),
   bank VARCHAR(255),
+  limit FLOAT,
   invoice_due_date DATE NOT NULL,
   invoice_closing_date DATE NOT NULL,
   registration_date DATE NOT NULL,

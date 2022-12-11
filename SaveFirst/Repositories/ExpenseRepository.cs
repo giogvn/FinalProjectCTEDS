@@ -243,4 +243,43 @@ namespace SaveFirst.Repositories
             return total;
         }
     }
+
+    public List<Expense> getCategoryExpenses(int categoryId)
+    {
+        {
+            string queryFind = $"SELECT * FROM Expense JOIN ExpenseCategory ON expense_id = id WHERE category_id = @CategoryId";
+            List<Expense> expenses = new();
+            using (SqlConnection con = new(ConnectionString))
+            {
+                con.Open();
+                SqlDataReader rdr;
+                using (SqlCommand cmd = new SqlCommand(queryFind, con))
+                {
+                    cmd.Parameters.AddWithValue("@CategoryId", categoryId);
+                    rdr = cmd.ExecuteReader();
+
+                    while (rdr.Read())
+                    {
+                        string[] nums = rdr["expense_date"].ToString().Split("-");
+                        int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
+                        Expense record = new Expense()
+                        {
+                            Id = (int)rdr["id"],
+                            SaverId = (int)rdr["saver_id"],
+                            Date = new DateOnly(num[0], num[1], num[2]),
+                            Value = (float)rdr["value"],
+                            Type = rdr["expense_type"].ToString(),
+                            Description = rdr["description"].ToString(),
+                            Status = rdr["status"].ToString(),
+                            NumberOfInstallments = (int)rdr["number_of_installments"],
+                            InstallmentValue = (float)rdr["installment_value"],
+                            InstallmentsLeft = (int)rdr["installments_left"]
+                        };
+                        expenses.Add(record);
+                    }
+                }
+            }
+            return expenses;
+        }        
+    }
 }

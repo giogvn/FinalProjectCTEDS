@@ -31,8 +31,8 @@ namespace SaveFirst.Repositories
 
         public void Create(PaymentMethod newRecord)
         {
-            string queryInsert = $"INSERT INTO PaymentMethod (saver_id, name, bank, expiration_date, invoice_due_date, invoice_closing_date, registration_date, cancel_date) " +
-                $"VALUES (@SaverId, @Name, @Bank, @ExpirationDate, @InvoiceDueDate, @InvoiceClosingDate, @RegistrationDate, @CancelDate)";
+            string queryInsert = $"INSERT INTO PaymentMethod (saver_id, name, bank, limit, expiration_date, invoice_due_date, invoice_closing_date, registration_date, cancel_date) " +
+                $"VALUES (@SaverId, @Name, @Bank, @Limit @ExpirationDate, @InvoiceDueDate, @InvoiceClosingDate, @RegistrationDate, @CancelDate)";
 
             using (SqlConnection con = new(ConnectionString))
             {
@@ -41,6 +41,7 @@ namespace SaveFirst.Repositories
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
                     cmd.Parameters.AddWithValue("@Name", newRecord.Name);
                     cmd.Parameters.AddWithValue("@Bank", newRecord.Bank);
+                    cmd.Parameters.AddWithValue("@Limit", newRecord.Limit);
                     cmd.Parameters.AddWithValue("@ExpirationDate", newRecord.ExpirationDate);
                     cmd.Parameters.AddWithValue("@InvoiceDueDate", newRecord.InvoiceDueDate);
                     cmd.Parameters.AddWithValue("@InvoiceClosingDate", newRecord.InvoiceClosingDate);
@@ -83,6 +84,7 @@ namespace SaveFirst.Repositories
                                 SaverId = (int)rdr["saver_id"],
                                 Name = rdr["name"].ToString(),
                                 Bank = rdr["bank"].ToString(),
+                                Limit = (float) rdr["limit"],
                                 ExpirationDate = new DateOnly(expDate[0], expDate[1], expDate[2]),
                                 InvoiceDueDate = new DateOnly(invDate[0], invDate[1], invDate[2]),
                                 InvoiceClosingDate = new DateOnly(invClosingDate[0], invClosingDate[1], invClosingDate[2])
@@ -110,15 +112,12 @@ namespace SaveFirst.Repositories
 
                 using (SqlCommand cmd = new(queryUpdateBody, con))
                 {
-
                     cmd.Parameters.AddWithValue("@Id", record.Id);
                     cmd.Parameters.AddWithValue("@Name", record.Name);
                     cmd.Parameters.AddWithValue("@Bank", record.Bank);
                     cmd.Parameters.AddWithValue("@InvoiceDueDate", record.InvoiceDueDate);
                     cmd.Parameters.AddWithValue("@InvoiceClosingDate", record.InvoiceClosingDate);
                     cmd.Parameters.AddWithValue("@ExpirationDate", record.ExpirationDate);
-
-
                     con.Open();
                     cmd.ExecuteNonQuery();
                 }
