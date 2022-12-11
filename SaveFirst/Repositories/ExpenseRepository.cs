@@ -161,9 +161,7 @@ namespace SaveFirst.Repositories
 
         public static List<Expense> GetExpensesFromPaymentMethod(int PaymentMethodId, string status = "active")
         {
-            string queryFind = $"SELECT * FROM Expense WHERE id = (SELECT expense_id FROM " +
-                $"ExpensePaymentMethod NATURAL JOIN PaymentMethodIncomeResource WHERE payment_method_id = @PaymentMethodId)" +
-                $"AND status = @Status;";
+            string queryFind = $"SELECT * FROM Expense JOIN (SELECT expense_id FROM ExpensePaymentMethod WHERE payment_method_id = @PaymentMethodId) Temp ON id = Temp.expense_id;"; 
 
             List<Expense> list = new();
             using (SqlConnection con = new(ConnectionString))
@@ -172,7 +170,6 @@ namespace SaveFirst.Repositories
                 SqlDataReader rdr;
                 using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
-                    cmd.Parameters.AddWithValue("@Status", status);
                     cmd.Parameters.AddWithValue("@PaymentMethodId", PaymentMethodId);
                     rdr = cmd.ExecuteReader();
 
