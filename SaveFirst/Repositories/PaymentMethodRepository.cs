@@ -132,7 +132,7 @@ namespace SaveFirst.Repositories
             float total = 0;
             foreach(Expense expense in expenses)
             {
-                total = expense.InstallmentValue;
+                total += expense.InstallmentValue;
             }
             return total;
         }

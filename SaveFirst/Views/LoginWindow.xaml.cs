@@ -35,6 +35,7 @@ namespace SaveFirst.Views
         Saver possibleSaver = new();
         public LoginWindow()
         {
+            //new ExpenseRWindow(admin).Show();
             new PaymentMethodRWindow(admin).Show();
             //new IncomeResourceRWindow( admin).Show();
             //new PaymentMethodRWindow(admin).Show();

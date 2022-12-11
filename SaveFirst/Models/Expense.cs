@@ -19,7 +19,7 @@ namespace SaveFirst.Models
 
         public float Value { get; set; }
 
-        public string? Type { get; set; }
+        public string? Type { get; set; } //recorrente - esporádico
 
         public string? Description { get; set; }
 

@@ -1,14 +1,13 @@
-﻿<Window x:Class="SaveFirst.Views.IncomeResourceRWindow"
+﻿<Window x:Class="SaveFirst.Views.ExpenseRWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaveFirst.Views"
         mc:Ignorable="d"
-        
         SizeToContent="Height"
         Width="485"
-        Title="IncomeResourceRWindow">
+        Title="ExpenseRWindow">
     <Window.Resources>
         <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
             <Setter Property="Template">
@@ -40,50 +39,27 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Height="300">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="220"/>
             <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
-        
-        <Label FontWeight="Bold" FontSize="20" VerticalContentAlignment="Center" Content="Cadastro de fonte de renda"/>
-        <Grid Grid.Row="1" Name="IncomeResourceInput">
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
+            <TextBox Name="NameBox" Text="{Binding Name}" Style ="{StaticResource placeHolder}" Tag="Nome" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.562,0.556" Margin="32,27,0,0" Width="190"></TextBox>
+            <TextBox Name="DescriptionBox" Text="{Binding Desctription}" Style ="{StaticResource placeHolder}" Tag="Descrição" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.562,0.556" Margin="32,74,0,0" Width="190"/>
+            <DatePicker   Grid.Column="1" Height="30" Width="190"/>
+            <TextBox Name="ValueBox" Style ="{StaticResource placeHolder}" Tag="Valor" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.562,0.556" Margin="32,126,0,0" Width="190"/>
+            <TextBox Name="NumberOfInstallmentsBox" Style ="{StaticResource placeHolder}" Tag="Numero de parcelas" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.562,0.556" Margin="32,176,0,0" Width="190"/>
+            <ComboBox Name ="CategoryBox"  Grid.Column="1" Height="25" Width="190" Margin="27,29,26,166">
 
-            <TextBox TextChanged="DateBoxChanged" Name="DateBox"  HorizontalAlignment="Center" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Data de pagamento"  Grid.Row="0" FontSize="20" Padding="14" Grid.ColumnSpan="1" Height="30" Width="190" Margin="0,42,0,138" />
 
-
-            <TextBox VerticalAlignment="Center" Name="NameBox" HorizontalAlignment="Center" Text="{Binding inputs[1]}" Padding="14" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Nome" FontSize="20" Height="30" Width="190" />
-
-            <TextBox TextChanged="ValueBoxChanged" Name="ValueBox"  HorizontalAlignment="Center" Text="{Binding Value}" Padding="14" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Valor" FontSize="20" Height="30" Width="190" Margin="0,138,0,42"  />
-
-            <ComboBox Name ="RecurrenceBox" Grid.Column="1" Width="190" Height="30" Margin=" 0 42 0 138" >
-                <ComboBoxItem IsEnabled="False" IsSelected="True">Escolha um tipo de recorrência</ComboBoxItem>
-                <ComboBoxItem>Não recorrente</ComboBoxItem>
-                <ComboBoxItem>Semanalmente</ComboBoxItem>
-                <ComboBoxItem>Mensalmente</ComboBoxItem>
-                <ComboBoxItem>Semestralmente</ComboBoxItem>
             </ComboBox>
-
+            
         </Grid>
-
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <Button Click="Cancel"  Width="140" Height="20" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center">
-                Cancelar
-            </Button>
-            <Button Click="AddIncome" Grid.Column="1"  Width="140" Height="20" FontSize="12" VerticalAlignment="Center" HorizontalAlignment="Center">
-                Adicionar
-            </Button>
-        </Grid>
-
     </Grid>
 </Window>
