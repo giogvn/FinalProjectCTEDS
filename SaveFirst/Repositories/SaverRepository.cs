@@ -50,13 +50,13 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public static List<Saver> FindAllFromSaver(string queryFind)
+        public List<Saver> FindAllFromSaver(int Id)
         {
             Saver record = null;
             List<Saver> list = new();
             using (SqlConnection con = new(ConnectionString))
             {
-                //string queryFind = $"SELECT * FROM Saver WHERE payer_id = '{Id}'";
+                string queryFind = $"SELECT * FROM Saver WHERE payer_id = '{Id}'";
                 using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
                     con.Open();
@@ -127,11 +127,12 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<Saver> ReadAll(string querySelect)
+        public List<Saver> ReadAll()
         {
             List<Saver> list = new();
             using (SqlConnection con = new(ConnectionString))
-            {                
+            {
+                string querySelect = $"SELECT * FROM Saver";
                 con.Open();
                 SqlDataReader  rdr;
                 using (SqlCommand cmd = new SqlCommand(querySelect, con))

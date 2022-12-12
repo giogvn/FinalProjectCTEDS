@@ -15,13 +15,12 @@ namespace SaveFirst.Views
     {
         Saver Saver;
         PaymentMethod newPaymentMethod = new();
-        CreditCard CreditCardOptions;
+        CreditCard creditCard = new CreditCard();
 
         public PaymentMethodRWindow(Saver saver): base()
         {
             InitializeComponent();
             Saver = saver;
-            CreditCardOptions = new(newPaymentMethod);
             newPaymentMethod.SaverId = saver.Id;
             
         }
@@ -30,9 +29,9 @@ namespace SaveFirst.Views
         {
             if (!IsLoaded)
                 return;
-            
+
             if (Choice1.SelectedIndex == 1)
-                NeededData.Content = CreditCardOptions;
+                NeededData.Content = creditCard;
             else
                 NeededData.Content = null;
         }
@@ -54,25 +53,25 @@ namespace SaveFirst.Views
             switch ((int)Choice1.SelectedIndex) {
                 case 1:
 
-                    if (!CreditCardOptions.ExpirationDateFormatCheck())
+                    if (!creditCard.ExpirationDateFormatCheck())
                     {
                         MessageBox.Show("Siga o formato MM/YYYY para data de validade");
                         break;
                     }
                     else
                     {
-                        int[] values = CreditCardOptions.SplitExpirationDate();
+                        int[] values = creditCard.SplitExpirationDate();
                         newPaymentMethod.ExpirationDate = new DateOnly(values[1], values[0], 1);
                     }
 
-                    if (CreditCardOptions.ClosingDateValidValue(out int day))
+                    if (creditCard.ClosingDateValidValue(out int day))
                     {
                         newPaymentMethod.InvoiceClosingDate = new(DateTime.Now.Year, DateTime.Now.Month, day);
                     }
                     else
                     {
                         MessageBox.Show("Escolha um valor entre 1 e 31 para o fechamento da fatura");
-                        CreditCardOptions.ClosingDateBox.Text = "";
+                        creditCard.ClosingDateBox.Text = "";
                         break;
                     }
 

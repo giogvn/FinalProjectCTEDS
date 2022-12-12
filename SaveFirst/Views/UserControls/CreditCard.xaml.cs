@@ -12,11 +12,9 @@ namespace SaveFirst.Views.UserControls
     public partial class CreditCard : UserControl
     {
 
-        public CreditCard(PaymentMethod beingCreated)
+        public CreditCard()
         {
             InitializeComponent();
-
-            paymentMethodGrid.DataContext = beingCreated;
         }
 
         public bool ExpirationDateFormatCheck()

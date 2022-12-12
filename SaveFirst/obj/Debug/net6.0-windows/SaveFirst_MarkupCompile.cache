@@ -12,9 +12,9 @@ TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\User\Documents\Pedro\FinalProject\SaveFirst\App.xaml
 6-948059326
 
-27-1684547185
+22-1627524786
 229525672803
 MainWindow.xaml;Views\ExpenseRWindow.xaml;Views\LoginWindow.xaml;Views\PaymentMethodRWindow.xaml;Views\SaverRWindow.xaml;Views\UserControls\CreditCard.xaml;
 
-True
+False
 

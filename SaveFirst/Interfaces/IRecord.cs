@@ -8,7 +8,7 @@ namespace SaveFirst.Interfaces
 {
     public interface IRecord<T>
     {
-        List<T> ReadAll(string query);
+        List<T> ReadAll();
         void Create(T newRecord);
         void Update(T record);
         void Delete(int RecordId);
