@@ -52,13 +52,13 @@ namespace SaveFirst.Repositories
             }
         }
 
-        static List<PaymentMethod> FindAllFromSaver(string queryFind)
+        public List<PaymentMethod> FindAllFromSaver(int Id)
         {
             PaymentMethod record = null;
             List<PaymentMethod> list = new();
             using (SqlConnection con = new(ConnectionString))
             {
-                //string queryFind = $"SELECT * FROM CreditCard WHERE saver_id = '{Id}'";
+                string queryFind = $"SELECT * FROM CreditCard WHERE saver_id = '{Id}'";
                 using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
                     con.Open();
@@ -102,7 +102,7 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        public List<PaymentMethod> ReadAll(string query) => throw new NotImplementedException();
+        public List<PaymentMethod> ReadAll() => throw new NotImplementedException();
 
         public void Update(PaymentMethod record)
         {

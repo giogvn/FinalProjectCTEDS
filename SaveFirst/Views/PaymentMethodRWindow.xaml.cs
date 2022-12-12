@@ -3,6 +3,7 @@ using System.Windows;
 using SaveFirst.Views.UserControls;
 using SaveFirst.Models;
 using SaveFirst.Repositories;
+using System.Text.RegularExpressions;
 
 namespace SaveFirst.Views
 {
@@ -15,14 +16,12 @@ namespace SaveFirst.Views
         Saver Saver;
         PaymentMethod newPaymentMethod = new();
         CreditCard CreditCardOptions;
-        CheckingAccount CheckingAccountOptions;
 
         public PaymentMethodRWindow(Saver saver): base()
         {
             InitializeComponent();
             Saver = saver;
             CreditCardOptions = new(newPaymentMethod);
-            CheckingAccountOptions = new(newPaymentMethod);
             newPaymentMethod.SaverId = saver.Id;
             
         }
@@ -34,10 +33,20 @@ namespace SaveFirst.Views
             
             if (Choice1.SelectedIndex == 1)
                 NeededData.Content = CreditCardOptions;
-            else if (Choice1.SelectedIndex == 2)
-                NeededData.Content = CheckingAccountOptions;
             else
                 NeededData.Content = null;
+        }
+
+        private void LimitBoxChecker(object sender, RoutedEventArgs e)
+        {
+            if (!IsLoaded)
+                return; 
+
+            if (!Regex.IsMatch(LimitBox.Text.Trim(), "[0-9]*"))
+            {
+                MessageBox.Show("Digite apenas numeros");
+                LimitBox.Text.Remove(LimitBox.Text.Length - 1);
+            }
         }
 
         private void Process(object sender, RoutedEventArgs e)

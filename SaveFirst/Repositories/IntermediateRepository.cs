@@ -57,17 +57,18 @@ namespace SaveFirst.Repositories
             throw new NotImplementedException();
         }
 
-        public List<IntermediateModel> FindAllFromSaver(string queryFind)
+        public List<IntermediateModel> FindAllFromSaver(int saverId)
         {
             IntermediateModel record = null;
             List<IntermediateModel> list = new();
             using (SqlConnection con = new(ConnectionString))
             {
                 //string queryFind = $"IF EXISTS(SELECT * FROM UserCredentials WHERE Email = {email})\r\n BEGIN\r\n   SELECT * FROM UserCredentials WHERE Email = {email}\r\n\r\n END";
-                //string queryFind = $"SELECT * FROM {DatabaseName} WHERE saver_id = '{SaverId}'";
+                string queryFind = $"SELECT * FROM {DatabaseName} WHERE saver_id = '@SaverId'";
                 using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
                     con.Open();
+                    cmd.Parameters.AddWithValue("@SaverId", saverId);
 
                     try
                     {
@@ -95,12 +96,12 @@ namespace SaveFirst.Repositories
                 return list;
             }
 
-        public List<IntermediateModel> ReadAll(string querySelect)
+        public List<IntermediateModel> ReadAll()
         {
             List<IntermediateModel> list = new();
             using (SqlConnection con = new(ConnectionString))
             {
-                //string querySelect = $"SELECT * FROM {DatabaseName}";
+                string querySelect = $"SELECT * FROM {DatabaseName}";
                 con.Open();
 
                 SqlDataReader  rdr;

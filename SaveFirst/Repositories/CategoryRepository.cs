@@ -91,7 +91,7 @@ namespace SaveFirst.Repositories
                 rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {                       
-                    Category record = new Expense()
+                    Category record = new Category()
                     {
                         Id = (int)rdr["id"],
                         SaverId = (int)rdr["saver_id"],
@@ -104,6 +104,6 @@ namespace SaveFirst.Repositories
         return categories;
     }
         public void Update(Category record) => throw new NotImplementedException();
-        public List<Category> ReadAll(string queryFind) => throw new NotImplementedException();
+        public List<Category> ReadAll() => throw new NotImplementedException();
     }
 }

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
 C:\Users\User\Documents\Pedro\FinalProject\SaveFirst\App.xaml
-81797471412
+6-948059326
 
-301563646573
+27-1684547185
 229525672803
-MainWindow.xaml;Views\ExpenseRWindow.xaml;Views\IncomeResourceRWindow.xaml;Views\LoginWindow.xaml;Views\PaymentMethodRWindow.xaml;Views\SaverRWindow.xaml;Views\UserControls\CheckingAccount.xaml;Views\UserControls\CreditCard.xaml;
+MainWindow.xaml;Views\ExpenseRWindow.xaml;Views\LoginWindow.xaml;Views\PaymentMethodRWindow.xaml;Views\SaverRWindow.xaml;Views\UserControls\CreditCard.xaml;
 
-False
+True
 

@@ -56,7 +56,7 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public static List<Expense> FindAllFromSaver(int saverId)
+        public List<Expense> FindAllFromSaver(int saverId)
         {
             string queryFind = $"SELECT * FROM Expense WHERE status = @Status AND saver_id = @SaverId;";
             List<Expense> list = new();
@@ -94,7 +94,7 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        public List<Expense> ReadAll (string querySelect) => throw new NotImplementedException();   
+        public List<Expense> ReadAll () => throw new NotImplementedException();   
 
         public void Update(Expense record)
         {
@@ -239,11 +239,10 @@ namespace SaveFirst.Repositories
             }
             return total;
         }
-    }
+    
 
     public List<Expense> getCategoryExpenses(int categoryId)
     {
-        {
             string queryFind = $"SELECT * FROM Expense JOIN ExpenseCategory ON expense_id = id WHERE category_id = @CategoryId";
             List<Expense> expenses = new();
             using (SqlConnection con = new(ConnectionString))
@@ -280,3 +279,4 @@ namespace SaveFirst.Repositories
         }        
     }
 }
+

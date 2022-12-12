@@ -5,9 +5,6 @@
     <Compile Update="Views\ExpenseRWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="Views\IncomeResourceRWindow.xaml.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Update="Views\LoginWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -17,9 +14,6 @@
   </ItemGroup>
   <ItemGroup>
     <Page Update="Views\ExpenseRWindow.xaml">
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Update="Views\IncomeResourceRWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Views\LoginWindow.xaml">
