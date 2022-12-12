@@ -30,7 +30,7 @@ namespace SaveFirst.Views
             if (!IsLoaded)
                 return;
 
-            if (Choice1.SelectedIndex == 1)
+            if (TypeBox.SelectedIndex == 1)
                 NeededData.Content = creditCard;
             else
                 NeededData.Content = null;
@@ -41,21 +41,22 @@ namespace SaveFirst.Views
             if (!IsLoaded)
                 return; 
 
-            if (!Regex.IsMatch(LimitBox.Text.Trim(), "[0-9]*"))
+            if (Regex.IsMatch(LimitBox.Text.Trim(), "[^0-9]+"))
             {
                 MessageBox.Show("Digite apenas numeros");
-                LimitBox.Text.Remove(LimitBox.Text.Length - 1);
+                LimitBox.Text = LimitBox.Text.Remove(LimitBox.Text.Length - 1);
             }
         }
 
         private void Process(object sender, RoutedEventArgs e)
         {
-            switch ((int)Choice1.SelectedIndex) {
+            switch ((int)TypeBox.SelectedIndex) {
                 case 1:
 
                     if (!creditCard.ExpirationDateFormatCheck())
                     {
                         MessageBox.Show("Siga o formato MM/YYYY para data de validade");
+                        creditCard.ExpireDateBox.Text = "";
                         break;
                     }
                     else

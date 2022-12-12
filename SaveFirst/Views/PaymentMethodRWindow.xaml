@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SaveFirst.Views"
         mc:Ignorable="d"
-        SizeToContent="Height"
+        SizeToContent="Height" ResizeMode="NoResize"
         Title="PaymentMethodRWindow"  Width="485">
     <Window.Resources>
         <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
@@ -40,14 +40,14 @@
     </Window.Resources>
     <Grid Height="300">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
             <RowDefinition Height="220"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <StackPanel Grid.Row="0" Orientation="Horizontal">
             
-            <ComboBox Margin ="10"  VerticalAlignment="Center" SelectionChanged="ChangeContentForRegister" Name="Choice1" IsReadOnly="True">
+            <ComboBox Margin="8" VerticalAlignment="Center" SelectionChanged="ChangeContentForRegister" Name="TypeBox" IsReadOnly="True">
                 <ComboBoxItem IsEnabled="False" IsSelected="True">Escolha uma opção</ComboBoxItem>
                 <ComboBoxItem>Cartão de Crédito</ComboBoxItem>
                 <ComboBoxItem>Conta corrente</ComboBoxItem>
@@ -62,19 +62,19 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             
-            <TextBox Width="190" Height="25" Margin="26,50,26,145"
+            <TextBox Width="183" Height="25" Margin="26,50,26,145"
                      Style="{StaticResource placeHolder}" Tag="Nome"
-                     FontSize="18" VerticalContentAlignment="Center" 
+                     FontSize="14" VerticalContentAlignment="Center" 
                      Text="{Binding Name}"
                      /> 
-            <TextBox Width="190" Height="25" VerticalAlignment="Center"
+            <TextBox Width="183" Height="25" VerticalAlignment="Center"
                      Style="{StaticResource placeHolder}" Tag="Banco"
-                     FontSize="18" VerticalContentAlignment="Center"
+                     FontSize="14" VerticalContentAlignment="Center"
                      Text="{Binding Bank}"
                      />
-            <TextBox Width="190" Height="25" Margin="26,145,26,50"
+            <TextBox Width="183" Height="25" Margin="26,145,26,50"
                      Style="{StaticResource placeHolder}" Tag="Valor limite"
-                     FontSize="18" VerticalContentAlignment="Center"
+                     FontSize="14" VerticalContentAlignment="Center"
                      TextChanged="LimitBoxChecker" Name="LimitBox"
                      />
             
@@ -82,8 +82,8 @@
             
         </Grid>
 
-        <Button Click="Process" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-             Add            
+        <Button Click="Process" Grid.Row="2" HorizontalAlignment="Center" Height="25" VerticalAlignment="Center">
+             Cadastrar método de pagamento            
         </Button>
     </Grid>
 </Window>

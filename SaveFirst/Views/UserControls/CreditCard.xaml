@@ -40,12 +40,12 @@
 
     </UserControl.Resources>
     <Grid>
-        <TextBox Width="190" Height="25" Margin="26,50,26,145"
-                     Style="{StaticResource placeHolder}" Tag="Data de fechamento da fatura"
-                     FontSize="14" VerticalContentAlignment="Center" 
+        <TextBox Width="183" Height="25" Margin="26,50,26,145" HorizontalAlignment="Center"
+                     Style="{StaticResource placeHolder}" Tag="Fechamento da fatura (dia)"
+                     FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
                      Name="ClosingDateBox"
                      />
-        <TextBox Width="190" Height="25" VerticalAlignment="Center"
+        <TextBox Width="183" Height="25" VerticalAlignment="Center"
                      Style="{StaticResource placeHolder}" Tag="Data de validade (MM/YYYY)"
                      FontSize="14" VerticalContentAlignment="Center"
                      Name="ExpireDateBox"
