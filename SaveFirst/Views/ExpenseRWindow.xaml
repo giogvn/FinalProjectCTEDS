@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SaveFirst.Views"
         mc:Ignorable="d"
         SizeToContent="Height"
-        Width="485"
+        Width="485" ResizeMode="NoResize"
         Title="ExpenseRWindow">
     <Window.Resources>
         <Style x:Key="placeHolder" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
@@ -41,25 +41,81 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="220"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="55"/>
         </Grid.RowDefinitions>
+        
+        <TextBlock  Height="25" Width="317" Margin="8 0 0 0"
+                        FontSize="18" FontWeight="Bold"
+                        HorizontalAlignment="Left" VerticalAlignment ="Center">
+                <Run Language="pt-br" Text="Cadastro de gastos"/>
+        </TextBlock>
+        
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <TextBox Name="NameBox" Text="{Binding Name}" Style ="{StaticResource placeHolder}" Tag="Nome" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.562,0.556" Margin="32,27,0,0" Width="190"></TextBox>
-            <TextBox Name="DescriptionBox" Text="{Binding Desctription}" Style ="{StaticResource placeHolder}" Tag="Descrição" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.562,0.556" Margin="32,74,0,0" Width="190"/>
-            <DatePicker   Grid.Column="1" Height="30" Width="190"/>
-            <TextBox Name="ValueBox" Style ="{StaticResource placeHolder}" Tag="Valor" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.562,0.556" Margin="32,126,0,0" Width="190"/>
-            <TextBox Name="NumberOfInstallmentsBox" Style ="{StaticResource placeHolder}" Tag="Numero de parcelas" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.562,0.556" Margin="32,176,0,0" Width="190"/>
-            <ComboBox Name ="CategoryBox"  Grid.Column="1" Height="25" Width="190" Margin="27,29,26,166">
+
+            <Grid Grid.Column="0" >
+                <TextBox Width="183" Height="25" Margin="26,50,26,145"
+                     Style="{StaticResource placeHolder}" Tag="Nome"
+                     FontSize="14" VerticalContentAlignment="Center" 
+                     Text="{Binding Name}"
+                     />
+                <TextBox Width="183" Height="25" VerticalAlignment="Center"
+                     Style="{StaticResource placeHolder}" Tag="Descrição"
+                     FontSize="14" VerticalContentAlignment="Center"
+                     Text="{Binding Description}"
+                     />
+                <TextBox Width="183" Height="25" Margin="26,145,26,50"
+                     Style="{StaticResource placeHolder}" Tag="Valor"
+                     FontSize="14" VerticalContentAlignment="Center"
+                     TextChanged="ValueBoxChecker" Name="ValueBox"
+                     />
+            </Grid>
+
+            <Grid Grid.Column="1">
+
+                <ComboBox Width="182" Height="25" Margin="26,50,26,145"
+                          FontSize="14"
+                          Name ="ExpenseTypeBox"
+                    >
+                    <ComboBoxItem IsSelected="True" IsEnabled="False" Content="Escolha o tipo de gasto"/>
+                    <ComboBoxItem Content="Esporádico"/>
+                    <ComboBoxItem Content="Recorrente"/>
+
+                </ComboBox>
+
+                <ComboBox Width="182" Height="25" VerticalAlignment="Center"
+                          FontSize="14"
+                          Name="CategoryBox"
+                    />
+
+                <DatePicker Width="182" Height="25" Margin="26,145,26,50"
+                            FontSize="14" Name ="ExpenseDatePicker"
+                    />
+
+            </Grid>
 
 
-            </ComboBox>
-            
+        </Grid>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <TextBox Width="183" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
+                     Style="{StaticResource placeHolder}" Tag="Numero de parcelas"
+                     FontSize="14" VerticalContentAlignment="Center"
+                     TextChanged="InstallmentsBoxChecker" Name="InstallmentsBox"
+                     />
+
+            <Button Width="183" Height="25" Grid.Column="1" Content="Adicionar gasto"
+                />
+
         </Grid>
     </Grid>
 </Window>
