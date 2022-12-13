@@ -1,13 +1,13 @@
 ﻿using System;
-using SaveFirst.Models;
-using SaveFirst.Repositories;
+using DatabasePopulator.Models;
+using DatabasePopulator.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Intrinsics.Arm;
 
-namespace SaveFirst.Repositories
+namespace DatabasePopulator.Repositories
 {
     internal class CalculatorRepository
     {

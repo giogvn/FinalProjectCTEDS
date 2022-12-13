@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SaveFirst.Models
+namespace DatabasePopulator.Models
 {
     public class Expense
     {

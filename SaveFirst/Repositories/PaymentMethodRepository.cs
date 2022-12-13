@@ -1,5 +1,5 @@
-﻿using SaveFirst.Interfaces;
-using SaveFirst.Models;
+﻿using DatabasePopulator.Interfaces;
+using DatabasePopulator.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 
-namespace SaveFirst.Repositories
+namespace DatabasePopulator.Repositories
 {
     public class PaymentMethodRepository : IRecord<PaymentMethod>
     {

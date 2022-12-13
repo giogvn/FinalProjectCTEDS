@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SaveFirst.Interfaces
+namespace DatabasePopulator.Interfaces
 {
     public interface IRecord<T>
     {
