@@ -90,7 +90,7 @@ namespace SaveFirst.Repositories
 
         public List<Category> getExpenseCategory(string expenseId)
         {
-        string queryFind = $"SELECT * FROM ExpenseCategory JOIN Category ON expense_id = id WHERE expense_id = @expenseId;";
+        string queryFind = $"SELECT * FROM Category WHERE id = (SELECT category_id FROM ExpenseCategory WHERE expense_id = @ExpenseId);";
         List<Category> categories = new();
         using (SqlConnection con = new(ConnectionString))
         {
