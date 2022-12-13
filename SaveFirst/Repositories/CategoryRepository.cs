@@ -68,13 +68,13 @@ namespace SaveFirst.Repositories
                             Name = rdr["name"].ToString()
                         };
                         list.Add(record);
-                        return list;
                     }
                     catch (Exception e)
                     {
                         return list;
                     }
                 }
+                return list;
             }
         }
 
