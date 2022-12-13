@@ -1,5 +1,6 @@
 ﻿using SaveFirst.Models;
 using SaveFirst.Repositories;
+using SaveFirst.Views.UserControls;
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
@@ -61,9 +62,13 @@ namespace SaveFirst.Views
                 return;
             if (CategoryBox.SelectedIndex == 0)
             {
-                //open category window
+                CategoryRegister.Content = new CategoryControl(Saver, this);
                 CategoryBox.SelectedIndex = -1;
             }
+        }
+        public void RemoveCategoryControl()
+        {
+            CategoryRegister.Content = null;
         }
         private void PaymentMethodBoxChanged(object sender, RoutedEventArgs e)
         {

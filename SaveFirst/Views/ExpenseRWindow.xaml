@@ -45,13 +45,13 @@
             <RowDefinition Height="220"/>
             <RowDefinition Height="55"/>
         </Grid.RowDefinitions>
-        
+
         <TextBlock  Height="25" Width="317" Margin="8 0 0 0"
                         FontSize="18" FontWeight="Bold"
                         HorizontalAlignment="Left" VerticalAlignment ="Center">
                 <Run Language="pt-br" Text="Cadastro de gastos"/>
         </TextBlock>
-        
+
         <Grid Grid.Row="1" Name="NewExpenseGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
@@ -59,32 +59,37 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" >
-                <TextBox Width="183" Height="25" Margin="26,32,26,163"
+                <TextBox Width="183" Height="25" Margin="26,20,26,175"
                      Style="{StaticResource placeHolder}" Tag="Nome"
                      FontSize="14" VerticalContentAlignment="Center" 
                      Text="{Binding Name}"
                      />
-                <TextBox Width="183" Height="25" Margin="26, 77, 26, 108"
+                <TextBox Width="183" Height="25" Margin="26, 60, 26, 135"
                      Style="{StaticResource placeHolder}" Tag="Descrição"
                      FontSize="14" VerticalContentAlignment="Center"
                      Text="{Binding Description}"
                      />
-                <TextBox Width="183" Height="25" Margin="26, 108, 26, 77"
+                <TextBox Width="183" Height="25" VerticalAlignment="Center"
                      Style="{StaticResource placeHolder}" Tag="Valor"
                      FontSize="14" VerticalContentAlignment="Center"
                      TextChanged="ValueBoxChecker" Name="ValueBox"
                      />
-                
-                <TextBox Width="183" Height="25" Margin="26,163, 26, 32"
+
+                <TextBox Width="183" Height="25" Margin="26,135, 26, 60"
                      Style="{StaticResource placeHolder}" Tag="Numero de parcelas"
                      FontSize="14" VerticalContentAlignment="Center"
                      TextChanged="InstallmentsBoxChecker" Name="InstallmentsBox"
                      />
+
+                <DatePicker Margin="26,175, 26, 20"
+                            Width="182" Height="25" 
+                            FontSize="14" Name ="ExpenseDatePicker"
+                    />
             </Grid>
 
             <Grid Grid.Column="1">
 
-                <ComboBox Width="182" Height="25" Margin="26,32,26,163"
+                <ComboBox Width="182" Height="25" Margin="26,20,26,175"
                           FontSize="14" SelectionChanged="TypeBoxChanged"
                           Name ="ExpenseTypeBox"
                     >
@@ -94,22 +99,21 @@
 
                 </ComboBox>
 
-                <ComboBox Margin="26, 77, 26, 108"
-                          Width="182" Height="25" VerticalAlignment="Center"
+                <ComboBox VerticalAlignment="Center"
+                          Width="182" Height="25" 
                           FontSize="14" SelectionChanged="CategoryBoxChanged"
                           Name="CategoryBox"
                     />
 
-                <ComboBox Margin="26, 108, 26, 77"
+                <ComboBox Margin="26, 60, 26, 135"
                           Width="182" Height="25" VerticalAlignment="Center"
                           FontSize="14" SelectionChanged="PaymentMethodBoxChanged"
                           Name="PaymentMethodBox"
                     />
+                
+                <ContentControl x:Name="CategoryRegister"/>
 
-                <DatePicker Margin="26,163, 26, 32"
-                            Width="182" Height="25" 
-                            FontSize="14" Name ="ExpenseDatePicker"
-                    />
+
 
             </Grid>
 
@@ -121,7 +125,7 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            
+
 
             <Button Width="183" Height="25" Grid.Column="1" 
                     Content="Adicionar gasto" Click="RegisterNewExpense"
