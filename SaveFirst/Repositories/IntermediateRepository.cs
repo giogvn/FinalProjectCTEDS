@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DatabasePopulator.Models;
-using DatabasePopulator.Interfaces;
+using SaveFirst.Models;
+using SaveFirst.Interfaces;
 using System.Data.SqlClient;
 
-namespace DatabasePopulator.Repositories
+namespace SaveFirst.Repositories
 {
     public class IntermediateRepository : IRecord<IntermediateModel>
     {
