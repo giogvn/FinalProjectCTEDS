@@ -46,36 +46,46 @@ namespace SaveFirst.Repositories
                 }
             }
         }
-        public List<Category> FindAllFromSaver(string saverId)
+        
+        public List<Saver> FindAllFromSaver(int Id)
         {
-            List<Category> list = new();
-            string querySelect = "SELECT * FROM Category WHERE saver_id = @SaverId";
+            Saver record = null;
+            List<Saver> list = new();
             using (SqlConnection con = new(ConnectionString))
             {
-                con.Open();
-                SqlDataReader rdr;
-                using (SqlCommand cmd = new SqlCommand(querySelect, con))
+                string queryFind = $"SELECT * FROM Saver WHERE payer_id = '{Id}'";
+                using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
-                    cmd.Parameters.AddWithValue("@SaverId", saverId);
+                    con.Open();
+
                     try
                     {
-                        rdr = cmd.ExecuteReader();
-                        rdr.Read();                   
-                        Category record = new Category()
+                        SqlDataReader rdr = cmd.ExecuteReader();
+                        while (rdr.Read())
                         {
-                            Id = rdr["id"].ToString(),
-                            SaverId = rdr["saver_id"].ToString(),
-                            Name = rdr["name"].ToString()
-                        };
-                        list.Add(record);
+
+                            string[] nums = rdr["birthdate"].ToString().Split("-");
+                            int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
+                            record = new Saver()
+                            {
+                                Id = rdr["id"].ToString(),
+                                Type = rdr["user_type"].ToString(),
+                                PayerId = rdr["payer_id"].ToString(),
+                                Birthday = new DateTime(num[0], num[1], num[2]),
+                            };
+                            list.Add(record);
+
+                        }
                     }
+
+
                     catch (Exception e)
                     {
-                        return list;
+                        Console.WriteLine("Not found");
                     }
                 }
-                return list;
             }
+            return list;
         }
 
         public List<Category> getExpenseCategory(string expenseId)
