@@ -52,7 +52,7 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<PaymentMethod> FindAllFromSaver(int Id)
+        public List<PaymentMethod> FindAllFromSaver(string Id)
         {
             PaymentMethod record = null;
             List<PaymentMethod> list = new();
@@ -80,20 +80,20 @@ namespace SaveFirst.Repositories
 
                             record = new PaymentMethod()
                             {
-                                Id = (int)rdr["id"],
-                                SaverId = (int)rdr["saver_id"],
+                                Id = rdr["id"].ToString(),
+                                SaverId = rdr["saver_id"].ToString(),
                                 Name = rdr["name"].ToString(),
                                 Bank = rdr["bank"].ToString(),
                                 Limit = (float) rdr["limit"],
-                                ExpirationDate = new DateOnly(expDate[0], expDate[1], expDate[2]),
-                                InvoiceDueDate = new DateOnly(invDate[0], invDate[1], invDate[2]),
-                                InvoiceClosingDate = new DateOnly(invClosingDate[0], invClosingDate[1], invClosingDate[2])
+                                ExpirationDate = new DateTime(expDate[0], expDate[1], expDate[2]),
+                                InvoiceDueDate = new DateTime(invDate[0], invDate[1], invDate[2]),
+                                InvoiceClosingDate = new DateTime(invClosingDate[0], invClosingDate[1], invClosingDate[2])
                             };
                             list.Add(record);
 
                         }
                     }
-                    catch (Microsoft.Data.Sqlite.SqliteException)
+                    catch (Exception e)
                     {
                         Console.WriteLine("Not found");
                     }
@@ -124,7 +124,7 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public float ExpensesFromPaymentMethod(int PaymentMethodId)
+        public float ExpensesFromPaymentMethod(string PaymentMethodId)
         {
             List<Expense> expenses = ExpenseRepository.GetExpensesFromPaymentMethod(PaymentMethodId);
 

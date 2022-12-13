@@ -56,7 +56,7 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<Expense> FindAllFromSaver(int saverId)
+        public List<Expense> FindAllFromSaver(string saverId)
         {
             string queryFind = $"SELECT * FROM Expense WHERE status = @Status AND saver_id = @SaverId;";
             List<Expense> list = new();
@@ -76,9 +76,9 @@ namespace SaveFirst.Repositories
                         int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                         Expense record = new Expense()
                         {
-                            Id = (int)rdr["id"],
-                            SaverId = (int)rdr["saver_id"],
-                            Date = new DateOnly(num[0], num[1], num[2]),
+                            Id = rdr["id"].ToString(),
+                            SaverId = rdr["saver_id"].ToString(),
+                            Date = new DateTime(num[0], num[1], num[2]),
                             Value = (float)rdr["value"],
                             Type = rdr["expense_type"].ToString(),
                             Description = rdr["description"].ToString(),
@@ -118,7 +118,7 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public static List<Expense> GetExpensesFromIncomeResource(int IncomeResourceId, string status = "active")
+        public static List<Expense> GetExpensesFromIncomeResource(string IncomeResourceId, string status = "active")
         {
             string queryFind = $"SELECT * FROM Expense WHERE id = (SELECT expense_id FROM " +
                 $"ExpensePaymentMethod NATURAL JOIN PaymentMethodIncomeResource WHERE income_resource_id = @IncomeResourceId)" +
@@ -141,9 +141,9 @@ namespace SaveFirst.Repositories
                         int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                         Expense record = new Expense()
                         {
-                            Id = (int)rdr["id"],
-                            SaverId = (int)rdr["saver_id"],
-                            Date = new DateOnly(num[0], num[1], num[2]),
+                            Id = rdr["id"].ToString(),
+                            SaverId = rdr["saver_id"].ToString(),
+                            Date = new DateTime(num[0], num[1], num[2]),
                             Value = (float)rdr["value"],
                             Type = rdr["expense_type"].ToString(),
                             Description = rdr["description"].ToString(),
@@ -159,7 +159,7 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        public static List<Expense> GetExpensesFromPaymentMethod(int PaymentMethodId, string status = "active")
+        public static List<Expense> GetExpensesFromPaymentMethod(string PaymentMethodId, string status = "active")
         {
             string queryFind = $"SELECT * FROM Expense JOIN (SELECT expense_id FROM ExpensePaymentMethod WHERE payment_method_id = @PaymentMethodId) Temp ON id = Temp.expense_id;"; 
 
@@ -179,9 +179,9 @@ namespace SaveFirst.Repositories
                         int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                         Expense record = new Expense()
                         {
-                            Id = (int)rdr["id"],
-                            SaverId = (int)rdr["saver_id"],
-                            Date = new DateOnly(num[0], num[1], num[2]),
+                            Id = rdr["id"].ToString(),
+                            SaverId = rdr["saver_id"].ToString(),
+                            Date = new DateTime(num[0], num[1], num[2]),
                             Value = (float)rdr["value"],
                             Type = rdr["expense_type"].ToString(),
                             Description = rdr["description"].ToString(),
@@ -196,10 +196,10 @@ namespace SaveFirst.Repositories
             }
             return list;
         }
-        public float CalculateTotalExpenses(int saverId, DateOnly limitDate)
+        public float CalculateTotalExpenses(string saverId, DateTime limitDate)
         {
             string queryFind = $"SELECT * FROM Expense JOIN (SELECT ExpensePaymentMethod, PaymentMethod WHERE saver_id = @SaverId AND payment_method_id = id" +
-                $"AND type = credit_card AND invoice_closing_date <= @Date ON id = expense_id";
+                $"AND invoice_closing_date <= @Date AND (status = @Status OR invoice_due_date = @Null)) ON id = expense_id";
             List<Expense> expenses = new();
             using (SqlConnection con = new(ConnectionString))
             {
@@ -207,6 +207,7 @@ namespace SaveFirst.Repositories
                 SqlDataReader rdr;
                 using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
+                    cmd.Parameters.AddWithValue("@Null", DBNull.Value);
                     cmd.Parameters.AddWithValue("@Status", "active");
                     cmd.Parameters.AddWithValue("@Date", limitDate.ToString("dd/mm/yyyy"));
                     rdr = cmd.ExecuteReader();
@@ -217,9 +218,9 @@ namespace SaveFirst.Repositories
                         int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                         Expense record = new Expense()
                         {
-                            Id = (int)rdr["id"],
-                            SaverId = (int)rdr["saver_id"],
-                            Date = new DateOnly(num[0], num[1], num[2]),
+                            Id = rdr["id"].ToString(),
+                            SaverId = rdr["saver_id"].ToString(),
+                            Date = new DateTime(num[0], num[1], num[2]),
                             Value = (float)rdr["value"],
                             Type = rdr["expense_type"].ToString(),
                             Description = rdr["description"].ToString(),
@@ -241,7 +242,7 @@ namespace SaveFirst.Repositories
         }
     
 
-    public List<Expense> getCategoryExpenses(int categoryId)
+    public List<Expense> getCategoryExpenses(string categoryId)
     {
             string queryFind = $"SELECT * FROM Expense JOIN ExpenseCategory ON expense_id = id WHERE category_id = @CategoryId";
             List<Expense> expenses = new();
@@ -260,9 +261,9 @@ namespace SaveFirst.Repositories
                         int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                         Expense record = new Expense()
                         {
-                            Id = (int)rdr["id"],
-                            SaverId = (int)rdr["saver_id"],
-                            Date = new DateOnly(num[0], num[1], num[2]),
+                            Id = rdr["id"].ToString(),
+                            SaverId = rdr["saver_id"].ToString(),
+                            Date = new DateTime(num[0], num[1], num[2]),
                             Value = (float)rdr["value"],
                             Type = rdr["expense_type"].ToString(),
                             Description = rdr["description"].ToString(),

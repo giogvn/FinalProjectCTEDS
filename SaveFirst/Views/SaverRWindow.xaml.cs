@@ -45,7 +45,7 @@ namespace SaveFirst.Views
                 return;
             }
 
-            newSaver.Birthday = DateOnly.FromDateTime((DateTime)Birthday.SelectedDate);
+            newSaver.Birthday = DateTime.FromDateTime((DateTime)Birthday.SelectedDate);
             SaverRepository saverRepository = new SaverRepository();
             saverRepository.Create(newSaver);
 

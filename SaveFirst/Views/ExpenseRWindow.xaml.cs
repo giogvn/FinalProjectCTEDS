@@ -136,7 +136,7 @@ namespace SaveFirst.Views
             }
             else
             {
-                newExpense.Date = DateOnly.FromDateTime((DateTime)ExpenseDatePicker.SelectedDate);
+                newExpense.Date = DateTime.FromDateTime((DateTime)ExpenseDatePicker.SelectedDate);
             }
                 
 
@@ -167,7 +167,7 @@ namespace SaveFirst.Views
             }
             else if (selectedPM.InvoiceDueDate != null)
             {
-                DateOnly nnDate = (DateOnly)selectedPM.InvoiceDueDate;
+                DateTime nnDate = (DateTime)selectedPM.InvoiceDueDate;
                 newExpense.DueDate = creator.CalculateDueDate(newExpense.Date, newExpense.NumberOfInstallments, nnDate.Day );
                 newExpense.InstallmentsLeft = creator.CalculateInstallmentsLeft(newExpense.DueDate, nnDate.Day);
             }

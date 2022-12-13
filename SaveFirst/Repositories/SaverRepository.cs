@@ -71,10 +71,10 @@ namespace SaveFirst.Repositories
                             int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                             record = new Saver()
                             {
-                                Id = (int)rdr["id"],
+                                Id = rdr["id"].ToString(),
                                 Type = rdr["user_type"].ToString(),
-                                PayerId = (int)rdr["payer_id"],
-                                Birthday = new DateOnly(num[0], num[1], num[2]),
+                                PayerId = rdr["payer_id"].ToString(),
+                                Birthday = new DateTime(num[0], num[1], num[2]),
                             };
                             list.Add(record);
 
@@ -82,7 +82,7 @@ namespace SaveFirst.Repositories
                     }
 
 
-                    catch (Microsoft.Data.Sqlite.SqliteException)
+                    catch (Exception e)
                     {
                         Console.WriteLine("Not found");
                     }
@@ -111,10 +111,10 @@ namespace SaveFirst.Repositories
                         int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                         Saver record = new Saver()
                         {
-                            Id = (int)rdr["id"],
+                            Id = rdr["id"].ToString(),
                             Type = rdr["type"].ToString(),
                             Name = rdr["name"].ToString(),
-                            Birthday = new DateOnly(num[0], num[1], num[2])
+                            Birthday = new DateTime(num[0], num[1], num[2])
                         };
                         list.Add(record);
                         return list;
@@ -146,10 +146,10 @@ namespace SaveFirst.Repositories
                             int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                             Saver record = new Saver()
                             {
-                                Id = (int)rdr["id"],
+                                Id =  rdr["id"].ToString(),
                                 Type = rdr["type"].ToString(),
                                 Name = rdr["name"].ToString(),
-                                Birthday = new DateOnly(num[0], num[1], num[2])
+                                Birthday = new DateTime(num[0], num[1], num[2])
                             };
                             list.Add(record);
                         }

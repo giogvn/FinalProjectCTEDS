@@ -8,8 +8,8 @@ namespace SaveFirst.Models
 {
     public class IntermediateModel
     {
-        public int ForeignKey1 { get; set; }
-        public int ForeignKey2 { get; set; }    
-        public int SaverId { get; set; }
+        public string? ForeignKey1 { get; set; }
+        public string? ForeignKey2 { get; set; }    
+        public string? SaverId { get; set; }
     }
 }

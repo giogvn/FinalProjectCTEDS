@@ -28,7 +28,7 @@ namespace SaveFirst.Views
             Email = "@usp.br",
             PayerId = 1,
             Name = "admin",
-            Birthday = DateOnly.FromDateTime(DateTime.Now),
+            Birthday = DateTime.FromDateTime(DateTime.Now),
             Password = "123",
             Type = "payer"
         };

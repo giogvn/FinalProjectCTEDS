@@ -12,20 +12,20 @@ namespace SaveFirst.Repositories
 {
     internal class CalculatorRepository
     {
-        public DateOnly CalculateDueDate(DateOnly purchaseDate, int numberOfInstallments ,int invoiceDueDate)
+        public DateTime CalculateDueDate(DateTime purchaseDate, int numberOfInstallments ,int invoiceDueDate)
         {
-            DateOnly dueD = purchaseDate.AddMonths(numberOfInstallments);
+            DateTime dueD = purchaseDate.AddMonths(numberOfInstallments);
             int dueMonth = dueD.Month;
             int dueYear = dueD.Year;
-            return new DateOnly(dueYear, dueMonth, invoiceDueDate);
+            return new DateTime(dueYear, dueMonth, invoiceDueDate);
         }
 
 
-        public int CalculateInstallmentsLeft(DateOnly dueDate, int invoiceDueDate)
+        public int CalculateInstallmentsLeft(DateTime dueDate, int invoiceDueDate)
         {
-            DateTime td = DateTime.Today;
-            DateOnly today = DateOnly.FromDateTime(td);
-            DateOnly currDueDate = new DateOnly(today.Year, today.Month, invoiceDueDate);
+
+            DateTime today = DateTime.Today;
+            DateTime currDueDate = new DateTime(today.Year, today.Month, invoiceDueDate);
 
             if (today > dueDate) { return 0; }
 

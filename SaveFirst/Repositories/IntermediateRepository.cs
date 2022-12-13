@@ -77,9 +77,9 @@ namespace SaveFirst.Repositories
                         {
                             record = new IntermediateModel()
                             {
-                                ForeignKey1 = (int)rdr[$"{Labels[0]}"],
-                                ForeignKey2 = (int)rdr[$"{Labels[1]}"],
-                                SaverId = (int)rdr["saver_id"]
+                                ForeignKey1 = rdr[$"{Labels[0]}"].ToString(),
+                                ForeignKey2 = rdr[$"{Labels[1]}"].ToString(),
+                                SaverId = rdr["saver_id"].ToString()
                             };
                             list.Add(record);
 
@@ -87,7 +87,7 @@ namespace SaveFirst.Repositories
                     }
 
 
-                    catch (Microsoft.Data.Sqlite.SqliteException)
+                    catch (Exception e)
                     {
                         Console.WriteLine("Not found");
                     }
@@ -114,9 +114,9 @@ namespace SaveFirst.Repositories
                     {
                         IntermediateModel record = new()
                         {
-                            ForeignKey1 = (int) rdr[$"{Labels[0]}"],
-                            ForeignKey2 = (int) rdr[$"{Labels[1]}"],
-                            SaverId = (int) rdr["saver_id"]
+                            ForeignKey1 = rdr[$"{Labels[0]}"].ToString(),
+                            ForeignKey2 = rdr[$"{Labels[1]}"].ToString(),
+                            SaverId = rdr["saver_id"].ToString()
                         };
 
                         list.Add(record);
