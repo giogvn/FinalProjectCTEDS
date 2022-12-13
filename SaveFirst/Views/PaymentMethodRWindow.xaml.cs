@@ -22,7 +22,7 @@ namespace SaveFirst.Views
             InitializeComponent();
             Saver = saver;
             newPaymentMethod.SaverId = saver.Id;
-            newPaymentMethod.RegistrationDate = DateOnly.FromDateTime(DateTime.Now);
+            newPaymentMethod.RegistrationDate = DateTime.FromDateTime(DateTime.Now);
 
         }
 
@@ -63,7 +63,7 @@ namespace SaveFirst.Views
                     else
                     {
                         int[] values = creditCard.SplitExpirationDate();
-                        newPaymentMethod.ExpirationDate = new DateOnly(values[1], values[0], 1);
+                        newPaymentMethod.ExpirationDate = new DateTime(values[1], values[0], 1);
                     }
 
                     if (creditCard.ClosingDateValidValue(out int day))

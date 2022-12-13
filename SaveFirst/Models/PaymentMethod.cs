@@ -9,8 +9,8 @@ namespace SaveFirst.Models
     public class PaymentMethod
     {
 
-        public int Id { get; set; } 
-        public int SaverId { get; set; }
+        public string? Id { get; set; } 
+        public string? SaverId { get; set; }
 
         public string? Name { get; set; }
 
@@ -18,15 +18,15 @@ namespace SaveFirst.Models
 
         public float Limit {get; set; }
 
-        public DateOnly? ExpirationDate { get; set; }
+        public DateTime? ExpirationDate { get; set; }
 
-        public DateOnly? InvoiceDueDate { get; set; }
+        public DateTime? InvoiceDueDate { get; set; }
 
-        public DateOnly? InvoiceClosingDate { get; set; }
+        public DateTime? InvoiceClosingDate { get; set; }
 
-        public DateOnly? RegistrationDate { get; set; }
+        public DateTime? RegistrationDate { get; set; }
 
-        public DateOnly? CancelDate { get; set;}
+        public DateTime? CancelDate { get; set;}
 
     }
 }

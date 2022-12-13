@@ -45,7 +45,7 @@ namespace SaveFirst.Repositories
                 }
             }
         }
-        public List<Category> FindAllFromSaver(int saverId)
+        public List<Category> FindAllFromSaver(string saverId)
         {
             List<Category> list = new();
             string querySelect = "SELECT * FROM Category WHERE saver_id = @SaverId";
@@ -62,8 +62,8 @@ namespace SaveFirst.Repositories
                         rdr.Read();                   
                         Category record = new Category()
                         {
-                            Id = (int)rdr["id"],
-                            SaverId = (int)rdr["saver_id"],
+                            Id = rdr["id"].ToString(),
+                            SaverId = rdr["saver_id"].ToString(),
                             Name = rdr["name"].ToString()
                         };
                         list.Add(record);
@@ -77,7 +77,7 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<Category> getExpenseCategory(int expenseId)
+        public List<Category> getExpenseCategory(string expenseId)
         {
         string queryFind = $"SELECT * FROM ExpenseCategory JOIN Category ON expense_id = id WHERE expense_id = @expenseId;";
         List<Category> categories = new();
@@ -93,8 +93,8 @@ namespace SaveFirst.Repositories
                 {                       
                     Category record = new Category()
                     {
-                        Id = (int)rdr["id"],
-                        SaverId = (int)rdr["saver_id"],
+                        Id = rdr["id"].ToString(),
+                        SaverId = rdr["saver_id"].ToString(),
                         Name = rdr["name"].ToString()
                     };
                     categories.Add(record);

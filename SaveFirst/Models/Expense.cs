@@ -9,13 +9,13 @@ namespace SaveFirst.Models
 {
     public class Expense
     {
-        public int Id { get; set; }
+        public string? Id { get; set; }
 
-        public int SaverId { get; set; }
+        public string? SaverId { get; set; }
 
-        public DateOnly Date { get; set; }
+        public DateTime Date { get; set; }
 
-        public  DateOnly DueDate { get; set; }
+        public  DateTime DueDate { get; set; }
 
         public float Value { get; set; }
 

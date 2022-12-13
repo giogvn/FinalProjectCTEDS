@@ -8,8 +8,8 @@ namespace SaveFirst.Models
 {
     public class Category
     {
-        public int Id { get; set; }
-        public int SaverId { get; set; }
+        public string? Id { get; set; }
+        public string? SaverId { get; set; }
         public string? Name { get; set; }
     }
 }
