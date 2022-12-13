@@ -20,6 +20,7 @@ namespace SaveFirst.Repositories
             return new DateOnly(dueYear, dueMonth, invoiceDueDate);
         }
 
+
         public int CalculateInstallmentsLeft(DateOnly dueDate, int invoiceDueDate)
         {
             DateTime td = DateTime.Today;

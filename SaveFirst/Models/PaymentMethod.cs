@@ -18,15 +18,15 @@ namespace SaveFirst.Models
 
         public float Limit {get; set; }
 
-        public DateOnly ExpirationDate { get; set; }
+        public DateOnly? ExpirationDate { get; set; }
 
-        public DateOnly InvoiceDueDate { get; set; }
+        public DateOnly? InvoiceDueDate { get; set; }
 
-        public DateOnly InvoiceClosingDate { get; set; }
+        public DateOnly? InvoiceClosingDate { get; set; }
 
-        public DateOnly RegistrationDate { get; set; }
+        public DateOnly? RegistrationDate { get; set; }
 
-        public DateOnly CancelDate { get; set;}
+        public DateOnly? CancelDate { get; set;}
 
     }
 }

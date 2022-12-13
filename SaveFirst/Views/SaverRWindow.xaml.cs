@@ -39,12 +39,18 @@ namespace SaveFirst.Views
 
         private void Register(object sender, RoutedEventArgs e)
         {
+            if (Birthday.SelectedDate == null)
+            {
+                MessageBox.Show("Escolha um aniversário");
+                return;
+            }
+
             newSaver.Birthday = DateOnly.FromDateTime((DateTime)Birthday.SelectedDate);
             SaverRepository saverRepository = new SaverRepository();
             saverRepository.Create(newSaver);
 
-            newSaver = new();
-            NewSaverGrid.DataContext = newSaver;
+            new LoginWindow().Show();
+            this.Close();
 
         }
     }

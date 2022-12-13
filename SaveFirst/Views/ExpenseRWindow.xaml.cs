@@ -1,5 +1,6 @@
 ﻿using SaveFirst.Models;
 using SaveFirst.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -14,29 +15,84 @@ namespace SaveFirst.Views
     public partial class ExpenseRWindow : Window
     {
         Saver Saver;
+        Expense newExpense = new();
+
+        List<PaymentMethod> PaymentMethods;
+        List<Category> Categories;
+
         public ExpenseRWindow(Saver saver)
         {
             InitializeComponent();
             Saver = saver;
 
 
-            //List<Category> categories = new CategoryRepository().FindAllFromSaver(saver.Id);
-            List<string> names = new();
-            names.Add("Criar uma nova categoria");
-            /*//
+            //Categories = new CategoryRepository().FindAllFromSaver(saver.Id);
+            List<string> categoryNames = new();
+            categoryNames.Add("Criar uma nova categoria");
+            /*/
             foreach (var category in categories)
                 if (category.Name != null)
                     names.Add(category.Name); 
             //*/
-            
-            CategoryBox.ItemsSource = names;
+
+            //PaymentMethods = new PaymentMethodRepository().FindAllFromSaver(saver.Id);
+            List<string> paymentMethodNames = new();
+
+            /*/
+            foreach(var paymentMethod in paymentMethods)  
+                if(paymentMethod.Name != null)
+                    paymentMethodNames.Add(paymentMethod.Name);
+            //*/
+
+            paymentMethodNames.Add("Cadastrar um novo método de pagamento");
+
+            PaymentMethodBox.ItemsSource = paymentMethodNames;
+
+            CategoryBox.ItemsSource = categoryNames;
+
+
+            NewExpenseGrid.DataContext = newExpense;
+
         }
+
+        private void CategoryBoxChanged(object sender, RoutedEventArgs e)
+        {
+            if (!IsLoaded)
+                return;
+            if (CategoryBox.SelectedIndex == 0)
+            {
+                //open category window
+                CategoryBox.SelectedIndex = -1;
+            }
+        }
+        private void PaymentMethodBoxChanged(object sender, RoutedEventArgs e)
+        {
+            if (!IsLoaded)
+                return;
+            if (PaymentMethodBox.SelectedIndex == 0)
+            {
+                new PaymentMethodRWindow(Saver).Show();
+                PaymentMethodBox.SelectedIndex = -1;
+            }
+        }
+        private void TypeBoxChanged(object sender, RoutedEventArgs e)
+        {
+            if (!IsLoaded)
+                return;
+            if (ExpenseTypeBox.SelectedIndex == 1)
+                newExpense.Type = "Esporádico";
+            else if (ExpenseTypeBox.SelectedIndex == 2)
+                newExpense.Type = "Recorrente";
+            else
+                MessageBox.Show("Escolha uma opção válida");
+        }
+
         private void ValueBoxChecker(object sender, RoutedEventArgs e)
         {
             if (!IsLoaded)
                 return;
 
-            if (Regex.IsMatch(ValueBox.Text.Trim(), "[^0-9]+"))
+            if (Regex.IsMatch(ValueBox.Text.Trim(), "[^0-9.]"))
             {
                 MessageBox.Show("Digite apenas numeros");
                 ValueBox.Text = ValueBox.Text.Remove(ValueBox.Text.Length - 1);
@@ -52,6 +108,77 @@ namespace SaveFirst.Views
                 MessageBox.Show("Digite apenas numeros");
                 InstallmentsBox.Text = InstallmentsBox.Text.Remove(InstallmentsBox.Text.Length - 1);
             }
+        }
+
+        private void RegisterNewExpense(object sender, RoutedEventArgs e)
+        {
+            if (float.TryParse(ValueBox.Text, out float value))
+            {
+                MessageBox.Show("Use o ponto '.' como separador decimal e digite um número válido");
+                ValueBox.Text = "";
+                return;
+            } else
+            {
+                newExpense.Value = value;
+            }
+            
+            newExpense.NumberOfInstallments = int.Parse(InstallmentsBox.Text);
+
+            if (ExpenseDatePicker.SelectedDate == null)
+            {
+                MessageBox.Show("Escolha uma data para o gasto");
+                return;
+            }
+            else
+            {
+                newExpense.Date = DateOnly.FromDateTime((DateTime)ExpenseDatePicker.SelectedDate);
+            }
+                
+
+            if (PaymentMethodBox.SelectedIndex == -1 || PaymentMethodBox.SelectedIndex == 0)
+            {
+                MessageBox.Show("Escolha um método de pagamento valido primeiro");
+                return;
+            }
+
+            if (CategoryBox.SelectedIndex == -1 || CategoryBox.SelectedIndex == 0)
+            {
+                MessageBox.Show("Escolha uma categoria válida primeiro");
+                return;
+            }
+
+            PaymentMethod selectedPM = PaymentMethods[PaymentMethodBox.SelectedIndex - 1];
+            Category selectedC = Categories[CategoryBox.SelectedIndex - 1];
+
+            CalculatorRepository creator = new();
+
+            newExpense.InstallmentValue = creator.CalculateInstallmentValue(newExpense.NumberOfInstallments, newExpense.Value);
+
+            if (selectedPM.InvoiceDueDate == null && newExpense.NumberOfInstallments != 1)
+            {
+                MessageBox.Show("Contas correntes não podem ser usados por gastos parcelados");
+                PaymentMethodBox.SelectedIndex = -1;
+                return;
+            }
+            else if (selectedPM.InvoiceDueDate != null)
+            {
+                DateOnly nnDate = (DateOnly)selectedPM.InvoiceDueDate;
+                newExpense.DueDate = creator.CalculateDueDate(newExpense.Date, newExpense.NumberOfInstallments, nnDate.Day );
+                newExpense.InstallmentsLeft = creator.CalculateInstallmentsLeft(newExpense.DueDate, nnDate.Day);
+            }
+
+            ExpenseRepository expenseRepository = new();
+            expenseRepository.Create(newExpense);
+
+            IntermediateRepository repository1 = new("", "ExpenseCategory", ExpenseCategory.Labels);
+            IntermediateRepository repository2 = new("", "ExpensePaymentMethod", ExpensePaymentMethod.Labels);
+
+             
+                
+            
+            
+
+
         }
     }
 }

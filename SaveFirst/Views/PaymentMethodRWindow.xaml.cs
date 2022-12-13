@@ -22,7 +22,8 @@ namespace SaveFirst.Views
             InitializeComponent();
             Saver = saver;
             newPaymentMethod.SaverId = saver.Id;
-            
+            newPaymentMethod.RegistrationDate = DateOnly.FromDateTime(DateTime.Now);
+
         }
 
         private void ChangeContentForRegister(object sender, RoutedEventArgs e)
@@ -77,10 +78,12 @@ namespace SaveFirst.Views
                     }
 
                     new PaymentMethodRepository().Create(newPaymentMethod);
+                    this.Close();
 
                     break;
                 case 2:
                     new PaymentMethodRepository().Create(newPaymentMethod);
+                    this.Close();
                     break;
                 default:
                     break;

@@ -52,34 +52,40 @@
                 <Run Language="pt-br" Text="Cadastro de gastos"/>
         </TextBlock>
         
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Name="NewExpenseGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" >
-                <TextBox Width="183" Height="25" Margin="26,50,26,145"
+                <TextBox Width="183" Height="25" Margin="26,32,26,163"
                      Style="{StaticResource placeHolder}" Tag="Nome"
                      FontSize="14" VerticalContentAlignment="Center" 
                      Text="{Binding Name}"
                      />
-                <TextBox Width="183" Height="25" VerticalAlignment="Center"
+                <TextBox Width="183" Height="25" Margin="26, 77, 26, 108"
                      Style="{StaticResource placeHolder}" Tag="Descrição"
                      FontSize="14" VerticalContentAlignment="Center"
                      Text="{Binding Description}"
                      />
-                <TextBox Width="183" Height="25" Margin="26,145,26,50"
+                <TextBox Width="183" Height="25" Margin="26, 108, 26, 77"
                      Style="{StaticResource placeHolder}" Tag="Valor"
                      FontSize="14" VerticalContentAlignment="Center"
                      TextChanged="ValueBoxChecker" Name="ValueBox"
+                     />
+                
+                <TextBox Width="183" Height="25" Margin="26,163, 26, 32"
+                     Style="{StaticResource placeHolder}" Tag="Numero de parcelas"
+                     FontSize="14" VerticalContentAlignment="Center"
+                     TextChanged="InstallmentsBoxChecker" Name="InstallmentsBox"
                      />
             </Grid>
 
             <Grid Grid.Column="1">
 
-                <ComboBox Width="182" Height="25" Margin="26,50,26,145"
-                          FontSize="14"
+                <ComboBox Width="182" Height="25" Margin="26,32,26,163"
+                          FontSize="14" SelectionChanged="TypeBoxChanged"
                           Name ="ExpenseTypeBox"
                     >
                     <ComboBoxItem IsSelected="True" IsEnabled="False" Content="Escolha o tipo de gasto"/>
@@ -88,12 +94,20 @@
 
                 </ComboBox>
 
-                <ComboBox Width="182" Height="25" VerticalAlignment="Center"
-                          FontSize="14"
+                <ComboBox Margin="26, 77, 26, 108"
+                          Width="182" Height="25" VerticalAlignment="Center"
+                          FontSize="14" SelectionChanged="CategoryBoxChanged"
                           Name="CategoryBox"
                     />
 
-                <DatePicker Width="182" Height="25" Margin="26,145,26,50"
+                <ComboBox Margin="26, 108, 26, 77"
+                          Width="182" Height="25" VerticalAlignment="Center"
+                          FontSize="14" SelectionChanged="PaymentMethodBoxChanged"
+                          Name="PaymentMethodBox"
+                    />
+
+                <DatePicker Margin="26,163, 26, 32"
+                            Width="182" Height="25" 
                             FontSize="14" Name ="ExpenseDatePicker"
                     />
 
@@ -107,13 +121,10 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <TextBox Width="183" Height="25" VerticalAlignment="Center" HorizontalAlignment="Center"
-                     Style="{StaticResource placeHolder}" Tag="Numero de parcelas"
-                     FontSize="14" VerticalContentAlignment="Center"
-                     TextChanged="InstallmentsBoxChecker" Name="InstallmentsBox"
-                     />
+            
 
-            <Button Width="183" Height="25" Grid.Column="1" Content="Adicionar gasto"
+            <Button Width="183" Height="25" Grid.Column="1" 
+                    Content="Adicionar gasto" Click="RegisterNewExpense"
                 />
 
         </Grid>

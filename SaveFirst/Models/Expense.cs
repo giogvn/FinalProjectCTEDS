@@ -23,7 +23,7 @@ namespace SaveFirst.Models
 
         public string? Description { get; set; }
 
-        public string? Status { get; set; }
+        public string? Status { get; set; } // active 
 
         public int NumberOfInstallments { get; set; }
 
