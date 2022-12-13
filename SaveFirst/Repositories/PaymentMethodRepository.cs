@@ -31,18 +31,20 @@ namespace SaveFirst.Repositories
 
         public void Create(PaymentMethod newRecord)
         {
-            string queryInsert = $"INSERT INTO PaymentMethod (saver_id, name, bank, limit, expiration_date, invoice_due_date, invoice_closing_date, registration_date, cancel_date) " +
-                $"VALUES (@SaverId, @Name, @Bank, @Limit @ExpirationDate, @InvoiceDueDate, @InvoiceClosingDate, @RegistrationDate, @CancelDate)";
+            string queryInsert = $"INSERT INTO PaymentMethod (id, saver_id, name, bank, limit, invoice_due_date, invoice_closing_date, registration_date) " +
+                $"VALUES (@Id, @SaverId, @Name, @Bank, @Limit, @InvoiceDueDate, @InvoiceClosingDate, @RegistrationDate)";
 
             using (SqlConnection con = new(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
+
+                    cmd.Parameters.AddWithValue("@Id", newRecord.Id);
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
                     cmd.Parameters.AddWithValue("@Name", newRecord.Name);
                     cmd.Parameters.AddWithValue("@Bank", newRecord.Bank);
                     cmd.Parameters.AddWithValue("@Limit", newRecord.Limit);
-                    cmd.Parameters.AddWithValue("@ExpirationDate", newRecord.ExpirationDate);
+                    cmd.Parameters.AddWithValue("@RegistrationDate", newRecord.RegistrationDate.ToString());
                     cmd.Parameters.AddWithValue("@InvoiceDueDate", newRecord.InvoiceDueDate);
                     cmd.Parameters.AddWithValue("@InvoiceClosingDate", newRecord.InvoiceClosingDate);
 
@@ -86,8 +88,8 @@ namespace SaveFirst.Repositories
                                 Bank = rdr["bank"].ToString(),
                                 Limit = (float) rdr["limit"],
                                 ExpirationDate = new DateTime(expDate[0], expDate[1], expDate[2]),
-                                InvoiceDueDate = new DateTime(invDate[0], invDate[1], invDate[2]),
-                                InvoiceClosingDate = new DateTime(invClosingDate[0], invClosingDate[1], invClosingDate[2])
+                                InvoiceDueDate = (int)rdr["invoice_due_date"],
+                                InvoiceClosingDate = (int)rdr["invoice_closing_date"]
                             };
                             list.Add(record);
 

@@ -11,7 +11,7 @@ namespace SaveFirst.Repositories
 {
     public class CategoryRepository : IRecord<Category>
     {
-        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst;integrated security=true;";
+        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst ;integrated security=true;";
         public void Delete(int RecordId)
         {
             using (SqlConnection con = new(ConnectionString))
@@ -31,12 +31,13 @@ namespace SaveFirst.Repositories
 
         public void Create(Category newRecord)
         {
-            string queryInsert = $"INSERT INTO Category (name) VALUES (@SaverId, @Name)";
+            string queryInsert = $"INSERT INTO Category (id, saver_id, name) VALUES (@Id, @SaverId, @Name)";
 
             using (SqlConnection con = new(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
+                    cmd.Parameters.AddWithValue("@Id", newRecord.Id);
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
                     cmd.Parameters.AddWithValue("@Name", newRecord.Name);
 

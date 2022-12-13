@@ -31,17 +31,19 @@ namespace SaveFirst.Repositories
 
         public void Create(Expense newRecord)
         {
-            string queryInsert = $"INSERT INTO Expense (saver_id, expense_date, due_date, value, expense_type, description, status," +
-                $"number_of_installments, installments_value, installments_left) VALUES (@SaverId, @Date, @DueDate, @Value, @Type, " +
+            string queryInsert = $"INSERT INTO Expense (id, saver_id, expense_date, due_date, value, expense_type, description, status," +
+                $"number_of_installments, installment_value, installments_left) VALUES (@Id, @SaverId, @Date, @DueDate, @Value, @Type, " +
                 $"@Description, @Status, @NumberOfInstallments, @InstallmentsValue, @InstallmentsLeft)";
 
             using (SqlConnection con = new(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
+
+                    cmd.Parameters.AddWithValue("@Id", newRecord.Id);
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
-                    cmd.Parameters.AddWithValue("@Date", newRecord.Date);
-                    cmd.Parameters.AddWithValue("@DueDate", newRecord.Date);
+                    cmd.Parameters.AddWithValue("@Date", newRecord.Date.ToString());
+                    cmd.Parameters.AddWithValue("@DueDate", newRecord.DueDate.ToString());
                     cmd.Parameters.AddWithValue("@Value", newRecord.Value);
                     cmd.Parameters.AddWithValue("@Type", newRecord.Type);
                     cmd.Parameters.AddWithValue("@Description", newRecord.Description);

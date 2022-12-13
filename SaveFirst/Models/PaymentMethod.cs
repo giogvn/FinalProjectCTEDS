@@ -20,9 +20,9 @@ namespace SaveFirst.Models
 
         public DateTime? ExpirationDate { get; set; }
 
-        public DateTime? InvoiceDueDate { get; set; }
+        public int InvoiceDueDate { get; set; }
 
-        public DateTime? InvoiceClosingDate { get; set; }
+        public int InvoiceClosingDate { get; set; }
 
         public DateTime? RegistrationDate { get; set; }
 
