@@ -22,24 +22,9 @@ namespace SaveFirst.Views
     /// </summary>
     public partial class LoginWindow : Window
     {
-        Saver admin = new()
-        {
-            Id = Guid.NewGuid().ToString(),
-            Email = "@usp.br",
-            PayerId = Guid.NewGuid().ToString(), 
-            Name = "admin",
-            Birthday = (DateTime.Now),
-            Password = "123",
-            Type = "payer"
-        };
         Saver possibleSaver = new();
         public LoginWindow()
         {
-            new MainWindow(admin).Show();
-            new ExpenseRWindow(admin).Show();
-            //new PaymentMethodRWindow(admin).Show();
-            //new IncomeResourceRWindow( admin).Show();
-            //new PaymentMethodRWindow(admin).Show();
             InitializeComponent();
             PossibleSaverGrid.DataContext = possibleSaver;
         }

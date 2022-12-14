@@ -27,20 +27,19 @@ namespace SaveFirst.Views
             Saver = saver;
 
 
-            //Categories = new CategoryRepository().FindAllFromSaver(saver.Id);
+            Categories = new CategoryRepository().FindAllFromSaver(saver.Id);
             List<string> categoryNames = new();
             categoryNames.Add("Criar uma nova categoria");
-            /*/
-            foreach (var category in categories)
+            //
+            foreach (var category in Categories)
                 if (category.Name != null)
-                    names.Add(category.Name); 
+                    categoryNames.Add(category.Name); 
             //*/
 
-            //PaymentMethods = new PaymentMethodRepository().FindAllFromSaver(saver.Id);
+            PaymentMethods = new PaymentMethodRepository().FindAllFromSaver(saver.Id);
             List<string> paymentMethodNames = new();
-
-            /*/
-            foreach(var paymentMethod in paymentMethods)  
+            //
+            foreach(var paymentMethod in PaymentMethods)  
                 if(paymentMethod.Name != null)
                     paymentMethodNames.Add(paymentMethod.Name);
             //*/
