@@ -149,7 +149,7 @@ namespace SaveFirst
             else
                 FillCs(0, 5);
 
-            float total = new ExpenseRepository().CalculateTotalExpenses(Saver.Id, new(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)));
+            double total = new ExpenseRepository().CalculateTotalExpenses(Saver.Id, new(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)));
 
             TotalBox.Text = "Total: " + total + " reais";
         }
@@ -205,6 +205,11 @@ namespace SaveFirst
         private void RegisterPM(object sender, RoutedEventArgs e)
         {
             new PaymentMethodRWindow(Saver).Show();
+        }
+
+        private void ListExpenses(object sender, RoutedEventArgs e)
+        {
+            new ExpenseLWindow(Saver).Show();
         }
     }
 }

@@ -98,7 +98,7 @@ namespace SaveFirst.Views
 
             if (Regex.IsMatch(ValueBox.Text.Trim(), "[^0-9.]"))
             {
-                MessageBox.Show("Digite apenas numeros");
+                MessageBox.Show("Use o ponto '.' como separador decimal e digite um número válido");
                 ValueBox.Text = ValueBox.Text.Remove(ValueBox.Text.Length - 1);
             }
         }
@@ -118,7 +118,7 @@ namespace SaveFirst.Views
         {
             newExpense.Status = "active";
 
-            if (float.TryParse(ValueBox.Text, out float value))
+            if (double.TryParse(ValueBox.Text, out double value))
             {
                 MessageBox.Show("Use o ponto '.' como separador decimal e digite um número válido");
                 ValueBox.Text = "";

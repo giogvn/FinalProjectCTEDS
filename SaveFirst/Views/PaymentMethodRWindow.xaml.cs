@@ -42,9 +42,9 @@ namespace SaveFirst.Views
             if (!IsLoaded)
                 return; 
 
-            if (Regex.IsMatch(LimitBox.Text.Trim(), "[^0-9]+"))
+            if (Regex.IsMatch(LimitBox.Text.Trim(), "[^0-9.]+"))
             {
-                MessageBox.Show("Digite apenas numeros");
+                MessageBox.Show("Use o ponto '.' como separador decimal e digite um número válido");
                 LimitBox.Text = LimitBox.Text.Remove(LimitBox.Text.Length - 1);
             }
         }
@@ -54,6 +54,14 @@ namespace SaveFirst.Views
             switch ((int)TypeBox.SelectedIndex) {
                 case 1:
                     newPaymentMethod.SaverId = Saver.Id;
+
+                    if (double.TryParse(LimitBox.Text, out double value))
+                        newPaymentMethod.Limit = value;
+                    else
+                    {
+                        MessageBox.Show("Use o ponto '.' como separador decimal e digite um número válido");
+                        LimitBox.Text = "";
+                    }
 
                     if (!creditCard.ExpirationDateFormatCheck())
                     {

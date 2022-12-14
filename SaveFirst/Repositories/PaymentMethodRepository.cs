@@ -78,7 +78,6 @@ namespace SaveFirst.Repositories
                                 SaverId = rdr["saver_id"].ToString(),
                                 Name = rdr["name"].ToString(),
                                 Bank = rdr["bank"].ToString(),
-                                ExpirationDate = new DateTime(expDate[0], expDate[1], expDate[2]),
                                 RegistrationDate = Convert.ToDateTime(rdr["registration_date"].ToString()),
                                 Limit = (double) rdr["limit"],
                                 InvoiceDueDate = (int)rdr["invoice_due_date"],

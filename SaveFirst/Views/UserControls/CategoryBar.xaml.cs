@@ -26,7 +26,7 @@ namespace SaveFirst.Views.UserControls
         {
             InitializeComponent();
             NameBox.Text = category.Name;
-            float total = 0;
+            double total = 0;
             foreach (var expense in new ExpenseRepository().getCategoryExpenses(category.Id))
                 total += expense.Value;
             TotalExpenseBox.Text = total + " reais";

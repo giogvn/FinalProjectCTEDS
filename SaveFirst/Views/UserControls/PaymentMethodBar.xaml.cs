@@ -29,7 +29,7 @@ namespace SaveFirst.Views.UserControls
             NameBox.Text = paymentMethod.Name + " - " + paymentMethod.Limit + " reais";
 
             var expenses = new PaymentMethodRepository().ExpensesFromPaymentMethod(paymentMethod.Id);
-            float percentage = expenses / paymentMethod.Limit;
+            double percentage = expenses / paymentMethod.Limit;
             Spent.Width = percentage * 200;
 
             PercentageBox.Text = (percentage * 100) + "%";
