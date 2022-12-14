@@ -30,6 +30,8 @@ namespace SaveFirst.Views.UserControls
             InitializeComponent();
             Saver = saver;
             ParentWindow = parentWindow;
+            NewCategoryGrid.DataContext = newCategory;
+            
         }
 
         private void RegisterCategory(object sender, RoutedEventArgs e)
@@ -38,6 +40,8 @@ namespace SaveFirst.Views.UserControls
             newCategory.Id = Guid.NewGuid().ToString();
             new CategoryRepository().Create(newCategory);
             ParentWindow.RemoveCategoryControl();
+            ParentWindow.Refresh();
+
 
         }
     }

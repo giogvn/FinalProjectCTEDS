@@ -1,4 +1,5 @@
-﻿using SaveFirst.Models;
+﻿using SaveFirst.Interfaces;
+using SaveFirst.Models;
 using SaveFirst.Repositories;
 using SaveFirst.Views.UserControls;
 using System;
@@ -13,18 +14,20 @@ namespace SaveFirst.Views
     /// <summary>
     /// Lógica interna para ExpenseRWindow.xaml
     /// </summary>
-    public partial class ExpenseRWindow : Window
+    public partial class ExpenseRWindow : Window, IRefreshable
     {
         Saver Saver;
         Expense newExpense = new();
 
         List<PaymentMethod> PaymentMethods;
         List<Category> Categories;
+        IRefreshable ParentWindow;
 
-        public ExpenseRWindow(Saver saver)
+        public ExpenseRWindow(Saver saver, IRefreshable parentWindow)
         {
             InitializeComponent();
             Saver = saver;
+            ParentWindow = parentWindow;
 
 
             Categories = new CategoryRepository().FindAllFromSaver(saver.Id);
@@ -35,16 +38,17 @@ namespace SaveFirst.Views
                 if (category.Name != null)
                     categoryNames.Add(category.Name); 
             //*/
-
+            
+            
             PaymentMethods = new PaymentMethodRepository().FindAllFromSaver(saver.Id);
             List<string> paymentMethodNames = new();
+            paymentMethodNames.Add("Cadastrar um novo método de pagamento");
             //
-            foreach(var paymentMethod in PaymentMethods)  
+            foreach (var paymentMethod in PaymentMethods)  
                 if(paymentMethod.Name != null)
                     paymentMethodNames.Add(paymentMethod.Name);
             //*/
 
-            paymentMethodNames.Add("Cadastrar um novo método de pagamento");
 
             PaymentMethodBox.ItemsSource = paymentMethodNames;
 
@@ -75,7 +79,7 @@ namespace SaveFirst.Views
                 return;
             if (PaymentMethodBox.SelectedIndex == 0)
             {
-                new PaymentMethodRWindow(Saver).Show();
+                new PaymentMethodRWindow(Saver, this).Show();
                 PaymentMethodBox.SelectedIndex = -1;
             }
         }
@@ -117,8 +121,13 @@ namespace SaveFirst.Views
         private void RegisterNewExpense(object sender, RoutedEventArgs e)
         {
             newExpense.Status = "active";
-
-            if (double.TryParse(ValueBox.Text, out double value))
+            newExpense.SaverId = Saver.Id;
+            if (ExpenseTypeBox.SelectedIndex == 0)
+            {
+                MessageBox.Show("Escolha um tipo de gasto válido!");
+                return;
+            }
+            if (!double.TryParse(ValueBox.Text, out double value))
             {
                 MessageBox.Show("Use o ponto '.' como separador decimal e digite um número válido");
                 ValueBox.Text = "";
@@ -173,18 +182,23 @@ namespace SaveFirst.Views
                 PaymentMethodBox.SelectedIndex = -1;
                 return;
             }
+            else if (selectedPM.InvoiceDueDate == null && newExpense.NumberOfInstallments == 1)
+            {
+                newExpense.DueDate = newExpense.Date;
+                newExpense.InstallmentsLeft = 0; 
+            } 
             else if (selectedPM.InvoiceDueDate != null)
             {
                 newExpense.DueDate = creator.CalculateDueDate(newExpense.Date, newExpense.NumberOfInstallments, (int)selectedPM.InvoiceDueDate);
                 newExpense.InstallmentsLeft = creator.CalculateInstallmentsLeft(newExpense.DueDate, (int)selectedPM.InvoiceDueDate);
             }
-
+            newExpense.InstallmentValue = creator.CalculateInstallmentValue(newExpense.NumberOfInstallments, newExpense.Value);
             newExpense.Id = Guid.NewGuid().ToString();
 
             ExpenseRepository expenseRepository = new();
             expenseRepository.Create(newExpense);
 
-            string connectionString = " ";
+            string connectionString = "data source=NOTEBOOK-HP\\MSSQLSERVER01;initial catalog=master;trusted_connection=true";
             IntermediateRepository repository1 = new(connectionString, "ExpenseCategory", ExpenseCategory.Labels);
             IntermediateRepository repository2 = new(connectionString, "ExpensePaymentMethod", ExpensePaymentMethod.Labels);
 
@@ -202,11 +216,42 @@ namespace SaveFirst.Views
             });
 
             this.Close();
+            ParentWindow.Refresh();
                 
             
             
 
 
+        }
+
+        public void Refresh()
+        {
+            Categories = new CategoryRepository().FindAllFromSaver(Saver.Id);
+            List<string> categoryNames = new();
+            categoryNames.Add("Criar uma nova categoria");
+            //
+            foreach (var category in Categories)
+                if (category.Name != null)
+                    categoryNames.Add(category.Name);
+            //*/
+
+
+            PaymentMethods = new PaymentMethodRepository().FindAllFromSaver(Saver.Id);
+            List<string> paymentMethodNames = new();
+            paymentMethodNames.Add("Cadastrar um novo método de pagamento");
+            //
+            foreach (var paymentMethod in PaymentMethods)
+                if (paymentMethod.Name != null)
+                    paymentMethodNames.Add(paymentMethod.Name);
+            //*/
+
+
+            PaymentMethodBox.ItemsSource = paymentMethodNames;
+
+            CategoryBox.ItemsSource = categoryNames;
+
+            NewExpenseGrid.DataContext = newExpense;
+            ParentWindow.Refresh();
         }
     }
 }

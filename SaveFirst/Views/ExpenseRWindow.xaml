@@ -59,11 +59,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0" >
-                <TextBox Width="183" Height="25" Margin="26,20,26,175"
-                     Style="{StaticResource placeHolder}" Tag="Nome"
-                     FontSize="14" VerticalContentAlignment="Center" 
-                     Text="{Binding Name}"
-                     />
+                
                 <TextBox Width="183" Height="25" Margin="26, 60, 26, 135"
                      Style="{StaticResource placeHolder}" Tag="Descrição"
                      FontSize="14" VerticalContentAlignment="Center"

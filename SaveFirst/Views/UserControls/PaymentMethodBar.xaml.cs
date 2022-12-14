@@ -30,9 +30,8 @@ namespace SaveFirst.Views.UserControls
 
             var expenses = new PaymentMethodRepository().ExpensesFromPaymentMethod(paymentMethod.Id);
             double percentage = expenses / paymentMethod.Limit;
+            NameBox.Text = paymentMethod.Name + " - " + expenses + " de " + paymentMethod.Limit + " gastos";
             Spent.Width = percentage * 200;
-
-            PercentageBox.Text = (percentage * 100) + "%";
 
 
         }

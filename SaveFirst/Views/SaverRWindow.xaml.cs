@@ -46,6 +46,10 @@ namespace SaveFirst.Views
             }
             else
                 newSaver.Birthday = (DateTime)Birthday.SelectedDate;
+            
+            newSaver.Id = Guid.NewGuid().ToString();
+            newSaver.PayerId = newSaver.Id;
+            newSaver.Type = "payer";
 
             SaverRepository saverRepository = new();
             saverRepository.Create(newSaver);

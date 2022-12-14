@@ -5,13 +5,14 @@ using SaveFirst.Models;
 using SaveFirst.Views.UserControls;
 using SaveFirst.Repositories;
 using SaveFirst.Views;
+using SaveFirst.Interfaces;
 
 namespace SaveFirst
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IRefreshable
     {
         Saver Saver;
 
@@ -137,13 +138,13 @@ namespace SaveFirst
             InitializeComponent();
             Saver = saver;
 
-            PaymentMethods = new PaymentMethodRepository().FindAllFromSaver(saver.Id);
+            PaymentMethods = new PaymentMethodRepository().FindAllFromSaver(Saver.Id);
             if (PaymentMethods.Count <= 5)
                 FillPMs(0, PaymentMethods.Count);
             else
                 FillPMs(0, 5);
 
-            Categories = new CategoryRepository().FindAllFromSaver(saver.Id);
+            Categories = new CategoryRepository().FindAllFromSaver(Saver.Id);
             if (Categories.Count <= 5)
                 FillCs(0, Categories.Count);
             else
@@ -151,7 +152,9 @@ namespace SaveFirst
 
             double total = new ExpenseRepository().CalculateTotalExpenses(Saver.Id, new(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)));
 
-            TotalBox.Text = "Total: " + total + " reais";
+            double moneyLeft = MaxPossible() - total;
+            TotalBox.Text = "Você gastou R$" + total;
+            LeftBox.Text = "Você ainda tem R$" + moneyLeft;
         }
 
         private void PreviousPM(object sender, RoutedEventArgs e)
@@ -159,12 +162,12 @@ namespace SaveFirst
             if (currentStartPositionPM == 0)
                 return;
             else
-                FillPMs(currentStartPositionC - 5, 5);
+                FillPMs(currentStartPositionPM - 5, 5);
         }
 
         private void NextPM(object sender, RoutedEventArgs e)
         {
-            if (currentLastPositionPM == PaymentMethods.Count - 1)
+            if (currentLastPositionPM == PaymentMethods.Count - 1 || currentLastPositionPM == currentStartPositionPM)
                 return;
             else
             {
@@ -186,7 +189,7 @@ namespace SaveFirst
 
         private void NextC(object sender, RoutedEventArgs e)
         {
-            if (currentLastPositionC == Categories.Count - 1)
+            if (currentLastPositionC == Categories.Count - 1 || currentStartPositionC == currentLastPositionC)
                 return;
             else
             {
@@ -199,17 +202,51 @@ namespace SaveFirst
 
         private void RegisterExpense(object sender, RoutedEventArgs e)
         {
-            new ExpenseRWindow(Saver).Show();
+            new ExpenseRWindow(Saver, this).Show();
         }
 
         private void RegisterPM(object sender, RoutedEventArgs e)
         {
-            new PaymentMethodRWindow(Saver).Show();
+            new PaymentMethodRWindow(Saver, this).Show();
         }
 
         private void ListExpenses(object sender, RoutedEventArgs e)
         {
             new ExpenseLWindow(Saver).Show();
+        }
+
+        
+
+        private double MaxPossible()
+        {
+            double total = 0;
+            foreach(var paymentMethod in PaymentMethods)
+            {
+                total += paymentMethod.Limit;
+            }
+            return total;
+        }
+
+        public void Refresh()
+        {
+            PaymentMethods = new PaymentMethodRepository().FindAllFromSaver(Saver.Id);
+            if (PaymentMethods.Count <= 5)
+                FillPMs(0, PaymentMethods.Count);
+            else
+                FillPMs(0, 5);
+
+            Categories = new CategoryRepository().FindAllFromSaver(Saver.Id);
+            if (Categories.Count <= 5)
+                FillCs(0, Categories.Count);
+            else
+                FillCs(0, 5);
+
+            double total = new ExpenseRepository().CalculateTotalExpenses(Saver.Id, new(DateTime.Now.Year, DateTime.Now.Month, DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month)));
+
+
+            double moneyLeft = MaxPossible() - total;
+            TotalBox.Text = "Você gastou R$" + total;
+            LeftBox.Text = "Você ainda tem R$" + moneyLeft;
         }
     }
 }

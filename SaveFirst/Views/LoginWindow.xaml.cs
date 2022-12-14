@@ -37,9 +37,10 @@ namespace SaveFirst.Views
             if (savers.Count > 0)
             {
                 Saver saver = savers[0];
-                this.Close();
+                
                 MainWindow mainWindow = new MainWindow(saver);
                 mainWindow.Show();
+                this.Close();
             }
             else
             {

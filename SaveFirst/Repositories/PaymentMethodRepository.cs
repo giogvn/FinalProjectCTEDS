@@ -11,7 +11,7 @@ namespace SaveFirst.Repositories
 {
     public class PaymentMethodRepository : IRecord<PaymentMethod>
     {
-        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst;integrated security=true;";
+        static string ConnectionString = "data source=NOTEBOOK-HP\\MSSQLSERVER01;initial catalog=master;trusted_connection=true";
         public void Delete(int RecordId)
         {
             using (SqlConnection con = new(ConnectionString))
@@ -45,8 +45,17 @@ namespace SaveFirst.Repositories
                     cmd.Parameters.AddWithValue("@Bank", newRecord.Bank);
                     cmd.Parameters.AddWithValue("@Limit", newRecord.Limit);
                     cmd.Parameters.AddWithValue("@RegistrationDate", newRecord.RegistrationDate.ToString());
-                    cmd.Parameters.AddWithValue("@InvoiceDueDate", newRecord.InvoiceDueDate);
-                    cmd.Parameters.AddWithValue("@InvoiceClosingDate", newRecord.InvoiceClosingDate);
+                    if (newRecord.InvoiceDueDate != null)
+                    {
+                        cmd.Parameters.AddWithValue("@InvoiceDueDate", newRecord.InvoiceDueDate);
+                        cmd.Parameters.AddWithValue("@InvoiceClosingDate", newRecord.InvoiceClosingDate);
+                    }
+
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@InvoiceDueDate", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@InvoiceClosingDate", DBNull.Value);
+                    }
 
                     con.Open();
                     cmd.ExecuteNonQuery();
@@ -65,28 +74,38 @@ namespace SaveFirst.Repositories
                 {
                     cmd.Parameters.AddWithValue("@SaverId", saverId);
                     con.Open();
-                  
-                        SqlDataReader rdr = cmd.ExecuteReader();
-                        while (rdr.Read())
+
+                    SqlDataReader rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {
+                        record = new PaymentMethod()
                         {
-                            string[] expD = rdr["expiration_date"].ToString().Split("-");
-                            int[] expDate = { int.Parse(expD[0]), int.Parse(expD[1]), int.Parse(expD[2]) };
+                            Id = rdr["id"].ToString(),
+                            SaverId = rdr["saver_id"].ToString(),
+                            Name = rdr["name"].ToString(),
+                            Bank = rdr["bank"].ToString(),
+                            RegistrationDate = Convert.ToDateTime(rdr["registration_date"].ToString()),
+                            Limit = (double)rdr["limit"]
+                        };
 
-                            record = new PaymentMethod()
-                            {
-                                Id = rdr["id"].ToString(),
-                                SaverId = rdr["saver_id"].ToString(),
-                                Name = rdr["name"].ToString(),
-                                Bank = rdr["bank"].ToString(),
-                                RegistrationDate = Convert.ToDateTime(rdr["registration_date"].ToString()),
-                                Limit = (double) rdr["limit"],
-                                InvoiceDueDate = (int)rdr["invoice_due_date"],
-                                InvoiceClosingDate = (int)rdr["invoice_closing_date"]
-                            };
-                            list.Add(record);
 
+                        if (typeof(DBNull) == rdr["invoice_due_date"].GetType())
+                        {
+                            record.InvoiceDueDate = null;
+                            record.InvoiceClosingDate = null;
                         }
-                    
+
+                        else
+                        {
+                            record.InvoiceDueDate = (int)rdr["invoice_due_date"];
+                            record.InvoiceClosingDate = (int)rdr["invoice_closing_date"];
+                        }
+
+                        list.Add(record);
+
+
+                    }
+
 
                 }
             }

@@ -10,7 +10,6 @@
         <DataGrid x:Name="ExpenseDataGrid" AutoGenerateColumns="False" IsReadOnly="True" ColumnWidth="*" Margin="5" IsSynchronizedWithCurrentItem="True" >
 
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nome" Binding="{Binding Name}" />
                 <DataGridTextColumn Header="Descrição" Binding="{Binding Description}" />
                 <DataGridTextColumn Header="Data" Binding="{Binding Date}" />
                 <DataGridTextColumn Header="Tipo" Binding="{Binding Type}" />

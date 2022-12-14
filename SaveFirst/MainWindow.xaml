@@ -73,9 +73,14 @@
         
         <Button Grid.Row="2" Grid.Column="2" Margin="20"
                 Content="Listar todos gastos" Click="ListExpenses"/>
-
+                
+        <TextBlock Grid.Row="4" Grid.Column="2" Margin="20"
+                   FontSize="15" FontWeight="Bold"
+                   Name = "LeftBox"
+            />
+        
         <TextBlock Grid.Row="5" Grid.Column="2" Margin="20"
-                   FontSize="30" FontWeight="Bold"
+                   FontSize="15" FontWeight="Bold"
                    Name = "TotalBox"
             />
 

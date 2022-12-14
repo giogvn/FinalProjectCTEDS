@@ -11,7 +11,7 @@ namespace SaveFirst.Repositories
 {
     public class CategoryRepository : IRecord<Category>
     {
-        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst ;integrated security=true;";
+        static string ConnectionString = "data source=NOTEBOOK-HP\\MSSQLSERVER01;initial catalog=master;trusted_connection=true";
         public void Delete(int RecordId)
         {
             using (SqlConnection con = new(ConnectionString))

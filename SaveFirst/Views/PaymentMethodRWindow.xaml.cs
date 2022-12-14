@@ -4,6 +4,7 @@ using SaveFirst.Views.UserControls;
 using SaveFirst.Models;
 using SaveFirst.Repositories;
 using System.Text.RegularExpressions;
+using SaveFirst.Interfaces;
 
 namespace SaveFirst.Views
 {
@@ -17,12 +18,15 @@ namespace SaveFirst.Views
         PaymentMethod newPaymentMethod = new();
         CreditCard creditCard = new CreditCard();
 
-        public PaymentMethodRWindow(Saver saver): base()
+        IRefreshable ParentWindow;
+        public PaymentMethodRWindow(Saver saver, IRefreshable parentWindow): base()
         {
             InitializeComponent();
             Saver = saver;
             newPaymentMethod.SaverId = saver.Id;
             newPaymentMethod.RegistrationDate = (DateTime.Now);
+            NewPaymentMethodGrid.DataContext = newPaymentMethod;
+            ParentWindow = parentWindow;
 
         }
 
@@ -54,6 +58,7 @@ namespace SaveFirst.Views
             switch ((int)TypeBox.SelectedIndex) {
                 case 1:
                     newPaymentMethod.SaverId = Saver.Id;
+                    newPaymentMethod.Id = Guid.NewGuid().ToString();
 
                     if (double.TryParse(LimitBox.Text, out double value))
                         newPaymentMethod.Limit = value;
@@ -98,14 +103,26 @@ namespace SaveFirst.Views
                     }
 
                     new PaymentMethodRepository().Create(newPaymentMethod);
+                    ParentWindow.Refresh();
                     this.Close();
 
                     break;
                 case 2:
                     newPaymentMethod.SaverId = Saver.Id;
+                    newPaymentMethod.Id = Guid.NewGuid().ToString();
                     newPaymentMethod.InvoiceDueDate = null;
                     newPaymentMethod.InvoiceClosingDate = null;
+                    
+                    if (double.TryParse(LimitBox.Text, out double valor))
+                        newPaymentMethod.Limit = valor;
+                    else
+                    {
+                        MessageBox.Show("Use o ponto '.' como separador decimal e digite um número válido");
+                        LimitBox.Text = "";
+                    }
+
                     new PaymentMethodRepository().Create(newPaymentMethod);
+                    ParentWindow.Refresh();
                     this.Close();
                     break;
                 default:

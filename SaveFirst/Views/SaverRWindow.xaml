@@ -64,7 +64,7 @@
             <TextBox HorizontalAlignment="Center" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Nome" Text="{Binding Name}" Grid.Row="0" FontSize="20" Padding="14" Grid.ColumnSpan="1" Height="30" Width="190" Margin="0,42,0,138" />
 
 
-            <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Email}" Padding="14" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Email" FontSize="20" Height="30" Width="190" />
+            <TextBox VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding Email}" Padding="14" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Email" FontSize="20" Height="30" Width="190"/>
 
             <TextBox HorizontalAlignment="Center" Text="{Binding Password}" Padding="14" Background="LightGray" Style="{StaticResource placeHolder}" Tag="Senha" FontSize="20" Height="30" Width="190" Margin="0,138,0,42"  />
             <TextBlock Text="Aniversário" Grid.Column="1" HorizontalAlignment="Center" FontSize="15"  Margin ="0,10,0,180" Height="20" />

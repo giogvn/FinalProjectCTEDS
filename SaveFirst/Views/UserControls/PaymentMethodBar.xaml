@@ -7,22 +7,19 @@
              mc:Ignorable="d" 
              d:DesignHeight="80" d:DesignWidth="280">
     <Grid>
-        <TextBox     Width="200" Height="25" Margin="20,10,60,45"
+        <TextBox     Width="195" Height="25" Margin="20,10,60,45"
                      FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
                      IsReadOnly="True" Name="NameBox" 
                      />
         
         
-        <Grid Width="200" Height="25" Margin="20,45,60,10">
+        <Grid Width="195" Height="25" Margin="20,45,60,10">
             <Rectangle Fill="LightSeaGreen" Stroke="Black"
                        />
-            <Rectangle Name ="Spent" Fill="Red" 
+            <Rectangle HorizontalAlignment="Left" Name ="Spent" Fill="Red" Stroke="Black"
                        />
         </Grid>
 
-        <TextBox     Width="25" Height="25" Margin="230,45,25,10"
-                     FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
-                     IsReadOnly="True" Name="PercentageBox" 
-                     />
+        
     </Grid>
 </UserControl>

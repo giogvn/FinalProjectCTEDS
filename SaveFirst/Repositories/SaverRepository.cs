@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using System.Windows;
 
 namespace SaveFirst.Repositories
 {
     public class SaverRepository : IRecord<Saver>
     {
-        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst ;integrated security=true;";
+        static string ConnectionString = "data source=NOTEBOOK-HP\\MSSQLSERVER01;initial catalog=master;trusted_connection=true";
         public void Delete(int RecordId)
         {
             using (SqlConnection con = new(ConnectionString))
@@ -31,7 +32,7 @@ namespace SaveFirst.Repositories
 
         public void Create(Saver newRecord)
         {
-            string queryInsert = $"INSERT INTO Saver (id , email, password, type, payer_id,  name,  birthdate) VALUES (@Id, @Email, @Password, @Type, @PayerId, @Name, @Birthday)";
+            string queryInsert = $"INSERT INTO Saver (id , email, type, payer_id,  name,  birthdate, password) VALUES (@Id, @Email, @Type, @PayerId, @Name, @Birthday, @Password)";
             using (SqlConnection con = new(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))
@@ -102,19 +103,17 @@ namespace SaveFirst.Repositories
                 using (SqlCommand cmd = new SqlCommand(querySelect, con))
                 {
                     cmd.Parameters.AddWithValue("@Email", email);
-                    cmd.Parameters.AddWithValue("@Password", password);                   
+                    cmd.Parameters.AddWithValue("@Password", password);
                     try
                     {
                         rdr = cmd.ExecuteReader();
                         rdr.Read();
-                        string[] nums = rdr["birthdate"].ToString().Split("-");
-                        int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                         Saver record = new Saver()
                         {
                             Id = rdr["id"].ToString(),
                             Type = rdr["type"].ToString(),
                             Name = rdr["name"].ToString(),
-                            Birthday = new DateTime(num[0], num[1], num[2])
+                            Birthday = Convert.ToDateTime(rdr["birthdate"].ToString())
                         };
                         list.Add(record);
                         return list;

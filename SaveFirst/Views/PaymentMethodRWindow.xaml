@@ -38,7 +38,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid Height="300">
+    <Grid Height="300" Name="NewPaymentMethodGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
             <RowDefinition Height="220"/>
