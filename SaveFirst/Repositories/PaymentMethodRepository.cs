@@ -85,11 +85,24 @@ namespace SaveFirst.Repositories
                                 Name = rdr["name"].ToString(),
                                 Bank = rdr["bank"].ToString(),
                                 RegistrationDate = Convert.ToDateTime(rdr["registration_date"].ToString()),
-                                Limit = (double) rdr["limit"],
-                                InvoiceDueDate = (int)rdr["invoice_due_date"],
-                                InvoiceClosingDate = (int)rdr["invoice_closing_date"]
+                                Limit = (double) rdr["limit"]
                             };
+                           
+                            
+                            if(typeof(rdr["invoice_due_date"] == DBNull))
+                            {
+                                record.InvoiceDueDate = null;
+                                record.InvoiceClosingDate = null;
+                            }
+                            
+                            else
+                            {
+                                record.InvoiceDueDate = (int)rdr["invoice_due_date"];
+                                record.InvoiceClosingDate = (int)rdr["invoice_closing_date"];
+                            }
+                            
                             list.Add(record);
+                                
 
                         }
                     
