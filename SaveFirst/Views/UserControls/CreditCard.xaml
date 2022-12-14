@@ -43,12 +43,17 @@
         <TextBox Width="183" Height="25" Margin="26,50,26,145" HorizontalAlignment="Center"
                      Style="{StaticResource placeHolder}" Tag="Fechamento da fatura (dia)"
                      FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                     Name="ClosingDateBox"
+                     Name="ClosingDateBox" TextChanged="ClosingDateBoxChecker"
                      />
-        <TextBox Width="183" Height="25" VerticalAlignment="Center"
+        <TextBox Width="183" Height="25" Margin="26,145,26,50"
                      Style="{StaticResource placeHolder}" Tag="Data de validade (MM/YYYY)"
                      FontSize="14" VerticalContentAlignment="Center"
-                     Name="ExpireDateBox"
+                     Name="ExpireDateBox" 
+                     />
+        <TextBox Width="183" Height="25" VerticalAlignment="Center"
+                     Style="{StaticResource placeHolder}" Tag="Vencimento da fatura (dia)"
+                     FontSize="14" VerticalContentAlignment="Center"
+                     TextChanged="DueDateBoxChecker" Name="DueDateBox"
                      />
     </Grid>
 </UserControl>
