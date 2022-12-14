@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="SaveFirst.Views.UserControls.CategoryBar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SaveFirst.Views.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="80" d:DesignWidth="280">
+    <Grid>
+        <TextBox     Width="200" Height="25" Margin="26,10,26,45"
+                     FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Left"
+                     IsReadOnly="True" Name="NameBox"
+                     />
+        <TextBox     Width="200" Height="25" Margin="26,45,26,10"
+                     FontSize="14" VerticalContentAlignment="Center" HorizontalContentAlignment="Right" 
+                     IsReadOnly="True" Name="TotalExpenseBox"
+                     />
+    </Grid>
+</UserControl>

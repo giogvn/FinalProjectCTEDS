@@ -6,11 +6,12 @@ using System.Threading.Tasks;
 
 namespace SaveFirst.Interfaces
 {
-    internal interface IRecord<T>
+    public interface IRecord<T>
     {
         List<T> ReadAll();
         void Create(T newRecord);
         void Update(T record);
-        void Delete(string idRecord);
+        void Delete(int RecordId);
+        List<T> FindAllFromSaver(int SaverId)=> throw new NotImplementedException();
     }
 }
