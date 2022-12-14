@@ -44,9 +44,10 @@ namespace SaveFirst.Views
                 MessageBox.Show("Escolha um aniversário");
                 return;
             }
+            else
+                newSaver.Birthday = (DateTime)Birthday.SelectedDate;
 
-            newSaver.Birthday = DateTime.FromDateTime((DateTime)Birthday.SelectedDate);
-            SaverRepository saverRepository = new SaverRepository();
+            SaverRepository saverRepository = new();
             saverRepository.Create(newSaver);
 
             new LoginWindow().Show();

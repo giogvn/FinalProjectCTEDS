@@ -24,17 +24,18 @@ namespace SaveFirst.Views
     {
         Saver admin = new()
         {
-            Id = 1,
+            Id = Guid.NewGuid().ToString(),
             Email = "@usp.br",
-            PayerId = 1,
+            PayerId = Guid.NewGuid().ToString(), 
             Name = "admin",
-            Birthday = DateTime.FromDateTime(DateTime.Now),
+            Birthday = (DateTime.Now),
             Password = "123",
             Type = "payer"
         };
         Saver possibleSaver = new();
         public LoginWindow()
         {
+            new MainWindow(admin).Show();
             new ExpenseRWindow(admin).Show();
             //new PaymentMethodRWindow(admin).Show();
             //new IncomeResourceRWindow( admin).Show();

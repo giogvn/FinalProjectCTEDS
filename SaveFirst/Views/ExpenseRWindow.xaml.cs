@@ -117,6 +117,8 @@ namespace SaveFirst.Views
 
         private void RegisterNewExpense(object sender, RoutedEventArgs e)
         {
+            newExpense.Status = "active";
+
             if (float.TryParse(ValueBox.Text, out float value))
             {
                 MessageBox.Show("Use o ponto '.' como separador decimal e digite um número válido");
@@ -128,6 +130,13 @@ namespace SaveFirst.Views
             }
             
             newExpense.NumberOfInstallments = int.Parse(InstallmentsBox.Text);
+            if (newExpense.NumberOfInstallments <= 0)
+            {
+                MessageBox.Show("Digite um número válido");
+                InstallmentsBox.Text = "";
+                return;
+            }
+
 
             if (ExpenseDatePicker.SelectedDate == null)
             {
@@ -136,7 +145,7 @@ namespace SaveFirst.Views
             }
             else
             {
-                newExpense.Date = DateTime.FromDateTime((DateTime)ExpenseDatePicker.SelectedDate);
+                newExpense.Date = ((DateTime)ExpenseDatePicker.SelectedDate);
             }
                 
 
@@ -167,18 +176,33 @@ namespace SaveFirst.Views
             }
             else if (selectedPM.InvoiceDueDate != null)
             {
-                DateTime nnDate = (DateTime)selectedPM.InvoiceDueDate;
-                newExpense.DueDate = creator.CalculateDueDate(newExpense.Date, newExpense.NumberOfInstallments, nnDate.Day );
-                newExpense.InstallmentsLeft = creator.CalculateInstallmentsLeft(newExpense.DueDate, nnDate.Day);
+                newExpense.DueDate = creator.CalculateDueDate(newExpense.Date, newExpense.NumberOfInstallments, (int)selectedPM.InvoiceDueDate);
+                newExpense.InstallmentsLeft = creator.CalculateInstallmentsLeft(newExpense.DueDate, (int)selectedPM.InvoiceDueDate);
             }
+
+            newExpense.Id = Guid.NewGuid().ToString();
 
             ExpenseRepository expenseRepository = new();
             expenseRepository.Create(newExpense);
 
-            IntermediateRepository repository1 = new("", "ExpenseCategory", ExpenseCategory.Labels);
-            IntermediateRepository repository2 = new("", "ExpensePaymentMethod", ExpensePaymentMethod.Labels);
+            string connectionString = " ";
+            IntermediateRepository repository1 = new(connectionString, "ExpenseCategory", ExpenseCategory.Labels);
+            IntermediateRepository repository2 = new(connectionString, "ExpensePaymentMethod", ExpensePaymentMethod.Labels);
 
-             
+            repository1.Create(new ExpenseCategory()
+            {
+                ForeignKey1 = newExpense.Id,
+                ForeignKey2 = selectedC.Id,
+                SaverId = Saver.Id
+            });
+            repository2.Create(new ExpensePaymentMethod()
+            {
+                ForeignKey1 = newExpense.Id,
+                ForeignKey2 = selectedPM.Id,
+                SaverId = Saver.Id
+            });
+
+            this.Close();
                 
             
             

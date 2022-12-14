@@ -22,7 +22,7 @@ namespace SaveFirst.Views
             InitializeComponent();
             Saver = saver;
             newPaymentMethod.SaverId = saver.Id;
-            newPaymentMethod.RegistrationDate = DateTime.FromDateTime(DateTime.Now);
+            newPaymentMethod.RegistrationDate = (DateTime.Now);
 
         }
 
@@ -53,6 +53,7 @@ namespace SaveFirst.Views
         {
             switch ((int)TypeBox.SelectedIndex) {
                 case 1:
+                    newPaymentMethod.SaverId = Saver.Id;
 
                     if (!creditCard.ExpirationDateFormatCheck())
                     {
@@ -66,9 +67,9 @@ namespace SaveFirst.Views
                         newPaymentMethod.ExpirationDate = new DateTime(values[1], values[0], 1);
                     }
 
-                    if (creditCard.ClosingDateValidValue(out int day))
+                    if (creditCard.ClosingDateValidValue(out int closingDay))
                     {
-                        newPaymentMethod.InvoiceClosingDate = new(DateTime.Now.Year, DateTime.Now.Month, day);
+                        newPaymentMethod.InvoiceClosingDate = closingDay;
                     }
                     else
                     {
@@ -77,11 +78,25 @@ namespace SaveFirst.Views
                         break;
                     }
 
+                    if (creditCard.DueDateValidValue(out int dueDay))
+                    {
+                        newPaymentMethod.InvoiceDueDate = dueDay;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Escolha um valor entre 1 e 31 para o vencimento da fatura");
+                        creditCard.DueDateBox.Text = "";
+                        break;
+                    }
+
                     new PaymentMethodRepository().Create(newPaymentMethod);
                     this.Close();
 
                     break;
                 case 2:
+                    newPaymentMethod.SaverId = Saver.Id;
+                    newPaymentMethod.InvoiceDueDate = null;
+                    newPaymentMethod.InvoiceClosingDate = null;
                     new PaymentMethodRepository().Create(newPaymentMethod);
                     this.Close();
                     break;
