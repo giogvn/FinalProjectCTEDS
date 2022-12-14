@@ -31,12 +31,13 @@ namespace SaveFirst.Repositories
 
         public void Create(Saver newRecord)
         {
-            string queryInsert = $"INSERT INTO Saver (id , email, type, payer_id,  name,  birthdate) VALUES (@Id, @Email, @Type, @PayerId, @Name, @Birthday)";
+            string queryInsert = $"INSERT INTO Saver (id , email, password, type, payer_id,  name,  birthdate) VALUES (@Id, @Email, @Password, @Type, @PayerId, @Name, @Birthday)";
             using (SqlConnection con = new(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
                     cmd.Parameters.AddWithValue("@Id", newRecord.Id);
+                    cmd.Parameters.AddWithValue("@Password", newRecord.Password);
                     cmd.Parameters.AddWithValue("@Email", newRecord.Email);
                     cmd.Parameters.AddWithValue("@Type", newRecord.Type);
                     cmd.Parameters.AddWithValue("@PayerId", newRecord.PayerId);
