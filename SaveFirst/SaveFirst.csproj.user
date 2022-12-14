@@ -11,7 +11,13 @@
     <Compile Update="Views\SaverRWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Views\UserControls\CategoryBar.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Views\UserControls\CategoryControl.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Views\UserControls\PaymentMethodBar.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -25,7 +31,13 @@
     <Page Update="Views\SaverRWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Views\UserControls\CategoryBar.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Views\UserControls\CategoryControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Views\UserControls\PaymentMethodBar.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

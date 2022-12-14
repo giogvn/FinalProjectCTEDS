@@ -35,6 +35,7 @@ namespace SaveFirst.Views.UserControls
         private void RegisterCategory(object sender, RoutedEventArgs e)
         {
             newCategory.SaverId = Saver.Id;
+            newCategory.Id = Guid.NewGuid().ToString();
             new CategoryRepository().Create(newCategory);
             ParentWindow.RemoveCategoryControl();
 

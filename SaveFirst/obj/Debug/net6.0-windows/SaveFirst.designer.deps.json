@@ -981,6 +981,33 @@
             "fileVersion": "5.0.20.51904"
           }
         }
+      },
+      "WPFToolkit/3.5.50211.1": {
+        "runtime": {
+          "lib/System.Windows.Controls.Input.Toolkit.dll": {
+            "assemblyVersion": "3.5.40128.1",
+            "fileVersion": "3.5.50211.1"
+          },
+          "lib/System.Windows.Controls.Layout.Toolkit.dll": {
+            "assemblyVersion": "3.5.40128.1",
+            "fileVersion": "3.5.50211.1"
+          },
+          "lib/WPFToolkit.dll": {
+            "assemblyVersion": "3.5.40128.1",
+            "fileVersion": "3.5.50211.1"
+          }
+        }
+      },
+      "WPFToolkit.DataVisualization/3.5.50211.1": {
+        "dependencies": {
+          "WPFToolkit": "3.5.50211.1"
+        },
+        "runtime": {
+          "lib/System.Windows.Controls.DataVisualization.Toolkit.dll": {
+            "assemblyVersion": "3.5.40128.1",
+            "fileVersion": "3.5.50211.1"
+          }
+        }
       }
     }
   },
@@ -1516,6 +1543,20 @@
       "sha512": "sha512-c1ho9WU9ZxMZawML+ssPKZfdnrg/OjR3pe0m9v8230z3acqphwvPJqzAkH54xRYm5ntZHGG1EPP3sux9H3qSPg==",
       "path": "system.windows.extensions/5.0.0",
       "hashPath": "system.windows.extensions.5.0.0.nupkg.sha512"
+    },
+    "WPFToolkit/3.5.50211.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-GBUDJtyv6WH6KKOQdeCpUGN1B1v3IpediEAmKQN9mu+oYhZvw21U6adfwCA087Z9bDMJwHPj18vZUXdTFfuqYA==",
+      "path": "wpftoolkit/3.5.50211.1",
+      "hashPath": "wpftoolkit.3.5.50211.1.nupkg.sha512"
+    },
+    "WPFToolkit.DataVisualization/3.5.50211.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Vu9u9Wr0OouBrrb2tw2UD86x9dZSFU6PSAtX5m3F//2FN47wWg8/G5lyDZHHd3PgcMJMuQ8vbjZIOGzm5PXWkA==",
+      "path": "wpftoolkit.datavisualization/3.5.50211.1",
+      "hashPath": "wpftoolkit.datavisualization.3.5.50211.1.nupkg.sha512"
     }
   }
 }

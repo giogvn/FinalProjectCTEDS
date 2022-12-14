@@ -3,18 +3,80 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SaveFirst"
-        mc:Ignorable="d"
-        Title="mainwindow" Height="450" Width="800">
+        xmlns:local="clr-namespace:SaveFirst" xmlns:chartingToolkit="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        Title="mainwindow" SizeToContent="Height" 
+        Width="840" ResizeMode="NoResize"
+        >
     <Grid>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Button Content="Switch" />
-            <ContentControl x:Name="contentControl" Grid.Row="1"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+            <RowDefinition Height="80"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        
+        <ContentControl Name ="PM1" Grid.Column="0" Grid.Row="0"/>
+        <ContentControl Name ="PM2" Grid.Column="0" Grid.Row="1"/>
+        <ContentControl Name ="PM3" Grid.Column="0" Grid.Row="2"/>
+        <ContentControl Name ="PM4" Grid.Column="0" Grid.Row="3"/>
+        <ContentControl Name ="PM5" Grid.Column="0" Grid.Row="4"/>
+        
+        <ContentControl Name ="C1" Grid.Column="01" Grid.Row="0"/>
+        <ContentControl Name ="C2" Grid.Column="01" Grid.Row="1"/>
+        <ContentControl Name ="C3" Grid.Column="01" Grid.Row="2"/>
+        <ContentControl Name ="C4" Grid.Column="01" Grid.Row="3"/>
+        <ContentControl Name ="C5" Grid.Column="01" Grid.Row="4"/>
+
+        <Grid Grid.Row="5" Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Margin="20" Content="Anteriores" Click="PreviousPM"
+                    Grid.Column="0"
+                    />
+            <Button Margin="20" Content="Próximos" Click="NextPM"
+                    Grid.Column="1"
+                    />
 
         </Grid>
+        
+        <Grid Grid.Row="5" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            
+            <Button Margin="20" Content="Anteriores" Click="PreviousC"
+                    Grid.Column="0"
+                    />
+            <Button Margin="20" Content="Próximas" Click="NextC"
+                    Grid.Column="1"
+                    />
+
+        </Grid>
+
+        <Button Grid.Row="1" Grid.Column="2" Margin="20"
+                Content="Cadastrar Novo Gasto" Click="RegisterExpense"/>
+        
+        <Button Grid.Row="3" Grid.Column="2" Margin="20"
+                Content="Cadastrar Novo Método de Pagamento" Click="RegisterPM"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="2" Margin="20"
+                   FontSize="30" FontWeight="Bold"
+                   Name = "TotalBox"
+            />
+
+
     </Grid>
 </Window>
+    
