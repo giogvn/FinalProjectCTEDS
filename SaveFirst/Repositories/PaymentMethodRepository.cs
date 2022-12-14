@@ -123,7 +123,7 @@ namespace SaveFirst.Repositories
                     cmd.Parameters.AddWithValue("@Id", record.Id);
                     cmd.Parameters.AddWithValue("@Name", record.Name);
                     cmd.Parameters.AddWithValue("@Bank", record.Bank);
-                    cmd.Parameters.AddWithValue("@InvoiceDueDate", record.InvoiceDueDate);
+                    cmd.Parameters.AddWithValue("@InvoiceDueDate", record.InvoiceDueDate.ToString());
                     cmd.Parameters.AddWithValue("@InvoiceClosingDate", record.InvoiceClosingDate);
                     cmd.Parameters.AddWithValue("@ExpirationDate", record.ExpirationDate);
                     con.Open();
