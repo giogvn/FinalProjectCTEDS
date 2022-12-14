@@ -89,7 +89,7 @@ namespace SaveFirst.Repositories
                             };
                            
                             
-                            if(typeof(rdr["invoice_due_date"] == DBNull))
+                            if(typeof(DBNull) == rdr["invoice_due_date"].GetType())
                             {
                                 record.InvoiceDueDate = null;
                                 record.InvoiceClosingDate = null;
