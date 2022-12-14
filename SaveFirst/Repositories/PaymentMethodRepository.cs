@@ -116,7 +116,7 @@ namespace SaveFirst.Repositories
         {
             using (SqlConnection con = new(ConnectionString))
             {
-                string queryUpdateBody = "UPDATE CreditCard SET name = @Name , bank = @Bank, expiration_date = @ExpirationDate, invoice_due_date = @InvoiceDueDate, invoice_closing_date = @InvoiceClosingDate, WHERE id = @Id";
+                string queryUpdateBody = "UPDATE CreditCard SET name = @Name , bank = @Bank, expiration_date = CONVERT(datetime,@ExpirationDate,103), invoice_due_date = @InvoiceDueDate, invoice_closing_date = @InvoiceClosingDate, WHERE id = @Id";
 
                 using (SqlCommand cmd = new(queryUpdateBody, con))
                 {

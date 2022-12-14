@@ -32,7 +32,7 @@ namespace SaveFirst.Repositories
 
         public void Create(Saver newRecord)
         {
-            string queryInsert = $"INSERT INTO Saver (id , email, type, payer_id,  name,  birthdate, password) VALUES (@Id, @Email, @Type, @PayerId, @Name, @Birthday, @Password)";
+            string queryInsert = $"INSERT INTO Saver (id , email, type, payer_id,  name,  birthdate, password) VALUES (@Id, @Email, @Type, @PayerId, @Name, CONVERT(datetime,@Birthday,103), @Password)";
             using (SqlConnection con = new(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))

@@ -32,7 +32,7 @@ namespace SaveFirst.Repositories
         public void Create(Expense newRecord)
         {
             string queryInsert = $"INSERT INTO Expense (id, saver_id, expense_date, due_date, value, expense_type, description, status," +
-                $"number_of_installments, installment_value, installments_left) VALUES (@Id, @SaverId, @Date, @DueDate, @Value, @Type, " +
+                $"number_of_installments, installment_value, installments_left) VALUES (@Id, @SaverId,  CONVERT(datetime,@Date,103), CONVERT(datetime,@DueDate,103), @Value, @Type, " +
                 $"@Description, @Status, @NumberOfInstallments, @InstallmentsValue, @InstallmentsLeft)";
 
             using (SqlConnection con = new(ConnectionString))
