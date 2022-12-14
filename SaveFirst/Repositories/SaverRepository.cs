@@ -107,14 +107,12 @@ namespace SaveFirst.Repositories
                     {
                         rdr = cmd.ExecuteReader();
                         rdr.Read();
-                        string[] nums = rdr["birthdate"].ToString().Split("-");
-                        int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                         Saver record = new Saver()
                         {
                             Id = rdr["id"].ToString(),
                             Type = rdr["type"].ToString(),
                             Name = rdr["name"].ToString(),
-                            Birthday = new DateTime(num[0], num[1], num[2])
+                            Birthday = Convert.ToDateTime(rdr["birthdate"].ToString())
                         };
                         list.Add(record);
                         return list;
