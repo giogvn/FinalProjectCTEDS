@@ -45,8 +45,17 @@ namespace SaveFirst.Repositories
                     cmd.Parameters.AddWithValue("@Bank", newRecord.Bank);
                     cmd.Parameters.AddWithValue("@Limit", newRecord.Limit);
                     cmd.Parameters.AddWithValue("@RegistrationDate", newRecord.RegistrationDate.ToString());
-                    cmd.Parameters.AddWithValue("@InvoiceDueDate", newRecord.InvoiceDueDate);
-                    cmd.Parameters.AddWithValue("@InvoiceClosingDate", newRecord.InvoiceClosingDate);
+                    if(newRecord.InvoiceDueDate != null)
+                    {
+                        cmd.Parameters.AddWithValue("@InvoiceDueDate", newRecord.InvoiceDueDate);
+                        cmd.Parameters.AddWithValue("@InvoiceClosingDate", newRecord.InvoiceClosingDate);
+                    }
+                    
+                    else
+                    {
+                        cmd.Parameters.AddWithValue("@InvoiceDueDate", DBNull.Value);
+                        cmd.Parameters.AddWithValue("@InvoiceClosingDate", DBNull.Value);                        
+                    }
 
                     con.Open();
                     cmd.ExecuteNonQuery();
