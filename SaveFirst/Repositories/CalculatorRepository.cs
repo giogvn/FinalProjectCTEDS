@@ -14,7 +14,6 @@ namespace SaveFirst.Repositories
         public DateTime CalculateDueDate(DateTime purchaseDate, int numberOfInstallments ,int invoiceDueDate)
         {
             DateTime dueD = purchaseDate.AddMonths(numberOfInstallments);
-            Console.WriteLine(dueD.ToString());
             int dueMonth = dueD.Month;
             int dueYear = dueD.Year;
             return new DateTime(dueYear, dueMonth, invoiceDueDate);
@@ -32,7 +31,7 @@ namespace SaveFirst.Repositories
             return (((currDueDate.Year - dueDate.Year) * 12) + currDueDate.Month - dueDate.Month) *-1;
         }
 
-        public float CalculateInstallmentValue(int numberOfInstallments, float expenseValue)
+        public double CalculateInstallmentValue(int numberOfInstallments, double expenseValue)
         {
             return expenseValue / numberOfInstallments;
         }

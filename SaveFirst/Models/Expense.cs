@@ -17,7 +17,7 @@ namespace SaveFirst.Models
 
         public  DateTime DueDate { get; set; }
 
-        public float Value { get; set; }
+        public double Value { get; set; }
 
         public string? Type { get; set; } //recorrente - esporádico
 
@@ -27,7 +27,7 @@ namespace SaveFirst.Models
 
         public int NumberOfInstallments { get; set; }
 
-        public float InstallmentValue { get; set; }
+        public double InstallmentValue { get; set; }
 
         public int InstallmentsLeft { get; set; }
 

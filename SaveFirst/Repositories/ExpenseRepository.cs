@@ -96,7 +96,7 @@ namespace SaveFirst.Repositories
             return list;
         }
 
-        public List<Expense> ReadAll () => throw new NotImplementedException();   
+        public List<Expense> ReadAll() => throw new NotImplementedException();
 
         public void Update(Expense record)
         {
@@ -163,7 +163,7 @@ namespace SaveFirst.Repositories
 
         public static List<Expense> GetExpensesFromPaymentMethod(string PaymentMethodId, string status = "active")
         {
-            string queryFind = $"SELECT * FROM Expense JOIN (SELECT expense_id FROM ExpensePaymentMethod WHERE payment_method_id = @PaymentMethodId) Temp ON id = Temp.expense_id;"; 
+            string queryFind = $"SELECT * FROM Expense JOIN (SELECT expense_id FROM ExpensePaymentMethod WHERE payment_method_id = @PaymentMethodId) Temp ON id = Temp.expense_id;";
 
             List<Expense> list = new();
             using (SqlConnection con = new(ConnectionString))
@@ -175,21 +175,22 @@ namespace SaveFirst.Repositories
                     cmd.Parameters.AddWithValue("@PaymentMethodId", PaymentMethodId);
                     rdr = cmd.ExecuteReader();
 
+
+
                     while (rdr.Read())
                     {
-                        string[] nums = rdr["expense_date"].ToString().Split("-");
-                        int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
+
                         Expense record = new Expense()
                         {
                             Id = rdr["id"].ToString(),
                             SaverId = rdr["saver_id"].ToString(),
-                            Date = new DateTime(num[0], num[1], num[2]),
-                            Value = (float)rdr["value"],
+                            Date = Convert.ToDateTime(rdr["expense_date"].ToString()),
+                            Value = (double)rdr["value"],
                             Type = rdr["expense_type"].ToString(),
                             Description = rdr["description"].ToString(),
                             Status = rdr["status"].ToString(),
                             NumberOfInstallments = (int)rdr["number_of_installments"],
-                            InstallmentValue = (float)rdr["installment_value"],
+                            InstallmentValue = (double)rdr["installment_value"],
                             InstallmentsLeft = (int)rdr["installments_left"]
                         };
                         list.Add(record);
@@ -198,10 +199,10 @@ namespace SaveFirst.Repositories
             }
             return list;
         }
-        public float CalculateTotalExpenses(string saverId, DateTime limitDate)
+
+        public double CalculateTotalExpenses(string saverId, DateTime limitDate)
         {
-            string queryFind = $"SELECT * FROM Expense JOIN (SELECT ExpensePaymentMethod, PaymentMethod WHERE saver_id = @SaverId AND payment_method_id = id" +
-                $"AND invoice_closing_date <= @Date AND (status = @Status OR invoice_due_date = @Null)) ON id = expense_id";
+            string queryFind = $"SELECT * FROM Expense WHERE status = @Status AND saver_id = @SaverId";
             List<Expense> expenses = new();
             using (SqlConnection con = new(ConnectionString))
             {
@@ -209,43 +210,42 @@ namespace SaveFirst.Repositories
                 SqlDataReader rdr;
                 using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
-                    cmd.Parameters.AddWithValue("@Null", DBNull.Value);
                     cmd.Parameters.AddWithValue("@Status", "active");
-                    cmd.Parameters.AddWithValue("@Date", limitDate.ToString("dd/mm/yyyy"));
+                    cmd.Parameters.AddWithValue("@SaverId", saverId);
                     rdr = cmd.ExecuteReader();
 
                     while (rdr.Read())
                     {
-                        string[] nums = rdr["expense_date"].ToString().Split("-");
-                        int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                         Expense record = new Expense()
                         {
                             Id = rdr["id"].ToString(),
                             SaverId = rdr["saver_id"].ToString(),
-                            Date = new DateTime(num[0], num[1], num[2]),
-                            Value = (float)rdr["value"],
+                            Date = Convert.ToDateTime(rdr["expense_date"].ToString()),
+                            Value = (double)rdr["value"],
                             Type = rdr["expense_type"].ToString(),
                             Description = rdr["description"].ToString(),
                             Status = rdr["status"].ToString(),
                             NumberOfInstallments = (int)rdr["number_of_installments"],
-                            InstallmentValue = (float)rdr["installment_value"],
+                            InstallmentValue = (double)rdr["installment_value"],
                             InstallmentsLeft = (int)rdr["installments_left"]
                         };
                         expenses.Add(record);
                     }
                 }
             }
-            float total = 0;
-            foreach(Expense expense in expenses)
+            double total = 0;
+            foreach (Expense expense in expenses)
             {
-                total += expense.Value;
+                if (expense.DueDate <= limitDate)
+                {
+                    total += expense.Value;
+                }
             }
             return total;
         }
-    
 
-    public List<Expense> getCategoryExpenses(string categoryId)
-    {
+        public List<Expense> getCategoryExpenses(string categoryId)
+        {
             string queryFind = $"SELECT * FROM Expense JOIN ExpenseCategory ON expense_id = id WHERE category_id = @CategoryId";
             List<Expense> expenses = new();
             using (SqlConnection con = new(ConnectionString))
@@ -259,19 +259,18 @@ namespace SaveFirst.Repositories
 
                     while (rdr.Read())
                     {
-                        string[] nums = rdr["expense_date"].ToString().Split("-");
-                        int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
+
                         Expense record = new Expense()
                         {
                             Id = rdr["id"].ToString(),
                             SaverId = rdr["saver_id"].ToString(),
-                            Date = new DateTime(num[0], num[1], num[2]),
-                            Value = (float)rdr["value"],
+                            Date = Convert.ToDateTime(rdr["expense_date"].ToString()),
+                            Value = (double)rdr["value"],
                             Type = rdr["expense_type"].ToString(),
                             Description = rdr["description"].ToString(),
                             Status = rdr["status"].ToString(),
                             NumberOfInstallments = (int)rdr["number_of_installments"],
-                            InstallmentValue = (float)rdr["installment_value"],
+                            InstallmentValue = (double)rdr["installment_value"],
                             InstallmentsLeft = (int)rdr["installments_left"]
                         };
                         expenses.Add(record);
@@ -279,7 +278,7 @@ namespace SaveFirst.Repositories
                 }
             }
             return expenses;
-        }        
+        }
     }
 }
 

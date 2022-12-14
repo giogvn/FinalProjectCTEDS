@@ -54,51 +54,37 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<PaymentMethod> FindAllFromSaver(string Id)
+        public List<PaymentMethod> FindAllFromSaver(string saverId)
         {
             PaymentMethod record = null;
             List<PaymentMethod> list = new();
             using (SqlConnection con = new(ConnectionString))
             {
-                string queryFind = $"SELECT * FROM CreditCard WHERE saver_id = '{Id}'";
+                string queryFind = $"SELECT * FROM PaymentMethod WHERE saver_id = @SaverId";
                 using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
+                    cmd.Parameters.AddWithValue("@SaverId", saverId);
                     con.Open();
-                    try
-                    {
+                  
                         SqlDataReader rdr = cmd.ExecuteReader();
                         while (rdr.Read())
                         {
-                            string[] expD = rdr["expiration_date"].ToString().Split("-");
-                            int[] expDate = { int.Parse(expD[0]), int.Parse(expD[1]), int.Parse(expD[2]) };
-
-
-                            string[] invDueD = rdr["invoice_due_date"].ToString().Split("-");
-                            int[] invDate = { int.Parse(invDueD[0]), int.Parse(invDueD[1]), int.Parse(invDueD[2]) };
-
-                            string[] invClosingD = rdr["invoice_closing_date"].ToString().Split("-");
-                            int[] invClosingDate = { int.Parse(invClosingD[0]), int.Parse(invClosingD[1]), int.Parse(invClosingD[2]) };
-
-
                             record = new PaymentMethod()
                             {
                                 Id = rdr["id"].ToString(),
                                 SaverId = rdr["saver_id"].ToString(),
                                 Name = rdr["name"].ToString(),
                                 Bank = rdr["bank"].ToString(),
-                                Limit = (float) rdr["limit"],
-                                ExpirationDate = new DateTime(expDate[0], expDate[1], expDate[2]),
+                                RegistrationDate = Convert.ToDateTime(rdr["registration_date"].ToString()),
+                                Limit = (double) rdr["limit"],
                                 InvoiceDueDate = (int)rdr["invoice_due_date"],
                                 InvoiceClosingDate = (int)rdr["invoice_closing_date"]
                             };
                             list.Add(record);
 
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Not found");
-                    }
+                    
+
                 }
             }
             return list;
@@ -126,11 +112,11 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public float ExpensesFromPaymentMethod(string PaymentMethodId)
+        public double ExpensesFromPaymentMethod(string PaymentMethodId)
         {
             List<Expense> expenses = ExpenseRepository.GetExpensesFromPaymentMethod(PaymentMethodId);
 
-            float total = 0;
+            double total = 0;
             foreach(Expense expense in expenses)
             {
                 total += expense.InstallmentValue;
