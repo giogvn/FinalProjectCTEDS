@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.Intrinsics.Arm;
-using System.Windows.Documents;
 
 namespace SaveFirst.Repositories
 {
@@ -29,10 +28,10 @@ namespace SaveFirst.Repositories
 
             if (today > dueDate) { return 0; }
 
-            return ((currDueDate.Year - dueDate.Year) * 12) + currDueDate.Month - dueDate.Month;
+            return (((currDueDate.Year - dueDate.Year) * 12) + currDueDate.Month - dueDate.Month) *-1;
         }
 
-        public float CalculateInstallmentValue(int numberOfInstallments, float expenseValue)
+        public double CalculateInstallmentValue(int numberOfInstallments, double expenseValue)
         {
             return expenseValue / numberOfInstallments;
         }

@@ -6,13 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-using Microsoft.Data.Sqlite;
 
 namespace SaveFirst.Repositories
 {
     public class SaverRepository : IRecord<Saver>
     {
-        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst;integrated security=true;";
+        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst ;integrated security=true;";
         public void Delete(int RecordId)
         {
             using (SqlConnection con = new(ConnectionString))
@@ -32,7 +31,7 @@ namespace SaveFirst.Repositories
 
         public void Create(Saver newRecord)
         {
-            string queryInsert = $"INSERT INTO Saver (id , email, saver_type, payer_id,  name,  birthdate) VALUES (@Id, @Email, @Type, @PayerId, @Name, @Birthday)";
+            string queryInsert = $"INSERT INTO Saver (id , email, type, payer_id,  name,  birthdate) VALUES (@Id, @Email, @Type, @PayerId, @Name, @Birthday)";
             using (SqlConnection con = new(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))
@@ -42,7 +41,7 @@ namespace SaveFirst.Repositories
                     cmd.Parameters.AddWithValue("@Type", newRecord.Type);
                     cmd.Parameters.AddWithValue("@PayerId", newRecord.PayerId);
                     cmd.Parameters.AddWithValue("@Name", newRecord.Name);
-                    cmd.Parameters.AddWithValue("@Birthday", newRecord.Birthday);
+                    cmd.Parameters.AddWithValue("@Birthday", newRecord.Birthday.ToString());
 
                     con.Open();
                     cmd.ExecuteNonQuery();

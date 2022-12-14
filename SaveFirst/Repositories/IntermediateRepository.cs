@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using SaveFirst.Models;
 using SaveFirst.Interfaces;
-using Microsoft.EntityFrameworkCore.Sqlite;
 using System.Data.SqlClient;
 
 namespace SaveFirst.Repositories
@@ -36,13 +35,12 @@ namespace SaveFirst.Repositories
                 // SQL Injection
                 //string queryInsert = $"INSERT INTO Products (IdProduct, Name, Description, Price) VALUES ('{newProduct.IdProduct}', '{newProduct.Name}', '{newProduct.Description}', {newProduct.Price})";
 
-                string queryInsert = $"INSERT INTO {DatabaseName} ({Labels[0]}, {Labels[1]}, saver_id) VALUES (@ForeignKey1, @ForeignKey2, @SaverId)";
+                string queryInsert = $"INSERT INTO {DatabaseName} ({Labels[0]}, {Labels[1]}) VALUES (@ForeignKey1, @ForeignKey2)";
 
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
                     cmd.Parameters.AddWithValue("@ForeignKey1", newRecord.ForeignKey1);
                     cmd.Parameters.AddWithValue("@ForeignKey2", newRecord.ForeignKey2);
-                    cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
                     
                     con.Open();
 

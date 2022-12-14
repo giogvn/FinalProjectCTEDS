@@ -11,7 +11,7 @@ namespace SaveFirst.Repositories
 {
     public class CategoryRepository : IRecord<Category>
     {
-        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst;integrated security=true;";
+        static string ConnectionString = "Server = DESKTOP-AIPLP16; Initial Catalog = SaveFirst ;integrated security=true;";
         public void Delete(int RecordId)
         {
             using (SqlConnection con = new(ConnectionString))
@@ -31,12 +31,13 @@ namespace SaveFirst.Repositories
 
         public void Create(Category newRecord)
         {
-            string queryInsert = $"INSERT INTO Category (name) VALUES (@SaverId, @Name)";
+            string queryInsert = $"INSERT INTO Category (id, saver_id, name) VALUES (@Id, @SaverId, @Name)";
 
             using (SqlConnection con = new(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
+                    cmd.Parameters.AddWithValue("@Id", newRecord.Id);
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
                     cmd.Parameters.AddWithValue("@Name", newRecord.Name);
 
@@ -59,15 +60,16 @@ namespace SaveFirst.Repositories
                     try
                     {
                         rdr = cmd.ExecuteReader();
-                        rdr.Read();                   
-                        Category record = new Category()
+                        while (rdr.Read())
                         {
-                            Id = rdr["id"].ToString(),
-                            SaverId = rdr["saver_id"].ToString(),
-                            Name = rdr["name"].ToString()
-                        };
-                        list.Add(record);
-                        return list;
+                            Category record = new()
+                            {
+                                Id = rdr["id"].ToString(),
+                                SaverId = rdr["saver_id"].ToString(),
+                                Name = rdr["name"].ToString()
+                            };
+                            list.Add(record);
+                        }                        
                     }
                     catch (Exception e)
                     {
@@ -75,34 +77,35 @@ namespace SaveFirst.Repositories
                     }
                 }
             }
+            return list;
         }
 
         public List<Category> getExpenseCategory(string expenseId)
         {
-        string queryFind = $"SELECT * FROM ExpenseCategory JOIN Category ON expense_id = id WHERE expense_id = @expenseId;";
-        List<Category> categories = new();
-        using (SqlConnection con = new(ConnectionString))
-        {
-            con.Open();
-            SqlDataReader rdr;
-            using (SqlCommand cmd = new SqlCommand(queryFind, con))
+            string queryFind = $"SELECT * FROM Category WHERE id = (SELECT category_id FROM ExpenseCategory WHERE expense_id = @ExpenseId);";
+            List<Category> categories = new();
+            using (SqlConnection con = new(ConnectionString))
             {
-                cmd.Parameters.AddWithValue("@expenseId", expenseId);
-                rdr = cmd.ExecuteReader();
-                while (rdr.Read())
-                {                       
-                    Category record = new Category()
-                    {
-                        Id = rdr["id"].ToString(),
-                        SaverId = rdr["saver_id"].ToString(),
-                        Name = rdr["name"].ToString()
-                    };
-                    categories.Add(record);
+                con.Open();
+                SqlDataReader rdr;
+                using (SqlCommand cmd = new SqlCommand(queryFind, con))
+                {
+                    cmd.Parameters.AddWithValue("@expenseId", expenseId);
+                    rdr = cmd.ExecuteReader();
+                    while (rdr.Read())
+                    {                       
+                        Category record = new Category()
+                        {
+                            Id = rdr["id"].ToString(),
+                            SaverId = rdr["saver_id"].ToString(),
+                            Name = rdr["name"].ToString()
+                        };
+                        categories.Add(record);
+                    }
                 }
             }
+            return categories;
         }
-        return categories;
-    }
         public void Update(Category record) => throw new NotImplementedException();
         public List<Category> ReadAll() => throw new NotImplementedException();
     }

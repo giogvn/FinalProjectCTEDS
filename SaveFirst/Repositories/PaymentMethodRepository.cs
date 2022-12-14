@@ -31,18 +31,20 @@ namespace SaveFirst.Repositories
 
         public void Create(PaymentMethod newRecord)
         {
-            string queryInsert = $"INSERT INTO PaymentMethod (saver_id, name, bank, limit, expiration_date, invoice_due_date, invoice_closing_date, registration_date, cancel_date) " +
-                $"VALUES (@SaverId, @Name, @Bank, @Limit @ExpirationDate, @InvoiceDueDate, @InvoiceClosingDate, @RegistrationDate, @CancelDate)";
+            string queryInsert = $"INSERT INTO PaymentMethod (id, saver_id, name, bank, limit, invoice_due_date, invoice_closing_date, registration_date) " +
+                $"VALUES (@Id, @SaverId, @Name, @Bank, @Limit, @InvoiceDueDate, @InvoiceClosingDate, @RegistrationDate)";
 
             using (SqlConnection con = new(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
+
+                    cmd.Parameters.AddWithValue("@Id", newRecord.Id);
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
                     cmd.Parameters.AddWithValue("@Name", newRecord.Name);
                     cmd.Parameters.AddWithValue("@Bank", newRecord.Bank);
                     cmd.Parameters.AddWithValue("@Limit", newRecord.Limit);
-                    cmd.Parameters.AddWithValue("@ExpirationDate", newRecord.ExpirationDate);
+                    cmd.Parameters.AddWithValue("@RegistrationDate", newRecord.RegistrationDate.ToString());
                     cmd.Parameters.AddWithValue("@InvoiceDueDate", newRecord.InvoiceDueDate);
                     cmd.Parameters.AddWithValue("@InvoiceClosingDate", newRecord.InvoiceClosingDate);
 
@@ -52,18 +54,18 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<PaymentMethod> FindAllFromSaver(string Id)
+        public List<PaymentMethod> FindAllFromSaver(string saverId)
         {
             PaymentMethod record = null;
             List<PaymentMethod> list = new();
             using (SqlConnection con = new(ConnectionString))
             {
-                string queryFind = $"SELECT * FROM CreditCard WHERE saver_id = '{Id}'";
+                string queryFind = $"SELECT * FROM PaymentMethod WHERE saver_id = @SaverId";
                 using (SqlCommand cmd = new SqlCommand(queryFind, con))
                 {
+                    cmd.Parameters.AddWithValue("@SaverId", saverId);
                     con.Open();
-                    try
-                    {
+                  
                         SqlDataReader rdr = cmd.ExecuteReader();
                         while (rdr.Read())
                         {
@@ -76,19 +78,17 @@ namespace SaveFirst.Repositories
                                 SaverId = rdr["saver_id"].ToString(),
                                 Name = rdr["name"].ToString(),
                                 Bank = rdr["bank"].ToString(),
-                                Limit = (float) rdr["limit"],
                                 ExpirationDate = new DateTime(expDate[0], expDate[1], expDate[2]),
+                                RegistrationDate = Convert.ToDateTime(rdr["registration_date"].ToString()),
+                                Limit = (double) rdr["limit"],
                                 InvoiceDueDate = (int)rdr["invoice_due_date"],
                                 InvoiceClosingDate = (int)rdr["invoice_closing_date"]
                             };
                             list.Add(record);
 
                         }
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Not found");
-                    }
+                    
+
                 }
             }
             return list;
@@ -116,11 +116,11 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public float ExpensesFromPaymentMethod(string PaymentMethodId)
+        public double ExpensesFromPaymentMethod(string PaymentMethodId)
         {
             List<Expense> expenses = ExpenseRepository.GetExpensesFromPaymentMethod(PaymentMethodId);
 
-            float total = 0;
+            double total = 0;
             foreach(Expense expense in expenses)
             {
                 total += expense.InstallmentValue;
