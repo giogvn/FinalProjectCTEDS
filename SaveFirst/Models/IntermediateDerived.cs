@@ -16,8 +16,5 @@ namespace SaveFirst.Models
     {
         public static string[] Labels = { "expense_id ", "payment_method_id" };
     }
-    public class PaymentMethodIncomeResource: IntermediateModel
-    {
-        public static string[] Labels = { "payment_method_id", "income_resource_id" };
-    }
+
 }
