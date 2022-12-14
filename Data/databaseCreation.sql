@@ -1,9 +1,6 @@
 USE [SaveFirst];
 GO
 
-SELECT * FROM Saver
-GO
-
 CREATE TABLE Saver(
 	id VARCHAR(255) PRIMARY KEY,
 	email VARCHAR(255) NOT NULL UNIQUE,
@@ -58,8 +55,8 @@ CREATE TABLE PaymentMethod(
   type VARCHAR(255),
   bank VARCHAR(255),
   limit FLOAT,
-  invoice_due_date INT NOT NULL,
-  invoice_closing_date INT NOT NULL,
+  invoice_due_date INT,
+  invoice_closing_date INT,
   registration_date DATETIME NOT NULL,
   cancel_date DATETIME DEFAULT NULL,
   FOREIGN KEY (saver_id) REFERENCES Saver(id),
