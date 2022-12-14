@@ -74,19 +74,17 @@ namespace SaveFirst.Repositories
 
                     while (rdr.Read())
                     {
-                        string[] nums = rdr["expense_date"].ToString().Split("-");
-                        int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
                         Expense record = new Expense()
                         {
                             Id = rdr["id"].ToString(),
                             SaverId = rdr["saver_id"].ToString(),
-                            Date = new DateTime(num[0], num[1], num[2]),
-                            Value = (float)rdr["value"],
+                            Date = Convert.ToDateTime(rdr["expense_date"].ToString()),
+                            Value = (double)rdr["value"],
                             Type = rdr["expense_type"].ToString(),
                             Description = rdr["description"].ToString(),
                             Status = rdr["status"].ToString(),
                             NumberOfInstallments = (int)rdr["number_of_installments"],
-                            InstallmentValue = (float)rdr["installment_value"],
+                            InstallmentValue = (double)rdr["installment_value"],
                             InstallmentsLeft = (int)rdr["installments_left"]
                         };
                         list.Add(record);
