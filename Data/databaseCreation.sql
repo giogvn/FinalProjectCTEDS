@@ -1,4 +1,4 @@
-USE [SaveFirst];
+USE [db_7];
 GO
 
 CREATE TABLE Saver(

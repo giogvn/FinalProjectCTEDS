@@ -12,7 +12,7 @@ namespace SaveFirst.Repositories
 {
     public class SaverRepository : IRecord<Saver>
     {
-        static string ConnectionString = "data source=NOTEBOOK-HP\\MSSQLSERVER01;initial catalog=master;trusted_connection=true";
+        static string ConnectionString = "Server=labsoft.pcs.usp.br; Initial Catalog=db_7; User id=usuario_7; pwd=44192792818;";
         public void Delete(int RecordId)
         {
             using (SqlConnection con = new(ConnectionString))
@@ -32,7 +32,7 @@ namespace SaveFirst.Repositories
 
         public void Create(Saver newRecord)
         {
-            string queryInsert = $"INSERT INTO Saver (id , email, type, payer_id,  name,  birthdate, password) VALUES (@Id, @Email, @Type, @PayerId, @Name, @Birthday, @Password)";
+            string queryInsert = $"INSERT INTO Saver (id , email, type, payer_id,  name,  birthdate, password) VALUES (@Id, @Email, @Type, @PayerId, @Name, CONVERT(datetime,@Birthday,103), @Password)";
             using (SqlConnection con = new(ConnectionString))
             {
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))

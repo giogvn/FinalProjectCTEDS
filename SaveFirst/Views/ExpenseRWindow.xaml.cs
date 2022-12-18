@@ -198,7 +198,7 @@ namespace SaveFirst.Views
             ExpenseRepository expenseRepository = new();
             expenseRepository.Create(newExpense);
 
-            string connectionString = "data source=NOTEBOOK-HP\\MSSQLSERVER01;initial catalog=master;trusted_connection=true";
+            string connectionString = "Server=labsoft.pcs.usp.br; Initial Catalog=db_7; User id=usuario_7; pwd=44192792818;";
             IntermediateRepository repository1 = new(connectionString, "ExpenseCategory", ExpenseCategory.Labels);
             IntermediateRepository repository2 = new(connectionString, "ExpensePaymentMethod", ExpensePaymentMethod.Labels);
 

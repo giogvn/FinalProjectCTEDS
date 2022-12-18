@@ -11,7 +11,7 @@ namespace SaveFirst.Repositories
 {
     public class PaymentMethodRepository : IRecord<PaymentMethod>
     {
-        static string ConnectionString = "data source=NOTEBOOK-HP\\MSSQLSERVER01;initial catalog=master;trusted_connection=true";
+        static string ConnectionString = "Server=labsoft.pcs.usp.br; Initial Catalog=db_7; User id=usuario_7; pwd=44192792818;";
         public void Delete(int RecordId)
         {
             using (SqlConnection con = new(ConnectionString))
@@ -31,8 +31,8 @@ namespace SaveFirst.Repositories
 
         public void Create(PaymentMethod newRecord)
         {
-            string queryInsert = $"INSERT INTO PaymentMethod (id, saver_id, name, bank, limit, invoice_due_date, invoice_closing_date, registration_date) " +
-                $"VALUES (@Id, @SaverId, @Name, @Bank, @Limit, @InvoiceDueDate, @InvoiceClosingDate, @RegistrationDate)";
+            string queryInsert = $"INSERT INTO PaymentMethod (id, saver_id, name, bank, limit, invoice_due_date, invoice_closing_date) " +
+                $"VALUES (@Id, @SaverId, @Name, @Bank, @Limit, @InvoiceDueDate, @InvoiceClosingDate)";
 
             using (SqlConnection con = new(ConnectionString))
             {
@@ -44,7 +44,6 @@ namespace SaveFirst.Repositories
                     cmd.Parameters.AddWithValue("@Name", newRecord.Name);
                     cmd.Parameters.AddWithValue("@Bank", newRecord.Bank);
                     cmd.Parameters.AddWithValue("@Limit", newRecord.Limit);
-                    cmd.Parameters.AddWithValue("@RegistrationDate", newRecord.RegistrationDate.ToString());
                     if (newRecord.InvoiceDueDate != null)
                     {
                         cmd.Parameters.AddWithValue("@InvoiceDueDate", newRecord.InvoiceDueDate);
@@ -84,7 +83,6 @@ namespace SaveFirst.Repositories
                             SaverId = rdr["saver_id"].ToString(),
                             Name = rdr["name"].ToString(),
                             Bank = rdr["bank"].ToString(),
-                            RegistrationDate = Convert.ToDateTime(rdr["registration_date"].ToString()),
                             Limit = (double)rdr["limit"]
                         };
 
@@ -118,14 +116,14 @@ namespace SaveFirst.Repositories
         {
             using (SqlConnection con = new(ConnectionString))
             {
-                string queryUpdateBody = "UPDATE CreditCard SET name = @Name , bank = @Bank, expiration_date = @ExpirationDate, invoice_due_date = @InvoiceDueDate, invoice_closing_date = @InvoiceClosingDate, WHERE id = @Id";
+                string queryUpdateBody = "UPDATE CreditCard SET name = @Name , bank = @Bank, expiration_date = CONVERT(datetime,@ExpirationDate,103), invoice_due_date = @InvoiceDueDate, invoice_closing_date = @InvoiceClosingDate, WHERE id = @Id";
 
                 using (SqlCommand cmd = new(queryUpdateBody, con))
                 {
                     cmd.Parameters.AddWithValue("@Id", record.Id);
                     cmd.Parameters.AddWithValue("@Name", record.Name);
                     cmd.Parameters.AddWithValue("@Bank", record.Bank);
-                    cmd.Parameters.AddWithValue("@InvoiceDueDate", record.InvoiceDueDate);
+                    cmd.Parameters.AddWithValue("@InvoiceDueDate", record.InvoiceDueDate.ToString());
                     cmd.Parameters.AddWithValue("@InvoiceClosingDate", record.InvoiceClosingDate);
                     cmd.Parameters.AddWithValue("@ExpirationDate", record.ExpirationDate);
                     con.Open();
