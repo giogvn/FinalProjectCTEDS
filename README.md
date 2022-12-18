@@ -15,12 +15,25 @@ Run the application using VisualStudio the application, the user will be present
 
 Click the **"Cadastro"** button to go to open the registration window.
 
+![alt text](/Prints/RegisteringUser.png)
+
+Fill in the textboxes:
+
+- *Nome*: your name
+- *Email*: your valid and yet not-registered e-mail
+- *Senha*: any non-blank sequence of characters representing the user password
+
+Click the "Efetuar Cadastro Button" twice. You should be redirected to the **LoginWindow**.
+
+## 2. Logging in
+
 ![alt text](/Prints/LoginWindow.png)
 
 Fill in the textboxes:
 
-- *Email*: a valid and yet not-registered e-mail
-- *Password*: any non-blank sequence of characters
-- 
-Type a valid and yet not-registered e-mail in the "Email" textbox
+- *Email*: your valid  and already registered e-mail
+- *Senha*: you password
+
+Click the "Acessar" button.
+
 
