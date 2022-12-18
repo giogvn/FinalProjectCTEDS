@@ -67,8 +67,94 @@ Fill in the textboxes:
 - *Vencimento da fatura (dia)*: the Credit Card's invoice due day
 - *Data de Validade*: the Credit Card's expiration month and year. The MM/YYYY format must be used.
 
+Click the "Cadastrar método de pagamento" button. This should redirect the application to the **MainWindow**.
+
 #### 3.1.2 Registering a Checking Account
+
+**If the "Conta Corrente" option was clicked, the **PaymentMethodRWindow** should be displayed as the following:**
 ![alt text](/Prints/RegisteringCheckingAccount.png)
+
+Fill in the textboxes:
+
+- *Nome*: user-defined name for the Checking Account being registered
+- *Banco*: name of the  Checking Account's bank
+- *Valor Limite*: very important field. This is the field that represents the User-defined limit to that PaymentMethod and is the target that will help him or her to decide whether to make another expense or not. In other words, it is the User-defined maximum value to be spent from that PaymentMethod in the current month. If the total value amount of active expenses registered to that PaymentMethod is greater that this limit, this PaymentMethod bar will appear red as described in the section **MainWindow**
+
+
+Click the "Cadastrar método de pagamento" button. This should redirect the application to the **MainWindow**.
+
+## 4. Registering an Expense
+
+While in the **MainWindow**, click the "Cadastrar Novo Gasto" button. This should open the **ExpenseRWindow**
+
+![alt text](/Prints/RegisteringCheckingAccount.png)
+
+Fill in the textboxes:
+
+- *Descrição*: a brief sequence of characters describing the expense
+- *Valor*: total Expense Value
+- *Numero de Parcelas*: total expense installments.
+
+Click the "Selecione uma data" date box and fill it with the Expense date.
+
+### 4.1 Selecting Expense Type
+Click the "Escolha o tipo de gasto" dropdown list. Choose one of the following options displayed:
+
+![alt text](/Prints/SelectingExpenseType.png)
+
+- *Esporádico*: if the expense is sporadic and don't have a periodic behavior (it won't happen in the following months with the same values)
+- *Recorrente*: if the Expense is not sporadic. Common cases are "Gym" and "StreamingService" payments
+
+
+### 4.1 Selecting Expense's PaymentMethod
+Click the empty button below the "Escolha o tipo de gasto" dropdown list button . This should open a dropdown list with the already registered **PaymentMethods** for the current user.
+
+Click on the **PaymentMethod** name displayed used for the Expense being registered or the "Cadastrar um novo método de pagamento" option, which should redirect the application the the **PaymentMethodRWindow** explained in the **Registering a Payment Method** previous section.
+
+![alt text](/Prints/SelectingPaymentMethod.png)
+
+### 4.1 Selecting Expense's Category
+
+Click the empty button two positions below the "Escolha o tipo de gasto" dropdown list button . This should open a dropdown list with the already registered **Categories** for the current user.
+
+Click on the **Criar uma nova categoria** option displayed in the dropdown list to register a new category if you want to register a new category.
+
+#### 4.1.1 Registering a Category
+
+![alt text](/Prints/SelectingPaymentMethod.png)
+
+**Fill in the textbox:**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
