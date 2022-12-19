@@ -125,7 +125,7 @@ Click on the **Criar uma nova categoria** option displayed in the dropdown list 
 
 #### 4.3.1 Registering a Category
 
-![alt text](/Prints/SelectingPaymentMethod.png)
+![alt text](/Prints/RegisteringCategory.png)
 
 **Fill in the textbox:**
 - *Nome*: the name of the category that must have not yet been registered by the current user.
