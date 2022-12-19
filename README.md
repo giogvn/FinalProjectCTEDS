@@ -160,42 +160,32 @@ Some information for the user's PaymentMethods with the **MainWindow** above:
 - He or she has spent an amout of 570 in the category "Entretenimento", which means that the Expenses from this category that are marked as "active" in the database sum 570. Being "active in the database" means that the expense has some installment that has not yet been paid. Therefore, this value is only valid for Expenses paid with credit card and whose last installment due date has not yet arrived. Being "active" or not is automatically defined by the database management system using the expense's due date  (which is automatically calculated) and the number of installments, both defined in the expense registration moment.
 
 
+### 5.3 Navigation Buttons
+
+![alt text](/Prints/NavigationButtons.png)
+
+The highlighted butttons above are used to navigate through the right and left portions of the **MainWindow** explained in the previous 5.1 and 5.2 sections.
+
+### 5.4 Total Expense's Values
+
+![alt text](/Prints/UserMoneySituation.png)
+
+The lower-right portion of **MainWindow** displays the following informations:
+
+- *Você ainda tem R$XXX*: the sum of all the PaymentsMethod's limits registered minus the sum of all the Expenses currently marked as "active" in the database is equal to R$XXX. This value represents how much the user can still spend if he or she wants to respect every PaymentMethod's limits registered.  Being "active in the database" means that the expense has some installment that has not yet been paid. Therefore, this value is only valid for Expenses paid with credit card and whose last installment due date has not yet arrived. Being "active" or not is automatically defined by the database management system using the expense's due date  (which is automatically calculated) and the number of installments, both defined in the expense registration moment. 
+
+- *Você gastou R$XXX* : the sum of all Expenses' installment values currently marked as "active" in the database is equal to R$XXX.
 
 
+### 5.5 Expenses List
+
+To list the currently active Expenses click the "Listar todos gastos" button.
+
+![alt text](/Prints/ExpensesListButton.png)
 
 
+This should open the **ExpenseLWindow**, displaying the active expenses for the user. Being "active in the database" means that the expense has some installment that has not yet been paid.
 
+![alt text](/Prints/ExpensesList.png)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-While in the Main Windown, one can 
-
-
+The user has one active expense with descrption "Academia" and total value of 120 to be paid in one installment ("Parcela" columnn).
