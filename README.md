@@ -91,7 +91,7 @@ Click the "Cadastrar método de pagamento" button. This should redirect the appl
 
 While in the **MainWindow**, click the "Cadastrar Novo Gasto" button. This should open the **ExpenseRWindow**
 
-![alt text](/Prints/RegisteringCheckingAccount.png)
+![alt text](/Prints/RegisteringExpense.png)
 
 Fill in the textboxes:
 
@@ -110,20 +110,20 @@ Click the "Escolha o tipo de gasto" dropdown list. Choose one of the following o
 - *Recorrente*: if the Expense is not sporadic. Common cases are "Gym" and "StreamingService" payments
 
 
-### 4.1 Selecting Expense's PaymentMethod
+### 4.2 Selecting Expense's PaymentMethod
 Click the empty button below the "Escolha o tipo de gasto" dropdown list button . This should open a dropdown list with the already registered **PaymentMethods** for the current user.
 
 Click on the **PaymentMethod** name displayed used for the Expense being registered or the "Cadastrar um novo método de pagamento" option, which should redirect the application the the **PaymentMethodRWindow** explained in the **Registering a Payment Method** previous section.
 
 ![alt text](/Prints/SelectingPaymentMethod.png)
 
-### 4.1 Selecting Expense's Category
+### 4.3 Selecting Expense's Category
 
 Click the empty button two positions below the "Escolha o tipo de gasto" dropdown list button . This should open a dropdown list with the already registered **Categories** for the current user.
 
 Click on the **Criar uma nova categoria** option displayed in the dropdown list to register a new category if you want to register a new category.
 
-#### 4.1.1 Registering a Category
+#### 4.3.1 Registering a Category
 
 ![alt text](/Prints/SelectingPaymentMethod.png)
 
