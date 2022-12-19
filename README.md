@@ -124,11 +124,40 @@ Click on the **Criar uma nova categoria** option displayed in the dropdown list 
 ![alt text](/Prints/SelectingPaymentMethod.png)
 
 **Fill in the textbox:**
+- *Nome*: the name of the category that must have not yet been registered by the current user.
+
+Click the "Adicionar" button. This should redirect the application to the default **ExpenseRWindow**.
+
+Click the "Adicionar gasto" button to finish the Expense registration. This should redirect the application to the **MainWindow**.
+
+## 5. Main Window 
+
+If the user have already registered some Expenses, Expense Categories and PaymentMethods his or her **MainWindow** should be similar to the following.
+
+![alt text](/Prints/SomewhatPopulatedMainWindow.png)
+
+### 5.1 PaymentMethod's Limits Status
+
+The left portion of **MainWindow** displays how far each one of the Payment Methods registered by the user is from the its limit. The redder the bar for each PaymentMethod, the less the user should spend from it.
 
 
+![alt text](/Prints/UserPaymentMethodSituation.png)
+
+Some information for the user's PaymentMethods with the **MainWindow** above:
+
+- He or she has already spent 1200 from a limit of 2000 set for the *Cartão 1* PaymentMethod
 
 
+### 5.2 Total Expense's Values by Category
 
+The right portion of **MainWindow** displays how much the user has spent in each category he or she has registered.
+
+
+![alt text](/Prints/UserCategorySituation.png)
+
+Some information for the user's PaymentMethods with the **MainWindow** above:
+
+- He or she has spent an amout of 570 in the category "Entretenimento", which means that the Expenses from this category that are marked as "active" in the database sum 570. Being "active in the database" means that the expense has some installment that has not yet been paid. Therefore, this value is only valid for Expenses paid with credit card and whose last installment due date has not yet arrived. Being "active" or not is automatically defined by the database management system using the expense's due date  (which is automatically calculated) and the number of installments, both defined in the expense registration moment.
 
 
 
