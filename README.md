@@ -1,4 +1,4 @@
-# SaveFirst
+# SaveFirst's User Manual
 SaveFirst is a Windows application made with the Windows Presentation Foundation (WPF) user interface structure.
 The aplicastion's use cases are the following:
 
