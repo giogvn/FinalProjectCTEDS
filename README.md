@@ -136,7 +136,7 @@ Click the "Adicionar gasto" button to finish the Expense registration. This shou
 
 ## 5. Main Window 
 
-If the user have already registered some Expenses, Expense Categories and PaymentMethods his or her **MainWindow** should be similar to the following.
+If the user already has some registered Expenses, Expense Categories and PaymentMethods their **MainWindow** should be similar to the following.
 
 ![alt text](/Prints/SomeWhatPopulatedMainWindow.png)
 
