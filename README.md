@@ -39,6 +39,7 @@ Click the "Acessar" button. This will open to the **MainWindow**.
 ## 3. Registering a Payment Method
 
 Click the "Cadastrar Novo Método de Pagamento" button in the upper-right corner of the MainWindow.
+
 ![alt text](/Prints/RegisteringPaymentMethod.png)
 
 This should open the **PaymentMethodRWindow**
@@ -46,6 +47,7 @@ This should open the **PaymentMethodRWindow**
 ### 3.1 Selecting one PaymentMethod type
 
 While in the **PaymentMethodRWindow** click in the "Escolha uma opção" drop-down list. This should open a list with two entries:
+
 ![alt text](/Prints/SelectingPaymentMethodType.png)
 
 Choose and click in one of the two options:
@@ -56,6 +58,7 @@ Choose and click in one of the two options:
 #### 3.1.1 Registering a Credit Card
 
 If the "Cartão de Crédito" option was clicked, the **PaymentMethodRWindow** should be displayed as the following:
+
 ![alt text](/Prints/RegisteringCreditCard.png)
 
 Fill in the textboxes:
@@ -72,6 +75,7 @@ Click the "Cadastrar método de pagamento" button. This should redirect the appl
 #### 3.1.2 Registering a Checking Account
 
 **If the "Conta Corrente" option was clicked, the **PaymentMethodRWindow** should be displayed as the following:**
+
 ![alt text](/Prints/RegisteringCheckingAccount.png)
 
 Fill in the textboxes:
