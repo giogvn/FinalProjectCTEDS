@@ -11,7 +11,7 @@ namespace SaveFirst.Repositories
 {
     public class CategoryRepository : IRecord<Category>
     {
-        static string ConnectionString = "Server=labsoft.pcs.usp.br; Initial Catalog=db_7; User id=usuario_7; pwd=44192792818;";
+        static string ConnectionString = "Server=labsoft.pcs.usp.br; Initial Catalog=db_7; User id=''; pwd='';";
         public void Delete(int RecordId)
         {
             using (SqlConnection con = new(ConnectionString))
