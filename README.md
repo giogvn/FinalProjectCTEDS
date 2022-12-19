@@ -190,6 +190,6 @@ To list the currently active Expenses click the "Listar todos gastos" button.
 
 This should open the **ExpenseLWindow**, displaying the active expenses for the user. Being "active in the database" means that the expense has some installment that has not yet been paid.
 
-![alt text](/Prints/ExpensesList.png)
+![alt text](/Prints/ExpenseList.png)
 
 The user has one active expense with descrption "Academia" and total value of 120 to be paid in one installment ("Parcela" columnn).
