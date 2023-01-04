@@ -7,11 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Windows;
+using SaveFirst.Builders;
 
 namespace SaveFirst.Repositories
 {
     public class SaverRepository : IRecord<Saver>
     {
+        private static ModelBuilder modelBuilder = new();
         static string ConnectionString = "Server=labsoft.pcs.usp.br; Initial Catalog=db_7; User id=''; pwd='';";
         public void Delete(int RecordId)
         {
@@ -51,46 +53,7 @@ namespace SaveFirst.Repositories
             }
         }
 
-        public List<Saver> FindAllFromSaver(int Id)
-        {
-            Saver record = null;
-            List<Saver> list = new();
-            using (SqlConnection con = new(ConnectionString))
-            {
-                string queryFind = $"SELECT * FROM Saver WHERE payer_id = '{Id}'";
-                using (SqlCommand cmd = new SqlCommand(queryFind, con))
-                {
-                    con.Open();
-
-                    try
-                    {
-                        SqlDataReader rdr = cmd.ExecuteReader();
-                        while (rdr.Read())
-                        {
-
-                            string[] nums = rdr["birthdate"].ToString().Split("-");
-                            int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
-                            record = new Saver()
-                            {
-                                Id = rdr["id"].ToString(),
-                                Type = rdr["user_type"].ToString(),
-                                PayerId = rdr["payer_id"].ToString(),
-                                Birthday = new DateTime(num[0], num[1], num[2]),
-                            };
-                            list.Add(record);
-
-                        }
-                    }
-
-
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Not found");
-                    }
-                }
-            }
-            return list;
-        }
+        public List<Saver> FindAllFromSaver(int Id)  => throw new NotImplementedException();
 
         public List<Saver> findSaver(string email, string password)
         {
@@ -104,81 +67,13 @@ namespace SaveFirst.Repositories
                 {
                     cmd.Parameters.AddWithValue("@Email", email);
                     cmd.Parameters.AddWithValue("@Password", password);
-                    try
-                    {
-                        rdr = cmd.ExecuteReader();
-                        rdr.Read();
-                        Saver record = new Saver()
-                        {
-                            Id = rdr["id"].ToString(),
-                            Type = rdr["type"].ToString(),
-                            Name = rdr["name"].ToString(),
-                            Birthday = Convert.ToDateTime(rdr["birthdate"].ToString())
-                        };
-                        list.Add(record);
-                        return list;
-                    }
-                    catch (Exception e)
-                    {
-                        return list;
-                    }
+                    rdr = cmd.ExecuteReader();
+                    return modelBuilder.Build(rdr, "saver");
                 }
             }
         }
+        public List<Saver> ReadAll() => throw new NotImplementedException();
 
-        public List<Saver> ReadAll()
-        {
-            List<Saver> list = new();
-            using (SqlConnection con = new(ConnectionString))
-            {
-                string querySelect = $"SELECT * FROM Saver";
-                con.Open();
-                SqlDataReader  rdr;
-                using (SqlCommand cmd = new SqlCommand(querySelect, con))
-                {                    
-                    try
-                    {
-                        rdr = cmd.ExecuteReader();
-                        while (rdr.Read())
-                        {
-                            string[] nums = rdr["birthdate"].ToString().Split("-");
-                            int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
-                            Saver record = new Saver()
-                            {
-                                Id =  rdr["id"].ToString(),
-                                Type = rdr["type"].ToString(),
-                                Name = rdr["name"].ToString(),
-                                Birthday = new DateTime(num[0], num[1], num[2])
-                            };
-                            list.Add(record);
-                        }
-                    }
-                    catch (SqlException)
-                    {
-                        return list;    
-                    }                    
-                }
-            }
-            return list;
-        }
-
-        public void Update(Saver record)
-        {
-            using (SqlConnection con = new(ConnectionString))
-            {
-                string queryUpdateBody = "UPDATE Saver SET name = @Name , birthdate = @Birthday WHERE id = @Id";
-
-                using (SqlCommand cmd = new(queryUpdateBody, con))
-                {
-
-                    cmd.Parameters.AddWithValue("@Id", record.Id);
-                    cmd.Parameters.AddWithValue("@Name", record.Name);
-                    cmd.Parameters.AddWithValue("@Birthday", record.Birthday);
-
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                }
-            }
-        }
+        public void Update(Saver record) => throw new NotImplementedException();
     }
 }

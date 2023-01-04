@@ -6,11 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using SaveFirst.Builders;
 
 namespace SaveFirst.Repositories
 {
     public class ExpenseRepository : IRecord<Expense>
     {
+
+        private static ModelBuilder modelBuilder = new();
         static string ConnectionString = "Server=labsoft.pcs.usp.br; Initial Catalog=db_7; User id=''; pwd='';";
         public void Delete(int RecordId)
         {
@@ -39,7 +42,6 @@ namespace SaveFirst.Repositories
             {
                 using (SqlCommand cmd = new SqlCommand(queryInsert, con))
                 {
-
                     cmd.Parameters.AddWithValue("@Id", newRecord.Id);
                     cmd.Parameters.AddWithValue("@SaverId", newRecord.SaverId);
                     cmd.Parameters.AddWithValue("@Date", newRecord.Date.ToString());
@@ -71,27 +73,9 @@ namespace SaveFirst.Repositories
                     cmd.Parameters.AddWithValue("@Status", "active");
                     cmd.Parameters.AddWithValue("@SaverId", saverId);
                     rdr = cmd.ExecuteReader();
-
-                    while (rdr.Read())
-                    {
-                        Expense record = new Expense()
-                        {
-                            Id = rdr["id"].ToString(),
-                            SaverId = rdr["saver_id"].ToString(),
-                            Date = Convert.ToDateTime(rdr["expense_date"].ToString()),
-                            Value = (double)rdr["value"],
-                            Type = rdr["expense_type"].ToString(),
-                            Description = rdr["description"].ToString(),
-                            Status = rdr["status"].ToString(),
-                            NumberOfInstallments = (int)rdr["number_of_installments"],
-                            InstallmentValue = (double)rdr["installment_value"],
-                            InstallmentsLeft = (int)rdr["installments_left"]
-                        };
-                        list.Add(record);
-                    }
+                    return modelBuilder.Build(rdr, "expense");
                 }
             }
-            return list;
         }
 
         public List<Expense> ReadAll() => throw new NotImplementedException();
@@ -134,29 +118,9 @@ namespace SaveFirst.Repositories
                     cmd.Parameters.AddWithValue("@Status", status);
                     cmd.Parameters.AddWithValue("@IncomeResource", IncomeResourceId);
                     rdr = cmd.ExecuteReader();
-
-                    while (rdr.Read())
-                    {
-                        string[] nums = rdr["expense_date"].ToString().Split("-");
-                        int[] num = { int.Parse(nums[0]), int.Parse(nums[1]), int.Parse(nums[2]) };
-                        Expense record = new Expense()
-                        {
-                            Id = rdr["id"].ToString(),
-                            SaverId = rdr["saver_id"].ToString(),
-                            Date = new DateTime(num[0], num[1], num[2]),
-                            Value = (float)rdr["value"],
-                            Type = rdr["expense_type"].ToString(),
-                            Description = rdr["description"].ToString(),
-                            Status = rdr["status"].ToString(),
-                            NumberOfInstallments = (int)rdr["number_of_installments"],
-                            InstallmentValue = (float)rdr["installment_value"],
-                            InstallmentsLeft = (int)rdr["installments_left"]
-                        };
-                        list.Add(record);
-                    }
+                    return modelBuilder.Build(rdr, "expense");
                 }
             }
-            return list;
         }
 
         public static List<Expense> GetExpensesFromPaymentMethod(string PaymentMethodId, string status = "active")
@@ -172,30 +136,9 @@ namespace SaveFirst.Repositories
                 {
                     cmd.Parameters.AddWithValue("@PaymentMethodId", PaymentMethodId);
                     rdr = cmd.ExecuteReader();
-
-
-
-                    while (rdr.Read())
-                    {
-
-                        Expense record = new Expense()
-                        {
-                            Id = rdr["id"].ToString(),
-                            SaverId = rdr["saver_id"].ToString(),
-                            Date = Convert.ToDateTime(rdr["expense_date"].ToString()),
-                            Value = (double)rdr["value"],
-                            Type = rdr["expense_type"].ToString(),
-                            Description = rdr["description"].ToString(),
-                            Status = rdr["status"].ToString(),
-                            NumberOfInstallments = (int)rdr["number_of_installments"],
-                            InstallmentValue = (double)rdr["installment_value"],
-                            InstallmentsLeft = (int)rdr["installments_left"]
-                        };
-                        list.Add(record);
-                    }
+                    return modelBuilder.Build(rdr, "expense");
                 }
             }
-            return list;
         }
 
         public double CalculateTotalExpenses(string saverId, DateTime limitDate)
@@ -211,35 +154,9 @@ namespace SaveFirst.Repositories
                     cmd.Parameters.AddWithValue("@Status", "active");
                     cmd.Parameters.AddWithValue("@SaverId", saverId);
                     rdr = cmd.ExecuteReader();
-
-                    while (rdr.Read())
-                    {
-                        Expense record = new Expense()
-                        {
-                            Id = rdr["id"].ToString(),
-                            SaverId = rdr["saver_id"].ToString(),
-                            Date = Convert.ToDateTime(rdr["expense_date"].ToString()),
-                            Value = (double)rdr["value"],
-                            Type = rdr["expense_type"].ToString(),
-                            Description = rdr["description"].ToString(),
-                            Status = rdr["status"].ToString(),
-                            NumberOfInstallments = (int)rdr["number_of_installments"],
-                            InstallmentValue = (double)rdr["installment_value"],
-                            InstallmentsLeft = (int)rdr["installments_left"]
-                        };
-                        expenses.Add(record);
-                    }
+                    return modelBuilder.Build(rdr, "expense");
                 }
             }
-            double total = 0;
-            foreach (Expense expense in expenses)
-            {
-                if (expense.DueDate <= limitDate)
-                {
-                    total += expense.InstallmentValue;
-                }
-            }
-            return total;
         }
 
         public List<Expense> getCategoryExpenses(string categoryId)
@@ -254,28 +171,9 @@ namespace SaveFirst.Repositories
                 {
                     cmd.Parameters.AddWithValue("@CategoryId", categoryId);
                     rdr = cmd.ExecuteReader();
-
-                    while (rdr.Read())
-                    {
-
-                        Expense record = new Expense()
-                        {
-                            Id = rdr["id"].ToString(),
-                            SaverId = rdr["saver_id"].ToString(),
-                            Date = Convert.ToDateTime(rdr["expense_date"].ToString()),
-                            Value = (double)rdr["value"],
-                            Type = rdr["expense_type"].ToString(),
-                            Description = rdr["description"].ToString(),
-                            Status = rdr["status"].ToString(),
-                            NumberOfInstallments = (int)rdr["number_of_installments"],
-                            InstallmentValue = (double)rdr["installment_value"],
-                            InstallmentsLeft = (int)rdr["installments_left"]
-                        };
-                        expenses.Add(record);
-                    }
+                    return modelBuilder.Build(rdr, "expense");
                 }
             }
-            return expenses;
         }
     }
 }

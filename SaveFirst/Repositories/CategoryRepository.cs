@@ -6,11 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using SaveFirst.Builders;
 
 namespace SaveFirst.Repositories
 {
     public class CategoryRepository : IRecord<Category>
     {
+        private ModelBuilder modelBuilder = new();
         static string ConnectionString = "Server=labsoft.pcs.usp.br; Initial Catalog=db_7; User id=''; pwd='';";
         public void Delete(int RecordId)
         {
@@ -57,33 +59,16 @@ namespace SaveFirst.Repositories
                 using (SqlCommand cmd = new SqlCommand(querySelect, con))
                 {
                     cmd.Parameters.AddWithValue("@SaverId", saverId);
-                    try
-                    {
-                        rdr = cmd.ExecuteReader();
-                        while (rdr.Read())
-                        {
-                            Category record = new()
-                            {
-                                Id = rdr["id"].ToString(),
-                                SaverId = rdr["saver_id"].ToString(),
-                                Name = rdr["name"].ToString()
-                            };
-                            list.Add(record);
-                        }                        
-                    }
-                    catch (Exception e)
-                    {
-                        return list;
-                    }
+                    rdr = cmd.ExecuteReader();
+                    return modelBuilder.Build(rdr, "category");
                 }
             }
-            return list;
         }
 
         public List<Category> getExpenseCategory(string expenseId)
         {
             string queryFind = $"SELECT * FROM Category WHERE id = (SELECT category_id FROM ExpenseCategory WHERE expense_id = @ExpenseId);";
-            List<Category> categories = new();
+            List<Category> list = new();
             using (SqlConnection con = new(ConnectionString))
             {
                 con.Open();
@@ -92,19 +77,9 @@ namespace SaveFirst.Repositories
                 {
                     cmd.Parameters.AddWithValue("@expenseId", expenseId);
                     rdr = cmd.ExecuteReader();
-                    while (rdr.Read())
-                    {                       
-                        Category record = new Category()
-                        {
-                            Id = rdr["id"].ToString(),
-                            SaverId = rdr["saver_id"].ToString(),
-                            Name = rdr["name"].ToString()
-                        };
-                        categories.Add(record);
-                    }
-                }
+                    return modelBuilder.Build(rdr, "category");
+                }   
             }
-            return categories;
         }
         public void Update(Category record) => throw new NotImplementedException();
         public List<Category> ReadAll() => throw new NotImplementedException();

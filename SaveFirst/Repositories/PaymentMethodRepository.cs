@@ -6,11 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
+using SaveFirst.Builders;
 
 namespace SaveFirst.Repositories
 {
     public class PaymentMethodRepository : IRecord<PaymentMethod>
     {
+        private static ModelBuilder modelBuilder = new();
         static string ConnectionString = "Server=labsoft.pcs.usp.br; Initial Catalog=db_7; User id=''; pwd='';";
         public void Delete(int RecordId)
         {
@@ -73,41 +75,10 @@ namespace SaveFirst.Repositories
                 {
                     cmd.Parameters.AddWithValue("@SaverId", saverId);
                     con.Open();
-
                     SqlDataReader rdr = cmd.ExecuteReader();
-                    while (rdr.Read())
-                    {
-                        record = new PaymentMethod()
-                        {
-                            Id = rdr["id"].ToString(),
-                            SaverId = rdr["saver_id"].ToString(),
-                            Name = rdr["name"].ToString(),
-                            Bank = rdr["bank"].ToString(),
-                            Limit = (double)rdr["limit"]
-                        };
-
-
-                        if (typeof(DBNull) == rdr["invoice_due_date"].GetType())
-                        {
-                            record.InvoiceDueDate = null;
-                            record.InvoiceClosingDate = null;
-                        }
-
-                        else
-                        {
-                            record.InvoiceDueDate = (int)rdr["invoice_due_date"];
-                            record.InvoiceClosingDate = (int)rdr["invoice_closing_date"];
-                        }
-
-                        list.Add(record);
-
-
-                    }
-
-
+                    return modelBuilder.Build(rdr, "paymentMethod");
                 }
             }
-            return list;
         }
 
         public List<PaymentMethod> ReadAll() => throw new NotImplementedException();
