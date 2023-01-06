@@ -14,7 +14,7 @@ namespace SaveFirst.Repositories
         private string ConnectionString { get; set; } = string.Empty;
         private string DatabaseName { get; set; } = string.Empty;
         private string[] Labels { get; set; }
-
+        private static ModelBuilder modelBuilder = new();
         public IntermediateRepository(string connectionString, string databaseName, string[] labels)
         {
             if (connectionString == string.Empty || databaseName == string.Empty)
@@ -67,33 +67,11 @@ namespace SaveFirst.Repositories
                 {
                     con.Open();
                     cmd.Parameters.AddWithValue("@SaverId", saverId);
-
-                    try
-                    {
-                        SqlDataReader  rdr = cmd.ExecuteReader();
-                        while (rdr.Read())
-                        {
-                            record = new IntermediateModel()
-                            {
-                                ForeignKey1 = rdr[$"{Labels[0]}"].ToString(),
-                                ForeignKey2 = rdr[$"{Labels[1]}"].ToString(),
-                                SaverId = rdr["saver_id"].ToString()
-                            };
-                            list.Add(record);
-
-                        }
-                    }
-
-
-                    catch (Exception e)
-                    {
-                        Console.WriteLine("Not found");
-                    }
+                    SqlDataReader  rdr = cmd.ExecuteReader();
+                    return modelBuilder.Build(rdr, "intermediate", labels =  Labels);
                 }
             }
-                return list;
-            }
-
+        }
         public List<IntermediateModel> ReadAll()
         {
             List<IntermediateModel> list = new();
@@ -107,6 +85,7 @@ namespace SaveFirst.Repositories
                 using (SqlCommand cmd = new SqlCommand(querySelect, con))
                 {
                     rdr = cmd.ExecuteReader();
+                    return modelBuilder.Build(rdr, "intermediate", labels = Labels);
 
                     while (rdr.Read())
                     {

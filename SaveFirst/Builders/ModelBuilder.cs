@@ -96,7 +96,9 @@ namespace SaveFirst.Builders
       return list;
     }
 
-    public List<T> Build(SqlDataReader rdr, string modelName)
+    public List<IntermediateModel> BuildIntermediateModel()
+
+    public List<T> Build(SqlDataReader rdr, string modelName, string[] labels = null) 
     {
       switch (modelName)
       {
@@ -111,6 +113,9 @@ namespace SaveFirst.Builders
 
         case "paymentMethod":
           return BuildPaymentMethod(rdr);
+        
+        case "intermediate":
+          return BuildIntermediateModel(rdr, labels);
       }
     }
   }
